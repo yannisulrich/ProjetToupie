@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc">
+			<Option target="ProjetToupie"/>
+		</Unit>
+		<Unit filename="/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h">
+			<Option target="ProjetToupie"/>
+		</Unit>
 		<Unit filename="/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/main.cpp">
 			<Option target="ProjetToupie"/>
 		</Unit>

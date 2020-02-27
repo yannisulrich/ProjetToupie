@@ -6,7 +6,13 @@
 
 #IncludeRegexTransform: 
 
+/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h
+vector
+-
+
 /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/main.cpp
 iostream
 -
+Vecteur.h
+/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h
 

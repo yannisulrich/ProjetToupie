@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/ProjetToupie.dir/Vecteur.cc.o"
   "CMakeFiles/ProjetToupie.dir/main.cpp.o"
   "ProjetToupie"
   "ProjetToupie.pdb"
