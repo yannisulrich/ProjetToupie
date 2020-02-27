@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Vecteur.h"
-
+using namespace std;
 int main() {
     Vecteur vect1({1.0, 2.0, -1.0});
     Vecteur vect2({2.0, 3.0, 4.0});

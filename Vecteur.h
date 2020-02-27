@@ -1,22 +1,22 @@
 //
 // Created by Yannis on 27.02.20.
 //
-
+#pragma once
 #ifndef PROJETTOUPIE_VECTEUR_H
 #define PROJETTOUPIE_VECTEUR_H
 
 #include <vector>
-using namespace std;
+
 class Vecteur {
 private:
-    vector<double> v;
+    std::vector<double> v;
     int dim;
 public:
-    explicit Vecteur(const vector<double> &input); //constructeurs
+    explicit Vecteur(const std::vector<double> &input); //constructeurs
     Vecteur(const Vecteur &input);
 
-    vector<double> getVect() const; //accès aux attributs
-    void setVect(const vector<double> & input);
+    std::vector<double> getVect() const; //accès aux attributs
+    void setVect(const std::vector<double> & input);
     int getDim() const;
 
     void augmente(double value); //operations basiques
