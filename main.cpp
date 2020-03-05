@@ -24,5 +24,5 @@ int main() {
     else {
         cout << "différent du"; }
     cout << " vecteur 3." << endl;
-
+cout << vect1.getCoord(3) << endl;
 }

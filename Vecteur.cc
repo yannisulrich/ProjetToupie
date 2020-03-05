@@ -22,6 +22,12 @@ vector<double> Vecteur::getVect() const{
 int Vecteur::getDim() const {
     return dim;
 }
+int Vecteur::getCoord(size_t Coord) const {
+    if(Coord > v.size()-1) {
+        throw invalid_argument( "requested coord non-existant" );
+    }
+    return v[Coord];
+}
 void Vecteur::setVect(const vector<double> & input) {
     v = input;
 }
@@ -30,7 +36,7 @@ void Vecteur::augmente(const double & value) {
     v.push_back(value);
     dim += 1;
 }
-void Vecteur::set_coord(const int & coord, const double & value) {
+void Vecteur::set_coord(const size_t & coord, const double & value) {
     if(coord < 0) throw invalid_argument( "received negative value" );
     v[coord] = value;
 }

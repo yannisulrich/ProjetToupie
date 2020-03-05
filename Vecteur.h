@@ -6,7 +6,7 @@
 
 #include <initializer_list>
 #include <vector>
-
+using namespace std;
 class Vecteur {
 private:
     std::vector<double> v;
@@ -19,9 +19,10 @@ public:
     std::vector<double> getVect() const; //accès aux attributs
     void setVect(const std::vector<double> & input);
     int getDim() const;
+    int getCoord(const size_t coord)const;
 
     void augmente(const double & value); //operations basiques
-    void set_coord(const int & coord, const double & value);
+    void set_coord(const size_t & coord, const double & value);
     void affiche() const;
     bool compare(const Vecteur & v2, const double Precision) const;
 
