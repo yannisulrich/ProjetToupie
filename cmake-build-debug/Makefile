@@ -123,6 +123,33 @@ ProjetToupie/fast:
 	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/build
 .PHONY : ProjetToupie/fast
 
+Matrice.o: Matrice.cc.o
+
+.PHONY : Matrice.o
+
+# target to build an object file
+Matrice.cc.o:
+	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Matrice.cc.o
+.PHONY : Matrice.cc.o
+
+Matrice.i: Matrice.cc.i
+
+.PHONY : Matrice.i
+
+# target to preprocess a source file
+Matrice.cc.i:
+	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Matrice.cc.i
+.PHONY : Matrice.cc.i
+
+Matrice.s: Matrice.cc.s
+
+.PHONY : Matrice.s
+
+# target to generate assembly for a file
+Matrice.cc.s:
+	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Matrice.cc.s
+.PHONY : Matrice.cc.s
+
 Vecteur.o: Vecteur.cc.o
 
 .PHONY : Vecteur.o
@@ -186,6 +213,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... ProjetToupie"
+	@echo "... Matrice.o"
+	@echo "... Matrice.i"
+	@echo "... Matrice.s"
 	@echo "... Vecteur.o"
 	@echo "... Vecteur.i"
 	@echo "... Vecteur.s"

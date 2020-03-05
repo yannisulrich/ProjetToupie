@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/ProjetToupie.dir/Matrice.cc.o"
   "CMakeFiles/ProjetToupie.dir/Vecteur.cc.o"
   "CMakeFiles/ProjetToupie.dir/main.cpp.o"
   "ProjetToupie"

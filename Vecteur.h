@@ -2,8 +2,7 @@
 // Created by Yannis on 27.02.20.
 //
 #pragma once
-#ifndef PROJETTOUPIE_VECTEUR_H
-#define PROJETTOUPIE_VECTEUR_H
+
 
 #include <initializer_list>
 #include <vector>
@@ -38,4 +37,4 @@ public:
 };
 
 
-#endif //PROJETTOUPIE_VECTEUR_H
+

@@ -6,7 +6,27 @@
 
 #IncludeRegexTransform: 
 
+/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Matrice.cc
+Matrice.h
+/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Matrice.h
+
+/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Matrice.h
+vector
+-
+
+/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc
+Vecteur.h
 /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h
+stdexcept
+-
+iostream
+-
+string
+-
+
+/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h
+initializer_list
+-
 vector
 -
 
