@@ -46,12 +46,13 @@ void Vecteur::affiche() const {
     }
     cout << endl;
 }
-bool Vecteur::compare(const Vecteur & v2, const double Precision) const {
+bool Vecteur::compare(const Vecteur & v2, const double Precision = 1e-10) const {
     if ( v.size() != v2.getDim()) {
         return false;
     }
-    for(double i : v) {
+    for(int i(0); i < v.size(); ++i) {
         if (abs(v[i]- v2.getVect()[i]) > Precision) {
+            ++i;
             return false;
         }
     }

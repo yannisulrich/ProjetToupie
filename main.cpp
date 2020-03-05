@@ -3,7 +3,7 @@
 using namespace std;
 int main() {
     Vecteur vect1({1.0, 2.0, -1.0});
-    Vecteur vect2({1.2, 2.0, -1.0});
+    Vecteur vect2({0, 2.0, -1.0});
     Vecteur vect3(vect1.prod_vect(vect2));
 
 
@@ -24,5 +24,5 @@ int main() {
     else {
         cout << "différent du"; }
     cout << " vecteur 3." << endl;
-cout << vect1.getCoord(3) << endl;
+
 }
