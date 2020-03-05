@@ -9,12 +9,8 @@
 
 using namespace std;
 //constructeurs
-Vecteur::Vecteur(const vector<double> &input) {
+Vecteur::Vecteur(std::initializer_list<double> const& input) {
     v = input;
-    dim = v.size();
-}
-Vecteur::Vecteur(const Vecteur &input) {
-    setVect(input.getVect());
     dim = v.size();
 }
 
@@ -29,11 +25,11 @@ void Vecteur::setVect(const vector<double> & input) {
     v = input;
 }
 //operations basiques
-void Vecteur::augmente(double value) {
+void Vecteur::augmente(const double & value) {
     v.push_back(value);
     dim += 1;
 }
-void Vecteur::set_coord(int coord, double value) {
+void Vecteur::set_coord(const int & coord, const double & value) {
     if(coord < 0) throw invalid_argument( "received negative value" );
     v[coord] = value;
 }
@@ -87,7 +83,7 @@ double Vecteur::prod_scal(const Vecteur & vect2) const {
     }
     return output;
 }
-Vecteur Vecteur::prod_vect(Vecteur vect2) const {
+Vecteur Vecteur::prod_vect(const Vecteur & vect2) const {
     if (dim != 3) throw std::invalid_argument("dimension of vector is not 3 (" + to_string(dim) + ")");
     if (vect2.getDim() != 3) throw std::invalid_argument("dimension of input is not 3 (" + to_string(vect2.getDim()) +")");
     Vecteur output({0,0,0});
