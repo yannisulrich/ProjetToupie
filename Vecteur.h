@@ -23,7 +23,7 @@ public:
     void augmente(const double & value); //operations basiques
     void set_coord(const int & coord, const double & value);
     void affiche() const;
-    bool compare(const Vecteur & v2) const;
+    bool compare(const Vecteur & v2, const double Precision) const;
 
     Vecteur addition(const Vecteur & vect2) const; //operation mathématiques
     Vecteur soustraction(const Vecteur& vect2) const;
