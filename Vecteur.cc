@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <iostream>
 #include<string>
+#include<cmath>
 
 using namespace std;
 //constructeurs
@@ -43,13 +44,12 @@ bool Vecteur::compare(const Vecteur & v2, const double Precision) const {
     if ( v.size() != v2.getDim()) {
         return false;
     }
-    bool output (true) ;
     for(double i : v) {
-        if (v[i]- v2.getVect()[i] > Precision) {
-            output = false;
+        if (abs(v[i]- v2.getVect()[i]) > Precision) {
+            return false;
         }
     }
-    return output;
+    return true;
 }
 
 //op. mathématiques
