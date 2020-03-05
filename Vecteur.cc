@@ -45,7 +45,7 @@ bool Vecteur::compare(const Vecteur & v2, const double Precision) const {
     }
     bool output (true) ;
     for(double i : v) {
-        if (v[i]-v2[i] > Precision) {
+        if (v[i]- v2.getVect()[i] > Precision) {
             output = false;
         }
     }
