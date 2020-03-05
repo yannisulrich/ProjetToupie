@@ -39,8 +39,17 @@ void Vecteur::affiche() const {
     }
     cout << endl;
 }
-bool Vecteur::compare(const Vecteur & v2) const {
-    return v == v2.getVect();
+bool Vecteur::compare(const Vecteur & v2, const double Precision) const {
+    if ( v.size() != v2.getDim()) {
+        return false;
+    }
+    bool output (true) ;
+    for(double i : v) {
+        if (v[i]-v2[i] > Precision) {
+            output = false;
+        }
+    }
+    return output;
 }
 
 //op. mathématiques
