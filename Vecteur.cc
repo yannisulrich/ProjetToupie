@@ -19,10 +19,10 @@ Vecteur::Vecteur(std::initializer_list<double> const& input) {
 vector<double> Vecteur::getVect() const{
     return v;
 }
-int Vecteur::getDim() const {
+unsigned int Vecteur::getDim() const {
     return dim;
 }
-int Vecteur::getCoord(size_t Coord) const {
+double Vecteur::getCoord(const size_t & Coord) const {
     if(Coord > v.size()-1) {
         throw invalid_argument( "requested coord non-existant" );
     }
@@ -46,7 +46,7 @@ void Vecteur::affiche() const {
     }
     cout << endl;
 }
-bool Vecteur::compare(const Vecteur & v2, const double Precision = 1e-10) const {
+bool Vecteur::compare(const Vecteur & v2, const double & Precision = 1e-10) const {
     if ( v.size() != v2.getDim()) {
         return false;
     }
@@ -107,4 +107,14 @@ Vecteur Vecteur::prod_vect(const Vecteur & vect2) const {
     output.v[1] = v[2]*vect2.v[0] - v[0]*vect2.v[2];
     output.v[2] = v[0]*vect2.v[1] - v[1]*vect2.v[0];
     return output;
+}
+
+double &Vecteur::operator[](size_t coord) {
+    return this->v[coord];
+}
+ostream& operator<<(ostream& out, const Vecteur & vect) {
+    for(double i : vect.getVect()) {
+        out << i << " ";
+    }
+    return out;
 }
