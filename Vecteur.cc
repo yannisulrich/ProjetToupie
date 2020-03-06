@@ -5,6 +5,7 @@
 #include "Vecteur.h"
 #include <stdexcept>
 #include <iostream>
+#include <iomanip>
 #include<string>
 #include<cmath>
 
@@ -114,7 +115,8 @@ double &Vecteur::operator[](size_t coord) {
 }
 ostream& operator<<(ostream& out, const Vecteur & vect) {
     for(double i : vect.getVect()) {
-        out << i << " ";
+        out  << i << setw(10);
     }
+    out << setw(-10);
     return out;
 }

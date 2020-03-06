@@ -86,6 +86,12 @@
 		<Unit filename="/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Matrice.h">
 			<Option target="ProjetToupie"/>
 		</Unit>
+		<Unit filename="/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Toupie.cc">
+			<Option target="ProjetToupie"/>
+		</Unit>
+		<Unit filename="/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Toupie.h">
+			<Option target="ProjetToupie"/>
+		</Unit>
 		<Unit filename="/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc">
 			<Option target="ProjetToupie"/>
 		</Unit>

@@ -70,22 +70,9 @@ CMakeFiles/ProjetToupie.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ProjetToupie.dir/main.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/main.cpp -o CMakeFiles/ProjetToupie.dir/main.cpp.s
 
-CMakeFiles/ProjetToupie.dir/Vecteur.cc.o: CMakeFiles/ProjetToupie.dir/flags.make
-CMakeFiles/ProjetToupie.dir/Vecteur.cc.o: ../Vecteur.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ProjetToupie.dir/Vecteur.cc.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ProjetToupie.dir/Vecteur.cc.o -c /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc
-
-CMakeFiles/ProjetToupie.dir/Vecteur.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ProjetToupie.dir/Vecteur.cc.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc > CMakeFiles/ProjetToupie.dir/Vecteur.cc.i
-
-CMakeFiles/ProjetToupie.dir/Vecteur.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ProjetToupie.dir/Vecteur.cc.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc -o CMakeFiles/ProjetToupie.dir/Vecteur.cc.s
-
 CMakeFiles/ProjetToupie.dir/Matrice.cc.o: CMakeFiles/ProjetToupie.dir/flags.make
 CMakeFiles/ProjetToupie.dir/Matrice.cc.o: ../Matrice.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ProjetToupie.dir/Matrice.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ProjetToupie.dir/Matrice.cc.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ProjetToupie.dir/Matrice.cc.o -c /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Matrice.cc
 
 CMakeFiles/ProjetToupie.dir/Matrice.cc.i: cmake_force
@@ -96,21 +83,49 @@ CMakeFiles/ProjetToupie.dir/Matrice.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ProjetToupie.dir/Matrice.cc.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Matrice.cc -o CMakeFiles/ProjetToupie.dir/Matrice.cc.s
 
+CMakeFiles/ProjetToupie.dir/Vecteur.cc.o: CMakeFiles/ProjetToupie.dir/flags.make
+CMakeFiles/ProjetToupie.dir/Vecteur.cc.o: ../Vecteur.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ProjetToupie.dir/Vecteur.cc.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ProjetToupie.dir/Vecteur.cc.o -c /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc
+
+CMakeFiles/ProjetToupie.dir/Vecteur.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ProjetToupie.dir/Vecteur.cc.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc > CMakeFiles/ProjetToupie.dir/Vecteur.cc.i
+
+CMakeFiles/ProjetToupie.dir/Vecteur.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ProjetToupie.dir/Vecteur.cc.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc -o CMakeFiles/ProjetToupie.dir/Vecteur.cc.s
+
+CMakeFiles/ProjetToupie.dir/Toupie.cc.o: CMakeFiles/ProjetToupie.dir/flags.make
+CMakeFiles/ProjetToupie.dir/Toupie.cc.o: ../Toupie.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ProjetToupie.dir/Toupie.cc.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ProjetToupie.dir/Toupie.cc.o -c /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Toupie.cc
+
+CMakeFiles/ProjetToupie.dir/Toupie.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ProjetToupie.dir/Toupie.cc.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Toupie.cc > CMakeFiles/ProjetToupie.dir/Toupie.cc.i
+
+CMakeFiles/ProjetToupie.dir/Toupie.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ProjetToupie.dir/Toupie.cc.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Toupie.cc -o CMakeFiles/ProjetToupie.dir/Toupie.cc.s
+
 # Object files for target ProjetToupie
 ProjetToupie_OBJECTS = \
 "CMakeFiles/ProjetToupie.dir/main.cpp.o" \
+"CMakeFiles/ProjetToupie.dir/Matrice.cc.o" \
 "CMakeFiles/ProjetToupie.dir/Vecteur.cc.o" \
-"CMakeFiles/ProjetToupie.dir/Matrice.cc.o"
+"CMakeFiles/ProjetToupie.dir/Toupie.cc.o"
 
 # External object files for target ProjetToupie
 ProjetToupie_EXTERNAL_OBJECTS =
 
 ProjetToupie: CMakeFiles/ProjetToupie.dir/main.cpp.o
-ProjetToupie: CMakeFiles/ProjetToupie.dir/Vecteur.cc.o
 ProjetToupie: CMakeFiles/ProjetToupie.dir/Matrice.cc.o
+ProjetToupie: CMakeFiles/ProjetToupie.dir/Vecteur.cc.o
+ProjetToupie: CMakeFiles/ProjetToupie.dir/Toupie.cc.o
 ProjetToupie: CMakeFiles/ProjetToupie.dir/build.make
 ProjetToupie: CMakeFiles/ProjetToupie.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable ProjetToupie"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ProjetToupie"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ProjetToupie.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

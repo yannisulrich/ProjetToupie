@@ -150,6 +150,33 @@ Matrice.cc.s:
 	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Matrice.cc.s
 .PHONY : Matrice.cc.s
 
+Toupie.o: Toupie.cc.o
+
+.PHONY : Toupie.o
+
+# target to build an object file
+Toupie.cc.o:
+	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Toupie.cc.o
+.PHONY : Toupie.cc.o
+
+Toupie.i: Toupie.cc.i
+
+.PHONY : Toupie.i
+
+# target to preprocess a source file
+Toupie.cc.i:
+	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Toupie.cc.i
+.PHONY : Toupie.cc.i
+
+Toupie.s: Toupie.cc.s
+
+.PHONY : Toupie.s
+
+# target to generate assembly for a file
+Toupie.cc.s:
+	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Toupie.cc.s
+.PHONY : Toupie.cc.s
+
 Vecteur.o: Vecteur.cc.o
 
 .PHONY : Vecteur.o
@@ -216,6 +243,9 @@ help:
 	@echo "... Matrice.o"
 	@echo "... Matrice.i"
 	@echo "... Matrice.s"
+	@echo "... Toupie.o"
+	@echo "... Toupie.i"
+	@echo "... Toupie.s"
 	@echo "... Vecteur.o"
 	@echo "... Vecteur.i"
 	@echo "... Vecteur.s"

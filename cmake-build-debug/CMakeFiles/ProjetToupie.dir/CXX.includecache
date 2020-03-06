@@ -6,14 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Matrice.cc
-Matrice.h
-/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Matrice.h
-
-/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Matrice.h
-vector
--
-
 /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc
 Vecteur.h
 /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h
@@ -21,7 +13,11 @@ stdexcept
 -
 iostream
 -
+iomanip
+-
 string
+-
+cmath
 -
 
 /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h
@@ -29,10 +25,4 @@ initializer_list
 -
 vector
 -
-
-/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/main.cpp
-iostream
--
-Vecteur.h
-/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h
 
