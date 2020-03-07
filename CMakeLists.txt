@@ -3,4 +3,4 @@ project(ProjetToupie)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(ProjetToupie main.cpp Matrice.cc Matrice.h Vecteur.cc Vecteur.h Toupie.cc Toupie.h)
+add_executable(ProjetToupie Matrice.cc Matrice.h Vecteur.cc Vecteur.h Toupie.cc Toupie.h vecteurtest.cpp)

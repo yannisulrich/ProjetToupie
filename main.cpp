@@ -3,9 +3,6 @@
 #include "Matrice.h"
 using namespace std;
 int main() {
-    Vecteur vect1({1.0, 2.0, -1.0});
-    Vecteur vect2({0, 2.0, -1.0});
-    Vecteur vect3(vect1.prod_vect(vect2));
 
 
     Matrice I;
@@ -35,5 +32,4 @@ int main() {
     cout << mat * mat << endl;
     cout << mat2 * mat2.inv() << endl;
     cout << mat.transp() << endl;
-
 }

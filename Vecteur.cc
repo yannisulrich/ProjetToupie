@@ -47,18 +47,23 @@ void Vecteur::affiche() const {
     }
     cout << endl;
 }
-bool Vecteur::compare(const Vecteur & v2, const double & Precision = 1e-10) const {
+
+bool Vecteur::operator==(Vecteur const& v2) {
     if ( v.size() != v2.getDim()) {
         return false;
     }
     for(int i(0); i < v.size(); ++i) {
-        if (abs(v[i]- v2.getVect()[i]) > Precision) {
+        if (abs(v[i]- v2.getVect()[i]) > 1e-10) {
             ++i;
             return false;
         }
     }
     return true;
 }
+
+//bool Vecteur::operator!=(Vecteur const& v2) {
+    //return not (v == v2);
+//}
 
 //op. mathématiques
 Vecteur Vecteur::addition(const Vecteur & vect2) const {

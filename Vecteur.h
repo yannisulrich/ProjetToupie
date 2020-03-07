@@ -6,6 +6,7 @@
 
 #include <initializer_list>
 #include <vector>
+#include <iostream>
 using namespace std;
 class Vecteur {
 private:
@@ -24,7 +25,8 @@ public:
     void augmente(const double & value); //operations basiques
     void set_coord(const size_t & coord, const double & value);
     void affiche() const;
-    bool compare(const Vecteur & v2, const double & Precision) const;
+    bool operator==(Vecteur const& v2);
+    //bool operator!=(Vecteur const& v2);
 
     Vecteur addition(const Vecteur & vect2) const; //operation mathématiques
     Vecteur soustraction(const Vecteur& vect2) const;
