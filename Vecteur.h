@@ -25,8 +25,17 @@ public:
     void augmente(const double & value); //operations basiques
     void set_coord(const size_t & coord, const double & value);
     void affiche() const;
-    bool operator==(Vecteur const& v2);
-    //bool operator!=(Vecteur const& v2);
+    void dimcheck(const Vecteur& vect2) const;
+    bool operator==(Vecteur const& v2) const;
+    bool operator!=(Vecteur const& v2) const;
+    void operator+=(Vecteur const& v2) const;
+    void operator+(Vecteur const& v2) const;
+    void operator-=(Vecteur const& v2) const;
+    void operator-(Vecteur const& v2) const;
+    void operator*=(double const& scalar) const;
+    void operator*(Vecteur const& v2) const;
+    void operator^(Vecteur const& v2) const;
+
 
     Vecteur addition(const Vecteur & vect2) const; //operation mathématiques
     Vecteur soustraction(const Vecteur& vect2) const;

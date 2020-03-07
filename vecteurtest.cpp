@@ -28,4 +28,12 @@ int main() {
         cout << "différent du";
     }
     cout << " vecteur 2," << endl << "et est ";
+    if (vect1 != vect3) {
+        cout << "différent du";
+    } else {
+        cout << "égal au";
+    }
+    cout << " vecteur 3." << endl;
+    vect1 += vect2;
+    cout << vect1;
 }

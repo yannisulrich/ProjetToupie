@@ -33,6 +33,7 @@ void Vecteur::setVect(const vector<double> & input) {
     v = input;
 }
 //operations basiques
+
 void Vecteur::augmente(const double & value) {
     v.push_back(value);
     dim += 1;
@@ -48,10 +49,14 @@ void Vecteur::affiche() const {
     cout << endl;
 }
 
-bool Vecteur::operator==(Vecteur const& v2) {
-    if ( v.size() != v2.getDim()) {
-        return false;
+void Vecteur::dimcheck(const Vecteur& v2) const {
+    if (v.size() != v2.getDim()){
+        throw invalid_argument( "dimensions do not match" );
     }
+}
+
+bool Vecteur::operator==(Vecteur const& v2) const {
+    dimcheck(v2);
     for(int i(0); i < v.size(); ++i) {
         if (abs(v[i]- v2.getVect()[i]) > 1e-10) {
             ++i;
@@ -61,11 +66,45 @@ bool Vecteur::operator==(Vecteur const& v2) {
     return true;
 }
 
-//bool Vecteur::operator!=(Vecteur const& v2) {
-    //return not (v == v2);
-//}
+bool Vecteur::operator!=(Vecteur const& v2) const {
+    return not (v == v2.getVect());
+}
 
 //op. mathématiques
+
+void Vecteur::operator+=(Vecteur const& v2) const {
+    dimcheck(v2);
+    for(size_t i = 0; i < dim; ++ i) {
+        v[i] += v2[i];
+
+    }
+}
+
+void Vecteur::operator+(Vecteur const& v2) const {
+    dimcheck(v2);
+}
+
+void Vecteur::operator-=(Vecteur const& v2) const {
+    dimcheck(v2);
+}
+
+void Vecteur::operator-(Vecteur const& v2) const {
+    dimcheck(v2);
+}
+
+void Vecteur::operator*=(double const& scalar) const {
+
+}
+
+void Vecteur::operator*(Vecteur const& v2) const {
+    dimcheck(v2);
+}
+
+void Vecteur::operator^(Vecteur const& v2) const {
+    dimcheck(v2);
+}
+
+
 Vecteur Vecteur::addition(const Vecteur & vect2) const {
     Vecteur output({});
     output.setVect(v);
