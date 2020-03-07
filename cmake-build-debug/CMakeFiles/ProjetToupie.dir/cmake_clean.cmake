@@ -2,7 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/ProjetToupie.dir/Matrice.cc.o"
   "CMakeFiles/ProjetToupie.dir/Toupie.cc.o"
   "CMakeFiles/ProjetToupie.dir/Vecteur.cc.o"
-  "CMakeFiles/ProjetToupie.dir/main.cpp.o"
+  "CMakeFiles/ProjetToupie.dir/vecteurtest.cpp.o"
   "ProjetToupie"
   "ProjetToupie.pdb"
 )

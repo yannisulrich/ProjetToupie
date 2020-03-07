@@ -6,7 +6,7 @@
 #include "Matrice.h"
 
 class Toupie {
-private:
+protected:
     Vecteur P;
     Vecteur P_dot;
     Matrice I;

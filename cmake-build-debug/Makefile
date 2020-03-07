@@ -204,32 +204,32 @@ Vecteur.cc.s:
 	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Vecteur.cc.s
 .PHONY : Vecteur.cc.s
 
-main.o: main.cpp.o
+vecteurtest.o: vecteurtest.cpp.o
 
-.PHONY : main.o
+.PHONY : vecteurtest.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/main.cpp.o
-.PHONY : main.cpp.o
+vecteurtest.cpp.o:
+	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/vecteurtest.cpp.o
+.PHONY : vecteurtest.cpp.o
 
-main.i: main.cpp.i
+vecteurtest.i: vecteurtest.cpp.i
 
-.PHONY : main.i
+.PHONY : vecteurtest.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/main.cpp.i
-.PHONY : main.cpp.i
+vecteurtest.cpp.i:
+	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/vecteurtest.cpp.i
+.PHONY : vecteurtest.cpp.i
 
-main.s: main.cpp.s
+vecteurtest.s: vecteurtest.cpp.s
 
-.PHONY : main.s
+.PHONY : vecteurtest.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/main.cpp.s
-.PHONY : main.cpp.s
+vecteurtest.cpp.s:
+	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/vecteurtest.cpp.s
+.PHONY : vecteurtest.cpp.s
 
 # Help Target
 help:
@@ -249,9 +249,9 @@ help:
 	@echo "... Vecteur.o"
 	@echo "... Vecteur.i"
 	@echo "... Vecteur.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... vecteurtest.o"
+	@echo "... vecteurtest.i"
+	@echo "... vecteurtest.s"
 .PHONY : help
 
 

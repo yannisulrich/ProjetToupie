@@ -72,12 +72,14 @@ bool Vecteur::operator!=(Vecteur const& v2) const {
 
 //op. mathématiques
 
-void Vecteur::operator+=(Vecteur const& v2) const {
+Vecteur & Vecteur::operator+=(Vecteur const& v2) {
     dimcheck(v2);
-    for(size_t i = 0; i < dim; ++ i) {
-        v[i] += v2[i];
 
+    for(size_t i = 0; i < dim; ++ i) {
+        //set_coord(i,getCoord(i) + v2.getVect()[i]);
+        this->v[i] += v2.v[i];
     }
+    return const_cast<Vecteur &>(*this);
 }
 
 void Vecteur::operator+(Vecteur const& v2) const {

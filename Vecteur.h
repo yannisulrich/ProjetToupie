@@ -28,7 +28,7 @@ public:
     void dimcheck(const Vecteur& vect2) const;
     bool operator==(Vecteur const& v2) const;
     bool operator!=(Vecteur const& v2) const;
-    void operator+=(Vecteur const& v2) const;
+    Vecteur & operator+=(Vecteur const& v2);
     void operator+(Vecteur const& v2) const;
     void operator-=(Vecteur const& v2) const;
     void operator-(Vecteur const& v2) const;
