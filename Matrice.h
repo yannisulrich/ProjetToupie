@@ -15,7 +15,7 @@ public:
             std::initializer_list<double> const& v_2); //initialisation avec valeurs configurables partout
     Matrice(const double & m11, const double & m22, const double & m33); //matrices diagonales
 
-    double get_value(const int & line, const int & col) const;
+    [[nodiscard]] double get_value(const int & line, const int & col) const;
 
     double& operator()(const unsigned & line, const unsigned & col);
     Matrice operator+(Matrice & mat2); //surcharge des opérateurs élémentaires
@@ -23,8 +23,8 @@ public:
     Matrice operator*(const Matrice &);
     friend Matrice operator*(const double & scal, const Matrice & mat);
     Vecteur operator*(const Vecteur & vect) const;
-    Matrice transp() const;
-    double det() const;
+    [[nodiscard]] Matrice transp() const;
+    [[nodiscard]] double det() const;
     Matrice inv();
 
     friend ostream& operator<<(ostream& out, const Matrice & mat);

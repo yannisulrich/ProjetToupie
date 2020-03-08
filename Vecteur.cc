@@ -76,7 +76,6 @@ Vecteur & Vecteur::operator+=(Vecteur const& v2) {
     dimcheck(v2);
 
     for(size_t i = 0; i < dim; ++ i) {
-        //set_coord(i,getCoord(i) + v2.getVect()[i]);
         this->v[i] += v2.v[i];
     }
     return const_cast<Vecteur &>(*this);
@@ -111,7 +110,7 @@ Vecteur Vecteur::addition(const Vecteur & vect2) const {
     Vecteur output({});
     output.setVect(v);
     for(size_t i = 0; i < dim; ++ i) {
-        output.v[i] += vect2.v[i];
+        output[i] += vect2.getCoord(i);
     }
     return output;
 }

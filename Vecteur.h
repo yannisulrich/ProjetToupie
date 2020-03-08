@@ -17,10 +17,10 @@ public:
     explicit Vecteur(const unsigned int & d): dim(d), v(d) {}
     Vecteur(const double & x, const double & y, const double & z): dim(3), v({x,y,z}) {}
 
-    std::vector<double> getVect() const; //accès aux attributs
+    [[nodiscard]] std::vector<double> getVect() const; //accès aux attributs
     void setVect(const std::vector<double> & input);
-    unsigned int getDim() const;
-    double getCoord(const size_t & coord) const;
+    [[nodiscard]] unsigned int getDim() const;
+    [[nodiscard]] double getCoord(const size_t & coord) const;
 
     void augmente(const double & value); //operations basiques
     void set_coord(const size_t & coord, const double & value);
@@ -37,12 +37,12 @@ public:
     void operator^(Vecteur const& v2) const;
 
 
-    Vecteur addition(const Vecteur & vect2) const; //operation mathématiques
-    Vecteur soustraction(const Vecteur& vect2) const;
-    Vecteur oppose() const;
-    Vecteur mult(const double & scalar) const;
-    double prod_scal(const Vecteur & vect2) const;
-    Vecteur prod_vect(const Vecteur & vect2) const;
+    [[nodiscard]] Vecteur addition(const Vecteur & vect2) const; //operation mathématiques
+    [[nodiscard]] Vecteur soustraction(const Vecteur& vect2) const;
+    [[nodiscard]] Vecteur oppose() const;
+    [[nodiscard]] Vecteur mult(const double & scalar) const;
+    [[nodiscard]] double prod_scal(const Vecteur & vect2) const;
+    [[nodiscard]] Vecteur prod_vect(const Vecteur & vect2) const;
 
     double& operator[](size_t coord);
     friend ostream& operator<<(ostream& out, const Vecteur & vect);
