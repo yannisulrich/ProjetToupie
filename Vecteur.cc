@@ -74,15 +74,17 @@ bool Vecteur::operator!=(Vecteur const& v2) const {
 
 Vecteur & Vecteur::operator+=(Vecteur const& v2) {
     dimcheck(v2);
-
     for(size_t i = 0; i < dim; ++ i) {
-        this->v[i] += v2.v[i];
+        v[i] += v2.v[i];
     }
-    return const_cast<Vecteur &>(*this);
+    return *this;
+
 }
 
-void Vecteur::operator+(Vecteur const& v2) const {
-    dimcheck(v2);
+const Vecteur operator+(Vecteur v1, Vecteur const& v2) {
+    v1.dimcheck(v2);
+    v1 += v2;
+    return v1; //la méthode conseillée d'après les leçons 12-13-14 du cours. attention, elle n'apprtient PAS à la classe
 }
 
 void Vecteur::operator-=(Vecteur const& v2) const {
@@ -93,8 +95,11 @@ void Vecteur::operator-(Vecteur const& v2) const {
     dimcheck(v2);
 }
 
-void Vecteur::operator*=(double const& scalar) const {
-
+Vecteur& Vecteur::operator*=(const double & scal) {
+    for(double i : v) {
+        i *= scal;
+    }
+    return *this;
 }
 
 void Vecteur::operator*(Vecteur const& v2) const {
@@ -104,6 +109,11 @@ void Vecteur::operator*(Vecteur const& v2) const {
 void Vecteur::operator^(Vecteur const& v2) const {
     dimcheck(v2);
 }
+const Vecteur operator*(const double & scal, Vecteur vect) {
+    vect *= scal;
+    return vect;
+}
+
 
 
 Vecteur Vecteur::addition(const Vecteur & vect2) const {
@@ -165,3 +175,4 @@ ostream& operator<<(ostream& out, const Vecteur & vect) {
     out << setw(-10);
     return out;
 }
+

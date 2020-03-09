@@ -29,10 +29,10 @@ public:
     bool operator==(Vecteur const& v2) const;
     bool operator!=(Vecteur const& v2) const;
     Vecteur & operator+=(Vecteur const& v2);
-    void operator+(Vecteur const& v2) const;
     void operator-=(Vecteur const& v2) const;
     void operator-(Vecteur const& v2) const;
-    void operator*=(double const& scalar) const;
+    friend const Vecteur operator*(const double &, Vecteur);
+    Vecteur& operator*=(const double &);
     void operator*(Vecteur const& v2) const;
     void operator^(Vecteur const& v2) const;
 
