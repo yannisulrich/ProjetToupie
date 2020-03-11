@@ -6,20 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.cc
-Vecteur.h
-/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h
-stdexcept
--
-iostream
--
-iomanip
--
-string
--
-cmath
--
-
 /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h
 initializer_list
 -
@@ -27,4 +13,10 @@ vector
 -
 iostream
 -
+
+/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/vecteurtest.cpp
+iostream
+-
+Vecteur.h
+/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h
 

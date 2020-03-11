@@ -17,7 +17,7 @@ Vecteur Toupie::getP_dot() const {
 }
 
 Matrice Toupie::getI() const {
-    return I;
+    return Ig;
 }
 
 ostream& operator<<(ostream &out, const Toupie &toup) {

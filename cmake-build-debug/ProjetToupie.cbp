@@ -98,6 +98,9 @@
 		<Unit filename="/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Vecteur.h">
 			<Option target="ProjetToupie"/>
 		</Unit>
+		<Unit filename="/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/testToupie.cc">
+			<Option target="ProjetToupie"/>
+		</Unit>
 		<Unit filename="/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/vecteurtest.cpp">
 			<Option target="ProjetToupie"/>
 		</Unit>

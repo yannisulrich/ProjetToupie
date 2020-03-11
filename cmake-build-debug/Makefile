@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ProjetToupie
+# Target rules for targets named TestToupie
 
 # Build rule for target.
-ProjetToupie: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ProjetToupie
-.PHONY : ProjetToupie
+TestToupie: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 TestToupie
+.PHONY : TestToupie
 
 # fast build rule for target.
-ProjetToupie/fast:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/build
-.PHONY : ProjetToupie/fast
+TestToupie/fast:
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/build
+.PHONY : TestToupie/fast
 
 Matrice.o: Matrice.cc.o
 
@@ -129,7 +129,7 @@ Matrice.o: Matrice.cc.o
 
 # target to build an object file
 Matrice.cc.o:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Matrice.cc.o
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/Matrice.cc.o
 .PHONY : Matrice.cc.o
 
 Matrice.i: Matrice.cc.i
@@ -138,7 +138,7 @@ Matrice.i: Matrice.cc.i
 
 # target to preprocess a source file
 Matrice.cc.i:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Matrice.cc.i
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/Matrice.cc.i
 .PHONY : Matrice.cc.i
 
 Matrice.s: Matrice.cc.s
@@ -147,7 +147,7 @@ Matrice.s: Matrice.cc.s
 
 # target to generate assembly for a file
 Matrice.cc.s:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Matrice.cc.s
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/Matrice.cc.s
 .PHONY : Matrice.cc.s
 
 Toupie.o: Toupie.cc.o
@@ -156,7 +156,7 @@ Toupie.o: Toupie.cc.o
 
 # target to build an object file
 Toupie.cc.o:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Toupie.cc.o
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/Toupie.cc.o
 .PHONY : Toupie.cc.o
 
 Toupie.i: Toupie.cc.i
@@ -165,7 +165,7 @@ Toupie.i: Toupie.cc.i
 
 # target to preprocess a source file
 Toupie.cc.i:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Toupie.cc.i
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/Toupie.cc.i
 .PHONY : Toupie.cc.i
 
 Toupie.s: Toupie.cc.s
@@ -174,7 +174,7 @@ Toupie.s: Toupie.cc.s
 
 # target to generate assembly for a file
 Toupie.cc.s:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Toupie.cc.s
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/Toupie.cc.s
 .PHONY : Toupie.cc.s
 
 Vecteur.o: Vecteur.cc.o
@@ -183,7 +183,7 @@ Vecteur.o: Vecteur.cc.o
 
 # target to build an object file
 Vecteur.cc.o:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Vecteur.cc.o
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/Vecteur.cc.o
 .PHONY : Vecteur.cc.o
 
 Vecteur.i: Vecteur.cc.i
@@ -192,7 +192,7 @@ Vecteur.i: Vecteur.cc.i
 
 # target to preprocess a source file
 Vecteur.cc.i:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Vecteur.cc.i
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/Vecteur.cc.i
 .PHONY : Vecteur.cc.i
 
 Vecteur.s: Vecteur.cc.s
@@ -201,35 +201,35 @@ Vecteur.s: Vecteur.cc.s
 
 # target to generate assembly for a file
 Vecteur.cc.s:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/Vecteur.cc.s
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/Vecteur.cc.s
 .PHONY : Vecteur.cc.s
 
-vecteurtest.o: vecteurtest.cpp.o
+testToupie.o: testToupie.cc.o
 
-.PHONY : vecteurtest.o
+.PHONY : testToupie.o
 
 # target to build an object file
-vecteurtest.cpp.o:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/vecteurtest.cpp.o
-.PHONY : vecteurtest.cpp.o
+testToupie.cc.o:
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/testToupie.cc.o
+.PHONY : testToupie.cc.o
 
-vecteurtest.i: vecteurtest.cpp.i
+testToupie.i: testToupie.cc.i
 
-.PHONY : vecteurtest.i
+.PHONY : testToupie.i
 
 # target to preprocess a source file
-vecteurtest.cpp.i:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/vecteurtest.cpp.i
-.PHONY : vecteurtest.cpp.i
+testToupie.cc.i:
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/testToupie.cc.i
+.PHONY : testToupie.cc.i
 
-vecteurtest.s: vecteurtest.cpp.s
+testToupie.s: testToupie.cc.s
 
-.PHONY : vecteurtest.s
+.PHONY : testToupie.s
 
 # target to generate assembly for a file
-vecteurtest.cpp.s:
-	$(MAKE) -f CMakeFiles/ProjetToupie.dir/build.make CMakeFiles/ProjetToupie.dir/vecteurtest.cpp.s
-.PHONY : vecteurtest.cpp.s
+testToupie.cc.s:
+	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/testToupie.cc.s
+.PHONY : testToupie.cc.s
 
 # Help Target
 help:
@@ -239,7 +239,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... ProjetToupie"
+	@echo "... TestToupie"
 	@echo "... Matrice.o"
 	@echo "... Matrice.i"
 	@echo "... Matrice.s"
@@ -249,9 +249,9 @@ help:
 	@echo "... Vecteur.o"
 	@echo "... Vecteur.i"
 	@echo "... Vecteur.s"
-	@echo "... vecteurtest.o"
-	@echo "... vecteurtest.i"
-	@echo "... vecteurtest.s"
+	@echo "... testToupie.o"
+	@echo "... testToupie.i"
+	@echo "... testToupie.s"
 .PHONY : help
 
 
