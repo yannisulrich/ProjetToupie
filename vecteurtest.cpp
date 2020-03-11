@@ -34,6 +34,7 @@ int main() {
         cout << "égal au";
     }
     cout << " vecteur 3." << endl;
+    cout << 2*vect3 << endl;
     vect1 += 2*vect3;
     cout << vect1;
 }

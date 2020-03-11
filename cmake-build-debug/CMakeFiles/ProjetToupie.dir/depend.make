@@ -13,7 +13,6 @@ CMakeFiles/ProjetToupie.dir/Toupie.cc.o: ../Vecteur.h
 CMakeFiles/ProjetToupie.dir/Vecteur.cc.o: ../Vecteur.cc
 CMakeFiles/ProjetToupie.dir/Vecteur.cc.o: ../Vecteur.h
 
-CMakeFiles/ProjetToupie.dir/main.cpp.o: ../Matrice.h
-CMakeFiles/ProjetToupie.dir/main.cpp.o: ../Vecteur.h
-CMakeFiles/ProjetToupie.dir/main.cpp.o: ../main.cpp
+CMakeFiles/ProjetToupie.dir/vecteurtest.cpp.o: ../Vecteur.h
+CMakeFiles/ProjetToupie.dir/vecteurtest.cpp.o: ../vecteurtest.cpp
 

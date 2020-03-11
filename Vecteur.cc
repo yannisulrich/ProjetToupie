@@ -96,7 +96,7 @@ void Vecteur::operator-(Vecteur const& v2) const {
 }
 
 Vecteur& Vecteur::operator*=(const double & scal) {
-    for(double i : v) {
+    for(double& i : v) {
         i *= scal;
     }
     return *this;
