@@ -36,5 +36,10 @@ int main() {
     cout << " vecteur 3." << endl;
     cout << 2*vect3 << endl;
     vect1 += 2*vect3;
-    cout << vect1;
+    cout << vect1 + vect2 << endl;
+    Vecteur vect5(vect1+vect2);
+    vect1[1] = 355;
+    cout << vect1 << endl;
+    cout << - vect1 << endl;
+    cout << vect5 << endl;
 }

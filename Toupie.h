@@ -16,7 +16,7 @@ public:
     Vecteur getP_dot() const;
     Matrice getI() const;
     Vecteur f() const;
-    friend ostream& operator<<(ostream& out, const Toupie & mat);
+    friend std::ostream& operator<<(std::ostream& out, const Toupie & mat);
 };
 
 

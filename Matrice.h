@@ -14,6 +14,7 @@ public:
     Matrice(std::initializer_list<double> const& v_0,std::initializer_list<double> const& v_1,
             std::initializer_list<double> const& v_2); //initialisation avec valeurs configurables partout
     Matrice(const double & m11, const double & m22, const double & m33); //matrices diagonales
+    Matrice(const Matrice & mat2) = default;
 
     [[nodiscard]] double get_value(const int &, const int &) const;
 
@@ -27,12 +28,10 @@ public:
     [[nodiscard]] double det() const;
     Matrice inv();
 
-    friend ostream& operator<<(ostream&, const Matrice &);
-
-
-
-
+    friend std::ostream& operator<<(std::ostream&, const Matrice &);
 };
+const Matrice operator+(Matrice mat1, const Matrice& mat2);
+const Matrice operator-(Matrice mat1, const Matrice& mat2);
 
 
 

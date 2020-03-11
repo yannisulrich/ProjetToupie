@@ -16,32 +16,35 @@ Vecteur::Vecteur(std::initializer_list<double> const& input) {
     dim = v.size();
 }
 
-//accès attributs
+//accès attributs.
 vector<double> Vecteur::getVect() const{
     return v;
 }
+void Vecteur::setVect(const vector<double> & input) {
+    v = input;
+}
+
 unsigned int Vecteur::getDim() const {
     return dim;
 }
+void Vecteur::augmente(const double & value) {
+    v.push_back(value);
+    dim += 1;
+}
+
 double Vecteur::getCoord(const size_t & Coord) const {
     if(Coord > v.size()-1) {
         throw invalid_argument( "requested coord non-existant" );
     }
     return v[Coord];
 }
-void Vecteur::setVect(const vector<double> & input) {
-    v = input;
-}
-//operations basiques
-
-void Vecteur::augmente(const double & value) {
-    v.push_back(value);
-    dim += 1;
-}
 void Vecteur::set_coord(const size_t & coord, const double & value) {
     if(coord < 0) throw invalid_argument( "received negative value" );
     v[coord] = value;
 }
+
+
+//operations basiques utiles
 void Vecteur::affiche() const {
     for(double i : v) {
         cout << i << " ";
@@ -55,9 +58,9 @@ void Vecteur::dimcheck(const Vecteur& v2) const {
     }
 }
 
-bool Vecteur::operator==(Vecteur const& v2) const {
+bool Vecteur::operator==(const Vecteur& v2) const {
     dimcheck(v2);
-    for(int i(0); i < v.size(); ++i) {
+    for(size_t i(0); i < v.size(); ++i) {
         if (abs(v[i]- v2.getVect()[i]) > 1e-10) {
             ++i;
             return false;
@@ -66,103 +69,68 @@ bool Vecteur::operator==(Vecteur const& v2) const {
     return true;
 }
 
-bool Vecteur::operator!=(Vecteur const& v2) const {
+bool Vecteur::operator!=(const Vecteur& v2) const {
     return not (v == v2.getVect());
 }
 
 //op. mathématiques
 
-Vecteur & Vecteur::operator+=(Vecteur const& v2) {
+Vecteur & Vecteur::operator+=(const Vecteur& v2) {
     dimcheck(v2);
     for(size_t i = 0; i < dim; ++ i) {
         v[i] += v2.v[i];
     }
     return *this;
-
 }
-
-const Vecteur operator+(Vecteur v1, Vecteur const& v2) {
-    v1.dimcheck(v2);
-    v1 += v2;
-    return v1; //la méthode conseillée d'après les leçons 12-13-14 du cours. attention, elle n'apprtient PAS à la classe
-}
-
-void Vecteur::operator-=(Vecteur const& v2) const {
+Vecteur & Vecteur::operator-=(const Vecteur& v2) {
     dimcheck(v2);
+    for(size_t i = 0; i < dim; ++ i) {
+        v[i] -= v2.v[i];
+    }
+    return *this;
 }
-
-void Vecteur::operator-(Vecteur const& v2) const {
-    dimcheck(v2);
-}
-
 Vecteur& Vecteur::operator*=(const double & scal) {
     for(double& i : v) {
         i *= scal;
     }
     return *this;
 }
+const Vecteur Vecteur::operator-() const {
+    Vecteur output(2 * *this);
+    return output;
 
-void Vecteur::operator*(Vecteur const& v2) const {
-    dimcheck(v2);
-}
-
-void Vecteur::operator^(Vecteur const& v2) const {
-    dimcheck(v2);
 }
 const Vecteur operator*(const double & scal, Vecteur vect) {
     vect *= scal;
     return vect;
 }
-
-
-
-Vecteur Vecteur::addition(const Vecteur & vect2) const {
-    Vecteur output({});
-    output.setVect(v);
-    for(size_t i = 0; i < dim; ++ i) {
-        output[i] += vect2.getCoord(i);
-    }
-    return output;
+const Vecteur operator+(Vecteur v1, const Vecteur& v2) {
+    v1.dimcheck(v2);
+    v1 += v2;
+    return v1;
 }
-Vecteur Vecteur::soustraction(const Vecteur & vect2) const {
-    Vecteur output({});
-    output.setVect(v);
-    for(size_t i = 0; i < dim; ++ i) {
-        output.v[i] -= vect2.v[i];
-    }
-    return output;
+const Vecteur operator-(Vecteur v1, const Vecteur& v2) {
+    v1.dimcheck(v2);
+    v1 -= v2;
+    return v1;
 }
-Vecteur Vecteur::oppose() const {
-    Vecteur output({});
-    for(double i : v) {
-        output.v.push_back(- i);
-    }
-    return output;
-}
-Vecteur Vecteur::mult(const double & scalar) const {
-    Vecteur output({});
-    for(double i : v) {
-        output.v.push_back(scalar * i);
-    }
 
-    return output;
-}
-double Vecteur::prod_scal(const Vecteur & vect2) const {
-    if (v.size() != vect2.getVect().size()) throw invalid_argument( "dimension of input does not equal dimension of vector" );
+double Vecteur::operator*(const Vecteur& v2) const {
+    dimcheck(v2);
     double output(0);
     for(size_t i(0); i < dim; ++i) {
-        output += v[i] * vect2.getVect()[i];
+        output += v[i] * v2.v[i];
     }
     return output;
 }
-Vecteur Vecteur::prod_vect(const Vecteur & vect2) const {
+Vecteur Vecteur::operator^(Vecteur vect2) const {
     if (dim != 3) throw std::invalid_argument("dimension of vector is not 3 (" + to_string(dim) + ")");
     if (vect2.getDim() != 3) throw std::invalid_argument("dimension of input is not 3 (" + to_string(vect2.getDim()) +")");
     Vecteur output({0,0,0});
-    output.v[0] = v[1]*vect2.v[2] - v[2]*vect2.v[1];
-    output.v[1] = v[2]*vect2.v[0] - v[0]*vect2.v[2];
-    output.v[2] = v[0]*vect2.v[1] - v[1]*vect2.v[0];
-    return output;
+    vect2.v[0] = v[1]*vect2.v[2] - v[2]*vect2.v[1];
+    vect2.v[1] = v[2]*vect2.v[0] - v[0]*vect2.v[2];
+    vect2.v[2] = v[0]*vect2.v[1] - v[1]*vect2.v[0];
+    return vect2;
 }
 
 double &Vecteur::operator[](size_t coord) {
@@ -175,4 +143,6 @@ ostream& operator<<(ostream& out, const Vecteur & vect) {
     out << setw(-10);
     return out;
 }
+
+
 

@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <cmath>
 using namespace std;
-
+//constructeurs
 Matrice::Matrice(std::initializer_list<double> const &v_0, std::initializer_list<double> const &v_1,
                  std::initializer_list<double> const &v_2) {
     m = {{0,0,0},{0,0,0},{0,0,0}};
@@ -23,10 +23,12 @@ Matrice::Matrice(const double & m00, const double & m11, const double & m22) {
     m[2][2] = m22;
 }
 
+//accès en const
 double Matrice::get_value(const int &line, const int &col) const {
     return m[line][col];
 }
 
+//opérations mathématiques
 Matrice& Matrice::operator+=(const Matrice & mat2) {
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {
@@ -35,6 +37,10 @@ Matrice& Matrice::operator+=(const Matrice & mat2) {
     }
     return *this;
 }
+const Matrice operator+(Matrice mat1, const Matrice& mat2) {
+    mat1 += mat2;
+    return mat1;
+}
 Matrice& Matrice::operator-=(const Matrice &mat2) {
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {
@@ -42,6 +48,10 @@ Matrice& Matrice::operator-=(const Matrice &mat2) {
         }
     }
     return *this;
+}
+const Matrice operator-(Matrice mat1, const Matrice& mat2) {
+    mat1 -= mat2;
+    return mat1;
 }
 Matrice Matrice::operator*(const Matrice & mat2) {
     Matrice output;
@@ -55,8 +65,9 @@ Matrice Matrice::operator*(const Matrice & mat2) {
     return *this;
 }
 Vecteur Matrice::operator*(const Vecteur & vect) const {
-    Vecteur output({m[0][0]*vect.getCoord(0)+m[0][1]*vect.getCoord(1)+m[0][2]*vect.getCoord(2),m[1][0]*vect.getCoord(0)+m[1][1]*vect.getCoord(1)+
-                                                                                               m[1][2]*vect.getCoord(2),m[2][0]*vect.getCoord(0)+m[2][1]*vect.getCoord(1)+m[2][2]*vect.getCoord(2)});
+    Vecteur output({m[0][0]*vect.getCoord(0)+m[0][1]*vect.getCoord(1)
+    +m[0][2]*vect.getCoord(2),m[1][0]*vect.getCoord(0)+m[1][1]*vect.getCoord(1)+
+    m[1][2]*vect.getCoord(2),m[2][0]*vect.getCoord(0)+m[2][1]*vect.getCoord(1)+m[2][2]*vect.getCoord(2)});
     return output;
 }
 Matrice operator*(const double & scal, const Matrice & mat) {
@@ -84,14 +95,7 @@ ostream& operator<<(ostream& out,const Matrice & mat) {
     out << "]]" << endl;
     return out;
 }
-const Matrice operator+(Matrice mat1, const Matrice& mat2) {
-    mat1 += mat2;
-    return mat1;
-}
-const Matrice operator-(Matrice mat1, const Matrice& mat2) {
-    mat1 -= mat2;
-    return mat1;
-}
+
 double Matrice::det() const {
     return m[0][0]*m[1][1]*m[2][2] + m[0][1]*m[1][2]*m[2][0] + m[1][0]*m[2][1]*m[0][2] -
             m[0][2]*m[1][1]*m[2][0] - m[0][1]*m[1][0]*m[2][2] - m[0][0]*m[2][1]*m[1][2];

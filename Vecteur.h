@@ -7,7 +7,6 @@
 #include <initializer_list>
 #include <vector>
 #include <iostream>
-using namespace std;
 class Vecteur {
 private:
     std::vector<double> v;
@@ -16,6 +15,7 @@ public:
     Vecteur(std::initializer_list<double> const& input); //constructeurs
     explicit Vecteur(const unsigned int & d): dim(d), v(d) {}
     Vecteur(const double & x, const double & y, const double & z): dim(3), v({x,y,z}) {}
+    Vecteur(const Vecteur&) = default;
 
     [[nodiscard]] std::vector<double> getVect() const; //accès aux attributs
     void setVect(const std::vector<double> & input);
@@ -26,29 +26,24 @@ public:
     void set_coord(const size_t & coord, const double & value);
     void affiche() const;
     void dimcheck(const Vecteur& vect2) const;
-    bool operator==(Vecteur const& v2) const;
-    bool operator!=(Vecteur const& v2) const;
-    Vecteur & operator+=(Vecteur const& v2);
-    void operator-=(Vecteur const& v2) const;
-    void operator-(Vecteur const& v2) const;
+    bool operator==(const Vecteur& v2) const;
+    bool operator!=(const Vecteur& v2) const;
+    Vecteur & operator+=(const Vecteur& v2);
+    Vecteur & operator-=(const Vecteur& v2);
     friend const Vecteur operator*(const double &, Vecteur);
     Vecteur& operator*=(const double &);
-    void operator*(Vecteur const& v2) const;
-    void operator^(Vecteur const& v2) const;
-
-
-    [[nodiscard]] Vecteur addition(const Vecteur & vect2) const; //operation mathématiques
-    [[nodiscard]] Vecteur soustraction(const Vecteur& vect2) const;
-    [[nodiscard]] Vecteur oppose() const;
-    [[nodiscard]] Vecteur mult(const double & scalar) const;
-    [[nodiscard]] double prod_scal(const Vecteur & vect2) const;
-    [[nodiscard]] Vecteur prod_vect(const Vecteur & vect2) const;
+    double operator*(const Vecteur& v2) const;
+    const Vecteur operator-() const;
+    Vecteur operator^(Vecteur vect2) const;
 
     double& operator[](size_t coord);
-    friend ostream& operator<<(ostream& out, const Vecteur & vect);
-
-
+    friend std::ostream& operator<<(std::ostream& out, const Vecteur & vect);
 };
+const Vecteur operator*(const double & scal, Vecteur vect);
+const Vecteur operator+(Vecteur v1, const Vecteur& v2);
+const Vecteur operator-(Vecteur v1, const Vecteur& v2);
+
+
 
 
 

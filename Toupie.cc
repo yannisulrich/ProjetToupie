@@ -4,9 +4,9 @@
 
 #include "Toupie.h"
 #include <iostream>
-
+using namespace std;
 Vecteur Toupie::f() const {
-    return P.oppose();
+    return -P;
 }
 Vecteur Toupie::getP() const {
     return P;
@@ -22,6 +22,7 @@ Matrice Toupie::getI() const {
 
 ostream& operator<<(ostream &out, const Toupie &toup) {
     out << "P: " << toup.getP() << "P_dot: " << toup.getP_dot();
+    return out;
 }
 
 
