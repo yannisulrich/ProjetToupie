@@ -6,8 +6,9 @@
 
 #include "Toupie.h"
 #include "Matrice.h"
+#include <iostream>
 
-class ConeSimple: Toupie {
+class ConeSimple: public Toupie {
 private:
     double L;
     double R;
@@ -19,5 +20,9 @@ public:
                     0.15 * m_ * (R_ * R_ + 0.25 * L_ * L_),
                          0.3 * m_ * R_ * R_)) {};
 
+    friend void operator<<(std::ostream&, const ConeSimple &);
+
 };
+
+
 

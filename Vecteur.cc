@@ -82,6 +82,7 @@ Vecteur & Vecteur::operator+=(const Vecteur& v2) {
     }
     return *this;
 }
+
 Vecteur & Vecteur::operator-=(const Vecteur& v2) {
     dimcheck(v2);
     for(size_t i = 0; i < dim; ++ i) {

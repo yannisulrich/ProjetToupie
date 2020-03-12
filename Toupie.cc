@@ -21,7 +21,7 @@ Matrice Toupie::getI() const {
 }
 
 ostream& operator<<(ostream &out, const Toupie &toup) {
-    out << "P: " << toup.getP() << "P_dot: " << toup.getP_dot();
+    out << "P: " << toup.getP() << ", P_dot: " << toup.getP_dot();
     return out;
 }
 
