@@ -8,10 +8,10 @@
 using namespace std;
 int main() {
 // un vecteur en 3D :
-    Vecteur vect1(1.0, 2.0, -0.1);
+    Vecteur vect1(1.0, 0.0, 0.0);
 
 // un autre vecteur en 3D
-    Vecteur vect2(2.6, 3.5,  4.1);
+    Vecteur vect2(0.0, 1.0,  0.0);
 
     Vecteur vect3(vect1);  // copie de V1
     Vecteur vect4(4);      // le vecteur nul en 4D
@@ -34,12 +34,13 @@ int main() {
         cout << "égal au";
     }
     cout << " vecteur 3." << endl;
-    cout << 2*vect3 << endl;
-    vect1 += 2*vect3;
-    cout << vect1 + vect2 << endl;
+    //cout << 2*vect3 << endl;
+    //vect1 += 2*vect3;
+    //cout << vect1 + vect2 << endl;
     Vecteur vect5(vect1+vect2);
-    vect1[1] = 355;
-    cout << vect1 << endl;
-    cout << - vect1 << endl;
-    cout << vect5 << endl;
+    //vect1[1] = 3;
+    //cout << vect1 << endl;
+    //cout << - vect1 << endl;
+    //cout << vect5 << endl;
+    cout << (vect2^vect1);
 }

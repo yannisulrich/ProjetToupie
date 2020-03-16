@@ -4,8 +4,11 @@
 
 #include "ConeSimple.h"
 #include <iostream>
+#include <iomanip>
 
-void operator<<(std::ostream& out, const ConeSimple & cone) {
-    out << "P: " << cone.getP() << ", P_dot: " << cone.getP_dot(); // TODO: A corriger peutêtre, copié collé
-    out << ", masse: " << cone.m << ", Longueur:  " << cone.L << ", Rayon" << cone.R;
+std::ostream& operator<<(std::ostream& out, const ConeSimple & cone) {
+    //out << Toupie(cone);
+    out << "P: " << std::setw(10) << cone.getP() << ", P_dot: " << cone.getP_dot(); // TODO: Lequel est meilleur?
+    out << ", masse: " << cone.m << ", Longueur:  " << cone.L << ", Rayon: " << cone.R;
+    return out;
 }

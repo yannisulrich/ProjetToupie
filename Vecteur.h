@@ -15,7 +15,6 @@ public:
     Vecteur(std::initializer_list<double> const& input); //constructeurs
     explicit Vecteur(const unsigned int & d): dim(d), v(d) {}
     Vecteur(const double & x, const double & y, const double & z): dim(3), v({x,y,z}) {}
-    Vecteur(const Vecteur&) = default;
 
     [[nodiscard]] std::vector<double> getVect() const; //accès aux attributs
     void setVect(const std::vector<double> & input);
@@ -34,7 +33,7 @@ public:
     Vecteur& operator*=(const double &);
     double operator*(const Vecteur& v2) const;
     const Vecteur operator-() const;
-    Vecteur operator^(Vecteur vect2) const;
+    Vecteur operator^(const Vecteur & vect2) const;
 
     double& operator[](size_t coord);
     friend std::ostream& operator<<(std::ostream& out, const Vecteur & vect);

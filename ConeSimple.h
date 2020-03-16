@@ -20,7 +20,7 @@ public:
                     0.15 * m_ * (R_ * R_ + 0.25 * L_ * L_),
                          0.3 * m_ * R_ * R_)) {};
 
-    friend void operator<<(std::ostream&, const ConeSimple &);
+    friend std::ostream& operator<<(std::ostream&, const ConeSimple &);
 
 };
 

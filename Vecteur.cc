@@ -97,7 +97,7 @@ Vecteur& Vecteur::operator*=(const double & scal) {
     return *this;
 }
 const Vecteur Vecteur::operator-() const {
-    Vecteur output(2 * *this);
+    Vecteur output(-1 * *this);
     return output;
 
 }
@@ -124,14 +124,14 @@ double Vecteur::operator*(const Vecteur& v2) const {
     }
     return output;
 }
-Vecteur Vecteur::operator^(Vecteur vect2) const {
+Vecteur Vecteur::operator^(const Vecteur& vect2) const {
     if (dim != 3) throw std::invalid_argument("dimension of vector is not 3 (" + to_string(dim) + ")");
     if (vect2.getDim() != 3) throw std::invalid_argument("dimension of input is not 3 (" + to_string(vect2.getDim()) +")");
     Vecteur output({0,0,0});
-    vect2.v[0] = v[1]*vect2.v[2] - v[2]*vect2.v[1];
-    vect2.v[1] = v[2]*vect2.v[0] - v[0]*vect2.v[2];
-    vect2.v[2] = v[0]*vect2.v[1] - v[1]*vect2.v[0];
-    return vect2;
+    output.v[0] = v[1]*vect2.v[2] - v[2]*vect2.v[1];
+    output.v[1] = v[2]*vect2.v[0] - v[0]*vect2.v[2];
+    output.v[2] = v[0]*vect2.v[1] - v[1]*vect2.v[0];
+    return output;
 }
 
 double &Vecteur::operator[](size_t coord) {
