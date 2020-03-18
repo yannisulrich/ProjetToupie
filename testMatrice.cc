@@ -15,11 +15,12 @@ int main() {
     { 3., 4., 0 },
     { 0., 0., 1. });
     Vecteur v(5, 6, 7);
-    Vecteur v2(3);
+    Vecteur v2(1,2,3);
     Matrice mat3;
-    Vecteur3 v3(3);
+
     auto start = high_resolution_clock::now();
-    v3 = mat*v;
+
+    v += 2*v2;
 
     auto stop = high_resolution_clock::now();
     cout << v2 << endl;
