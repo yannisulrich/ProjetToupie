@@ -97,9 +97,7 @@ Vecteur& Vecteur::operator*=(const double & scal) {
     return *this;
 }
 const Vecteur Vecteur::operator-() const {
-    Vecteur output(-1 * *this);
-    return output;
-
+    return -1 * *this;
 }
 const Vecteur operator*(const double & scal, Vecteur vect) {
     vect *= scal;
@@ -134,9 +132,10 @@ Vecteur Vecteur::operator^(const Vecteur& vect2) const {
     return output;
 }
 
-double &Vecteur::operator[](size_t coord) {
+double &Vecteur::operator[](size_t coord) { //read-write access
     return this->v[coord];
 }
+
 ostream& operator<<(ostream& out, const Vecteur & vect) {
     for(double i : vect.getVect()) {
         out  << i << setw(10);

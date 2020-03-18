@@ -2,17 +2,18 @@
 // Created by Yannis on 05.03.20.
 //
 #pragma once
-#include <vector>
+#include <array>
 #include "Vecteur.h"
 #include <initializer_list>
 class Matrice {
 private:
-    std::vector<std::vector<double > > m;
+
+
+    std::array<std::array<double, 3 >, 3 > m;
 
 public:
-    Matrice(): m({{0,0,0},{0,0,0},{0,0,0}}) {}
-    Matrice(std::initializer_list<double> const& v_0,std::initializer_list<double> const& v_1,
-            std::initializer_list<double> const& v_2); //initialisation avec valeurs configurables partout
+    Matrice(): m({0,0,0,0,0,0,0,0,0}) {}
+    Matrice(const std::array<double, 3> &v_0, const std::array<double, 3> &v_1, const std::array<double, 3> &v_2); //initialisation avec valeurs configurables partout
     Matrice(const double & m11, const double & m22, const double & m33); //matrices diagonales
     Matrice(const Matrice & mat2) = default;
 

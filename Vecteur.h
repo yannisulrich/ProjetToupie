@@ -8,6 +8,7 @@
 #include <vector>
 #include <iostream>
 class Vecteur {
+    friend class Matrice;
 private:
     std::vector<double> v;
     unsigned int dim;
@@ -15,7 +16,6 @@ public:
     Vecteur(std::initializer_list<double> const& input); //constructeurs
     explicit Vecteur(const unsigned int & d): dim(d), v(d) {}
     Vecteur(const double & x, const double & y, const double & z): dim(3), v({x,y,z}) {}
-
     [[nodiscard]] std::vector<double> getVect() const; //accès aux attributs
     void setVect(const std::vector<double> & input);
     [[nodiscard]] unsigned int getDim() const;

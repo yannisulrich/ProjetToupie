@@ -9,15 +9,15 @@
 #include <cmath>
 using namespace std;
 //constructeurs
-Matrice::Matrice(std::initializer_list<double> const &v_0, std::initializer_list<double> const &v_1,
-                 std::initializer_list<double> const &v_2) {
-    m = {{0,0,0},{0,0,0},{0,0,0}};
+Matrice::Matrice(array<double, 3> const &v_0, array<double, 3> const &v_1,
+                 array<double, 3> const &v_2) {
+    m = {0,0,0,0,0,0,0,0,0};
     m[0] = v_0;
     m[1] = v_1;
     m[2] = v_2;
 }
 Matrice::Matrice(const double & m00, const double & m11, const double & m22) {
-    m = {{0,0,0},{0,0,0},{0,0,0}};
+    m = {0,0,0,0,0,0,0,0,0};
     m[0][0] = m00;
     m[1][1] = m11;
     m[2][2] = m22;
@@ -32,7 +32,7 @@ double Matrice::get_value(const int &line, const int &col) const {
 Matrice& Matrice::operator+=(const Matrice & mat2) {
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {
-            m[i][j] += mat2.get_value(i,j);
+            m[i][j] += mat2.m[i][j];
         }
     }
     return *this;
@@ -58,23 +58,29 @@ Matrice Matrice::operator*(const Matrice & mat2) {
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {
             for(size_t k(0); k < 3; ++k) {
-                output(i,j) += m[i][k] * mat2.get_value(k,j);
+                output(i,j) += m[i][k] * mat2.m[k][j];
             }
         }
     }
     return *this;
 }
 Vecteur Matrice::operator*(const Vecteur & vect) const {
-    Vecteur output({m[0][0]*vect.getCoord(0)+m[0][1]*vect.getCoord(1)
-    +m[0][2]*vect.getCoord(2),m[1][0]*vect.getCoord(0)+m[1][1]*vect.getCoord(1)+
-    m[1][2]*vect.getCoord(2),m[2][0]*vect.getCoord(0)+m[2][1]*vect.getCoord(1)+m[2][2]*vect.getCoord(2)});
+    if(vect.getDim() != 3) throw std::invalid_argument("dimension of vector is not 3");
+    Vecteur output(3);
+    const double* matpos =  & m[0][0];
+    for(size_t i(0); i < 3; ++i) {
+        const double* vectpos =  & vect.v[0];
+        for (size_t j(0); j < 3; ++j) {
+            output[i] += (*matpos++) * (*vectpos++);
+        }
+    }
     return output;
 }
 Matrice operator*(const double & scal, const Matrice & mat) {
     Matrice output;
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {
-            output(i,j) = mat.get_value(i,j) * scal;
+            output.m[i][j] = mat.m[i][j] * scal;
         }
     }
     return output;

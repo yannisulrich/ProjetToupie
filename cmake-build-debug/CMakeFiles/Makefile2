@@ -53,12 +53,12 @@ CMAKE_BINARY_DIR = /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/TestToupie.dir/all
+all: CMakeFiles/TestMatrice.dir/all
 
 .PHONY : all
 
 # The main recursive "clean" target.
-clean: CMakeFiles/TestToupie.dir/clean
+clean: CMakeFiles/TestMatrice.dir/clean
 
 .PHONY : clean
 
@@ -68,31 +68,31 @@ preinstall:
 .PHONY : preinstall
 
 #=============================================================================
-# Target rules for target CMakeFiles/TestToupie.dir
+# Target rules for target CMakeFiles/TestMatrice.dir
 
 # All Build rule for target.
-CMakeFiles/TestToupie.dir/all:
-	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/depend
-	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target TestToupie"
-.PHONY : CMakeFiles/TestToupie.dir/all
+CMakeFiles/TestMatrice.dir/all:
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/depend
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5 "Built target TestMatrice"
+.PHONY : CMakeFiles/TestMatrice.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/TestToupie.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles 6
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/TestToupie.dir/all
+CMakeFiles/TestMatrice.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles 5
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/TestMatrice.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/TestToupie.dir/rule
+.PHONY : CMakeFiles/TestMatrice.dir/rule
 
 # Convenience name for target.
-TestToupie: CMakeFiles/TestToupie.dir/rule
+TestMatrice: CMakeFiles/TestMatrice.dir/rule
 
-.PHONY : TestToupie
+.PHONY : TestMatrice
 
 # clean rule for target.
-CMakeFiles/TestToupie.dir/clean:
-	$(MAKE) -f CMakeFiles/TestToupie.dir/build.make CMakeFiles/TestToupie.dir/clean
-.PHONY : CMakeFiles/TestToupie.dir/clean
+CMakeFiles/TestMatrice.dir/clean:
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/clean
+.PHONY : CMakeFiles/TestMatrice.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
