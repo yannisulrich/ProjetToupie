@@ -54,7 +54,6 @@ Matrice Matrice::operator*(const Matrice & mat2) { //TODO: optimize
     const double* mat2pos0 =  & (*mat2.m)[0][0];
     double* outpos0 =  & (*output.m)[0][0];
 
-    (*outpos0) +=
 
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {
