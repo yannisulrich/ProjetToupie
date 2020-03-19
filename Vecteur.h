@@ -15,12 +15,10 @@ template <class T>
 class Vecteur {
     friend class Matrice; //ceci sert a accélérer la multiplication matricielle
 private:
-    T* v_ {};
+    T v_;
     size_t dim_;
     double * beg;
 public:
-
-
     //constructeurs
     explicit Vecteur(const std::vector<double> &input);
     explicit Vecteur(const std::array<double, 3> & input);
@@ -29,8 +27,8 @@ public:
     explicit Vecteur(const unsigned int & d);
 
 
-    Vecteur(const double & x, const double & y, const double & z): dim_(3), v_(new T({x,y,z})), beg(&(*v_)[0]) {}
-    Vecteur(const Vecteur<T> & vect2) noexcept: v_(new T(*vect2.v_)), dim_(vect2.dim_), beg(&(*v_)[0]) {}
+    Vecteur(const double & x, const double & y, const double & z): dim_(3), v_(T({x,y,z})), beg(& v_[0]) {}
+    Vecteur(const Vecteur<T> & vect2) noexcept: v_(T(vect2.v_)), dim_(vect2.dim_), beg(& v_[0]) {}
     //Vecteur(Vecteur<T>&& vect2) noexcept: v_(vect2.v_), dim_(vect2.dim_), beg(&(*v_)[0]) {}
 
     //copy assignment constructor

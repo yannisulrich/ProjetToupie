@@ -20,19 +20,10 @@ int main() {
 
     Vecteur3 v(5, 6, 7);
     Vecteur3 v2(0.1,0.2,0.3);
-
+    v2 = mat*v2;
     auto start = high_resolution_clock::now();
-    mat = mat * mat2;
-    mat = mat * mat2;
-    mat = mat * mat2;
-    mat = mat * mat2;
-    mat = mat * mat2;
+    start = high_resolution_clock::now();
 
-    mat = mat * mat2;
-    mat = mat * mat2;
-    mat = mat * mat2;
-    mat = mat * mat2;
-    mat = mat * mat2;
     auto stop = high_resolution_clock::now();
     cout << mat << endl;
     //cout << v2 << endl;
