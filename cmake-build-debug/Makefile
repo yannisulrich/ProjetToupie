@@ -177,33 +177,6 @@ Vecteur.cc.s:
 	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/Vecteur.cc.s
 .PHONY : Vecteur.cc.s
 
-Vecteur3.o: Vecteur3.cc.o
-
-.PHONY : Vecteur3.o
-
-# target to build an object file
-Vecteur3.cc.o:
-	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/Vecteur3.cc.o
-.PHONY : Vecteur3.cc.o
-
-Vecteur3.i: Vecteur3.cc.i
-
-.PHONY : Vecteur3.i
-
-# target to preprocess a source file
-Vecteur3.cc.i:
-	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/Vecteur3.cc.i
-.PHONY : Vecteur3.cc.i
-
-Vecteur3.s: Vecteur3.cc.s
-
-.PHONY : Vecteur3.s
-
-# target to generate assembly for a file
-Vecteur3.cc.s:
-	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/Vecteur3.cc.s
-.PHONY : Vecteur3.cc.s
-
 testMatrice.o: testMatrice.cc.o
 
 .PHONY : testMatrice.o
@@ -246,9 +219,6 @@ help:
 	@echo "... Vecteur.o"
 	@echo "... Vecteur.i"
 	@echo "... Vecteur.s"
-	@echo "... Vecteur3.o"
-	@echo "... Vecteur3.i"
-	@echo "... Vecteur3.s"
 	@echo "... testMatrice.o"
 	@echo "... testMatrice.i"
 	@echo "... testMatrice.s"

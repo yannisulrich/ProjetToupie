@@ -11,16 +11,17 @@
 using namespace std;
 using namespace std::chrono;
 //constructeurs
-Matrice::Matrice(array<double, 3> const &v_0, array<double, 3> const &v_1,
-                 array<double, 3> const &v_2) {
-    m = new std::array<std::array<double, 3 >, 3 > {0,0,0,0,0,0,0,0,0};
+Matrice::Matrice(array<double, 3> const &v_0, array<double, 3> const &v_1, array<double, 3> const &v_2):
+    m(new std::array<std::array<double, 3 >, 3 > {0,0,0,0,0,0,0,0,0})
+{
     (*m)[0] = v_0;
     (*m)[1] = v_1;
     (*m)[2] = v_2;
+
 }
-Matrice::Matrice(const double & m00, const double & m11, const double & m22) {
-    m = new std::array<std::array<double, 3 >, 3 > {m00,0,0,0,m11,0,0,0,m22};
-}
+Matrice::Matrice(const double & m00, const double & m11, const double & m22):
+    m(new std::array<std::array<double, 3 >, 3 > {m00,0,0,0,m11,0,0,0,m22})
+{}
 
 //accès en const
 double Matrice::get_value(const int &line, const int &col) const {
@@ -29,31 +30,32 @@ double Matrice::get_value(const int &line, const int &col) const {
 
 //opérations mathématiques
 Matrice& Matrice::operator+=(const Matrice & mat2) {
-    for(size_t i(0); i < 3; ++i) {
-        for(size_t j(0); j < 3; ++j) {
-            (*m)[i][j] += (*mat2.m)[i][j];
-        }
+    double* matpos0 =  & (*m)[0][0];
+    const double* mat2pos0 =  & (*mat2.m)[0][0];
+
+    for(size_t i(0); i < 9; ++i) {
+        (*matpos0++) += (*mat2pos0++);
     }
+
     return *this;
-}
-const Matrice operator+(Matrice mat1, const Matrice& mat2) {
-    mat1 += mat2;
-    return mat1;
 }
 Matrice& Matrice::operator-=(const Matrice &mat2) {
-    for(size_t i(0); i < 3; ++i) {
-        for(size_t j(0); j < 3; ++j) {
-            (*m)[i][j] += (*mat2.m)[i][j];
-        }
+    double* matpos0 =  & (*m)[0][0];
+    const double* mat2pos0 =  & (*mat2.m)[0][0];
+
+    for(size_t i(0); i < 9; ++i) {
+        (*matpos0++) -= (*mat2pos0++);
     }
     return *this;
 }
-const Matrice operator-(Matrice mat1, const Matrice& mat2) {
-    mat1 -= mat2;
-    return mat1;
-}
-Matrice Matrice::operator*(const Matrice & mat2) {
+Matrice Matrice::operator*(const Matrice & mat2) { //TODO: optimize
     Matrice output;
+    const double* matpos0 =  & (*m)[0][0];
+    const double* mat2pos0 =  & (*mat2.m)[0][0];
+    double* outpos0 =  & (*output.m)[0][0];
+
+    (*outpos0) +=
+
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {
             for(size_t k(0); k < 3; ++k) {
@@ -61,11 +63,12 @@ Matrice Matrice::operator*(const Matrice & mat2) {
             }
         }
     }
-    return *this;
+    return output;
 }
-Vecteur Matrice::operator*(const Vecteur & vect) const {
 
-    //auto start = high_resolution_clock::now();
+Vecteur<array<double, 3>> Matrice::operator*(const Vecteur<array<double, 3>> & vect) const {
+
+
     if(vect.dim_ != 3) throw std::invalid_argument("dimension of vector is not 3");
 
 
@@ -84,16 +87,20 @@ Vecteur Matrice::operator*(const Vecteur & vect) const {
 
     }
 
-    Vecteur output(out0, out1, out2);
-    /*
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<nanoseconds>(stop - start);
+
+
+    //auto start = high_resolution_clock::now();
+    Vecteur<array<double, 3> > output(array<double, 3>({out0, out1, out2}));
+    //output.setVect({out0, out1, out2});
+    //auto stop = high_resolution_clock::now();
+    /*auto duration = duration_cast<nanoseconds>(stop - start);
     cout << "Time taken by function multiply mat vec: "
          << duration.count() << " nanoseconds" << endl;
     */
 
     return output;
 }
+
 Matrice operator*(const double & scal, const Matrice & mat) {
     Matrice output;
     for(size_t i(0); i < 3; ++i) {
@@ -107,15 +114,14 @@ double& Matrice::operator()(const unsigned & line, const unsigned & col) {
     return (double&) (*m)[line][col];
 }
 ostream& operator<<(ostream& out,const Matrice & mat) {
-    out << "[";
-    out << "[";
-    out << mat.get_value(0,0) << setw(10) << mat.get_value(0,1) << setw(10) << mat.get_value(0,2);
+    out << "[[";
+    out << setw(10) << mat.get_value(0,0) << setw(10) << mat.get_value(0,1) << setw(10) << mat.get_value(0,2);
     out << "]" << endl;
     out << " [";
-    out << mat.get_value(1,0) << setw(10) << mat.get_value(1,1) << setw(10) << mat.get_value(1,2);
+    out << setw(10) << mat.get_value(1,0) << setw(10) << mat.get_value(1,1) << setw(10) << mat.get_value(1,2);
     out << "]" << endl;
     out << " [";
-    out << mat.get_value(2,0) << setw(10) << mat.get_value(2,1) << setw(10) << mat.get_value(2,2);
+    out << setw(10) << mat.get_value(2,0) << setw(10) << mat.get_value(2,1) << setw(10) << mat.get_value(2,2);
     out << "]]" << endl;
     return out;
 }
@@ -141,7 +147,7 @@ Matrice Matrice::inv() {
 
     return out;
 }
-Matrice Matrice::transp() const {
+Matrice Matrice::transp() const { //TODO: optimize
     Matrice out;
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {

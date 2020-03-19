@@ -7,35 +7,45 @@
 #include <initializer_list>
 #include <memory>
 #include <vector>
+#include <array>
 #include <iostream>
 #include <memory>
-
+#include <iomanip>
+template <class T>
 class Vecteur {
     friend class Matrice; //ceci sert a accélérer la multiplication matricielle
 private:
-    std::vector<double>  *v_ {};
+    T* v_ {};
     size_t dim_;
     double * beg;
 public:
-    Vecteur(std::initializer_list<double> const& input); //constructeurs
-    explicit Vecteur(const unsigned int & d): dim_(d), v_(new std::vector<double> (d)), beg(&(*v_)[0]) {}
-    Vecteur(const double & x, const double & y, const double & z): dim_(3), v_(new std::vector<double>({x,y,z})), beg(&(*v_)[0]) {}
-    Vecteur(const Vecteur & vect2) noexcept: v_(new std::vector<double>(*vect2.v_)), dim_(vect2.dim_), beg(&(*v_)[0]) {std::cout << "warning copy" << std::endl;}
-    Vecteur(Vecteur&& vect2) noexcept: v_(vect2.v_), dim_(vect2.dim_), beg(&(*v_)[0]) {std::cout << "warning move" << std::endl;}
+
+
+    //constructeurs
+    explicit Vecteur(const std::vector<double> &input);
+    explicit Vecteur(const std::array<double, 3> & input);
+    explicit Vecteur(const std::array<double, 5> & input);
+
+    explicit Vecteur(const unsigned int & d);
+
+
+    Vecteur(const double & x, const double & y, const double & z): dim_(3), v_(new T({x,y,z})), beg(&(*v_)[0]) {}
+    Vecteur(const Vecteur<T> & vect2) noexcept: v_(new T(*vect2.v_)), dim_(vect2.dim_), beg(&(*v_)[0]) {}
+    //Vecteur(Vecteur<T>&& vect2) noexcept: v_(vect2.v_), dim_(vect2.dim_), beg(&(*v_)[0]) {}
 
     //copy assignment constructor
-
-    Vecteur & operator=(const Vecteur& vect2) {v_ = new std::vector<double>(*vect2.v_);
+    /*
+    Vecteur<T> & operator=(const Vecteur<T>& vect2) {v_ = new T(*vect2.v_);
     dim_ = vect2.dim_;
     std::cout << "copy assing." << std::endl;
     return *this;
     }
-
+    */
     //move assignment constructor
-    Vecteur & operator=(Vecteur&& vect2) noexcept {v_ = vect2.v_; dim_ = vect2.dim_;std::cout << "warning move assign." << std::endl; return *this;};
+    //Vecteur<T> & operator=(Vecteur<T>&& vect2) noexcept {v_ = vect2.v_; dim_ = vect2.dim_; return *this;};
 
-    [[nodiscard]] std::vector<double> v() const; //accès aux attributs
-    void setVect(const std::vector<double> & input);
+    [[nodiscard]] T v() const; //accès aux attributs
+    void setVect(const T & input);
     [[nodiscard]] unsigned int dim() const;
     [[nodiscard]] double getCoord(const size_t & coord) const;
 
@@ -43,25 +53,49 @@ public:
     void set_coord(const size_t & coord, const double & value);
 
 
-    void dimcheck(const Vecteur& vect2) const; //comparaison
-    bool operator==(const Vecteur& v2) const;
-    bool operator!=(const Vecteur& v2) const;
+    void dimcheck(const Vecteur<T>&) const; //comparaison
+    bool operator==(const Vecteur<T>& v2) const;
+    bool operator!=(const Vecteur<T>& v2) const;
 
 
-    Vecteur & operator+=(const Vecteur& v2); //operations mathématiques
-    Vecteur & operator-=(const Vecteur& v2);
-    friend const Vecteur operator*(const double &, Vecteur);
-    Vecteur& operator*=(const double &);
-    double operator*(const Vecteur& v2) const;
-    const Vecteur operator-() const;
-    Vecteur operator^(const Vecteur & vect2) const;
+    Vecteur<T> & operator+=(const Vecteur<T>& v2); //operations mathématiques
+    Vecteur<T> & operator-=(const Vecteur<T>& v2);
+    friend const Vecteur<T> operator* (const double & scal, Vecteur<T> vect) {
+        vect *= scal;
+        return vect;
+    }
+    Vecteur<T>& operator*=(const double &);
+    double operator*(const Vecteur<T>& v2) const;
+    const Vecteur<T> operator-() const;
+    Vecteur<T> operator^(const Vecteur<T> & vect2) const;
 
     double& operator[](size_t coord);
-    friend std::ostream& operator<<(std::ostream& out, const Vecteur & vect);
+    friend std::ostream& operator<<(std::ostream& out, const Vecteur<T> & vect) {
+        for(double i : *vect.v_) out  << i << std::setw(15);
+        out << std::setw(-15);
+        return out;};
 };
-const Vecteur operator*(const double & scal, Vecteur vect);
-const Vecteur operator+(Vecteur v1, const Vecteur& v2);
-const Vecteur operator-(Vecteur v1, const Vecteur& v2);
+/*
+template <class T>
+const Vecteur<T> operator*(const double & scal, Vecteur<T>); */
+/*
+template<> class Vecteur<std::vector<double> > {
+public:
+
+};*/
+
+template <class T>
+const Vecteur<T> operator+(Vecteur<T> v1, const Vecteur<T>& v2) {
+    v1.dimcheck(v2);
+    v1 += v2;
+    return v1;
+};
+template <class T>
+const Vecteur<T> operator-(Vecteur<T> v1, const Vecteur<T>& v2) {
+    v1.dimcheck(v2);
+    v1 -= v2;
+    return v1;
+};
 
 
 
