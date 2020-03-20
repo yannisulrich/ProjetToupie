@@ -14,11 +14,11 @@ private:
     double R;
     double m;
 public:
-    ConeSimple(const Vecteur & P_,const Vecteur & P_dot_, const double &L_, const double &R_, const double &m_) :
+    ConeSimple(const Vecteur5 & P_,const Vecteur5 & P_dot_, const double &L_, const double &R_, const double &m_) :
     L(L_), R(R_), m(m_), Toupie(P_, P_dot_,
             Matrice(0.15 * m_ * (R_ * R_ + 0.25 * L_ * L_),
                     0.15 * m_ * (R_ * R_ + 0.25 * L_ * L_),
-                         0.3 * m_ * R_ * R_)) {};
+                         0.3 * m_ * R_ * R_)) {}
 
     friend std::ostream& operator<<(std::ostream&, const ConeSimple &);
 

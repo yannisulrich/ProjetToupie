@@ -6,4 +6,7 @@
 
 #pragma once
 #include "Vecteur.h"
-extern const Vecteur g;
+#include <vector>
+#include <array>
+
+extern const Vecteur3 g;

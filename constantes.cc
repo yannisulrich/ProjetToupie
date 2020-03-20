@@ -5,4 +5,4 @@
 #include "constantes.h"
 #include "Vecteur.h"
 
-extern const Vecteur g({0.0, 0.0, -9.81});
+extern const Vecteur3 g(0.0, 0.0, -9.81);

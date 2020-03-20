@@ -5,7 +5,6 @@
 #include "Vecteur.h"
 #include <stdexcept>
 #include <iostream>
-#include <iomanip>
 #include<string>
 #include<cmath>
 #include <chrono>
@@ -15,60 +14,20 @@ using namespace std::chrono;
 
 //constructeurs conditionnels suivant le type de v_
 
-template<> Vecteur<vector<double>>::Vecteur(const vector<double> & input) {
-    dim_ = input.size();
-    v_ = vector<double>();
-    v_ = input;
-    beg = &v_[0];
-}
+
 template <> Vecteur<vector<double> >::Vecteur(const unsigned int &d) {
     dim_ = d;
     v_ = vector<double>(d);
-    beg = &v_[0];
 }
 
 template<> Vecteur<array<double, 3>>::Vecteur(const array<double, 3> & input) {
     dim_ = input.size();
-    v_ = array<double, 3>();
-    v_ = input;
-    beg = &v_[0];
+    v_ = array<double, 3>(input);
 }
 template<> Vecteur<array<double, 5>>::Vecteur(const array<double, 5> & input) {
     dim_ = input.size();
-    v_ = array<double, 5>();
-    v_ = input;
-    beg = &v_[0];
+    v_ = array<double, 5>(input);
 }
-/*
-Vecteur &Vecteur::operator=(const Vecteur &vect2) {
-    if(this == &vect2) return *this;
-    delete v_;
-    v_ = make_unique<vector<double>>(vect2.dim_);
-    v_ = move(vect2.v_);
-    dim_ = vect2.dim_;
-    //cout << "copy assignment" << endl;
-    return *this;
-}
-
-Vecteur::Vecteur(Vecteur &&vect2) {
-    v = vect2.v;
-    dim = vect2.dim;
-    vect2.v = nullptr;
-    vect2.dim = 0;
-    //cout << "move!" << endl;
-
-}
-Vecteur &Vecteur::operator=(Vecteur &&vect2) {
-    if(this == &vect2) return *this;
-    delete v;
-    v = vect2.v;
-    dim = vect2.dim;
-    vect2.v = nullptr;
-    vect2.dim = 0;
-    //cout << "move assignment!" << endl;
-    return *this;
-}
-*/
 //accès attributs.
 template <class T>
 T Vecteur<T>::v() const{
@@ -84,11 +43,13 @@ template <class T>
 unsigned int Vecteur<T>::dim() const {
     return dim_;
 }
+/*
 template <>
 void Vecteur<vector<double> >::augmente(const double & value) {
     v_.push_back(value);
     dim_ += 1;
-}
+} not currently implemented
+ */
 template <class T>
 double Vecteur<T>::getCoord(const size_t & Coord) const {
     if(Coord > (v_.size()-1)) {
@@ -130,8 +91,8 @@ Vecteur<T> & Vecteur<T>::operator+=(const Vecteur<T>& v2) {
 
     dimcheck(v2);
 
-    double * vect1pos(beg);
-    double * vect2pos(v2.beg);
+    double * vect1pos(& v_[0]);
+    const double * vect2pos(& v2.v_[0]);
 
     for(size_t i = 0; i < dim_; ++ i) {
         (*vect1pos++) += (*vect2pos++);
@@ -142,8 +103,8 @@ Vecteur<T> & Vecteur<T>::operator+=(const Vecteur<T>& v2) {
 template <class T>
 Vecteur<T> & Vecteur<T>::operator-=(const Vecteur<T>& v2) {
     dimcheck(v2);
-    double * vect1pos(beg);
-    double * vect2pos(v2.beg);
+    double * vect1pos(& v_[0]);
+    const double * vect2pos(&v2.v_[0]);
     for(size_t i = 0; i < dim_; ++ i) {
         (*vect1pos++) -= (*vect2pos++);
         //(*v_)[i] -= (*v2.v_)[i];

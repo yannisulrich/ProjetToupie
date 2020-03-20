@@ -11,36 +11,23 @@
 #include <iostream>
 #include <memory>
 #include <iomanip>
-template <class T>
+template <typename T>
 class Vecteur {
     friend class Matrice; //ceci sert a accélérer la multiplication matricielle
 private:
     T v_;
     size_t dim_;
-    double * beg;
 public:
     //constructeurs
-    explicit Vecteur(const std::vector<double> &input);
+
+    //Vecteur(const std::initializer_list<double> &input): dim_(input.size()), v_(input) {}
     explicit Vecteur(const std::array<double, 3> & input);
     explicit Vecteur(const std::array<double, 5> & input);
 
     explicit Vecteur(const unsigned int & d);
 
-
-    Vecteur(const double & x, const double & y, const double & z): dim_(3), v_(T({x,y,z})), beg(& v_[0]) {}
-    Vecteur(const Vecteur<T> & vect2) noexcept: v_(T(vect2.v_)), dim_(vect2.dim_), beg(& v_[0]) {}
-    //Vecteur(Vecteur<T>&& vect2) noexcept: v_(vect2.v_), dim_(vect2.dim_), beg(&(*v_)[0]) {}
-
-    //copy assignment constructor
-    /*
-    Vecteur<T> & operator=(const Vecteur<T>& vect2) {v_ = new T(*vect2.v_);
-    dim_ = vect2.dim_;
-    std::cout << "copy assing." << std::endl;
-    return *this;
-    }
-    */
-    //move assignment constructor
-    //Vecteur<T> & operator=(Vecteur<T>&& vect2) noexcept {v_ = vect2.v_; dim_ = vect2.dim_; return *this;};
+    Vecteur(const double & x, const double & y, const double & z): dim_(3), v_(T({x,y,z})) {}
+    Vecteur(const Vecteur<T> & vect2) noexcept: v_(T(vect2.v_)), dim_(vect2.dim_) {}
 
     [[nodiscard]] T v() const; //accès aux attributs
     void setVect(const T & input);
@@ -69,18 +56,10 @@ public:
 
     double& operator[](size_t coord);
     friend std::ostream& operator<<(std::ostream& out, const Vecteur<T> & vect) {
-        for(double i : *vect.v_) out  << i << std::setw(15);
+        for(double i : vect.v_) out  << i << std::setw(15);
         out << std::setw(-15);
         return out;};
 };
-/*
-template <class T>
-const Vecteur<T> operator*(const double & scal, Vecteur<T>); */
-/*
-template<> class Vecteur<std::vector<double> > {
-public:
-
-};*/
 
 template <class T>
 const Vecteur<T> operator+(Vecteur<T> v1, const Vecteur<T>& v2) {
@@ -95,7 +74,8 @@ const Vecteur<T> operator-(Vecteur<T> v1, const Vecteur<T>& v2) {
     return v1;
 };
 
-
-
+//typedef Vecteur<std::vector<double> > VecteurN;
+typedef Vecteur<std::array<double, 3> > Vecteur3;
+typedef Vecteur<std::array<double, 5> > Vecteur5;
 
 

@@ -8,10 +8,13 @@
 
 #include "Toupie.h"
 #include "Vecteur.h"
+template <typename T>
 class Integrateur {
 protected:
-    const std::function<Vecteur(const Vecteur&, const Vecteur&)> f;
+
+    const std::function<Vecteur<T>(const Vecteur<T>&, const Vecteur<T>&)> f;
 public:
-    Integrateur(std::function<Vecteur(const Vecteur&, const Vecteur&)>  f_): f(std::move(f_)) {};
-    void integrate(const Toupie & toup, const double& dt);
+    explicit Integrateur(std::function<Vecteur<T>(const Vecteur<T>&, const Vecteur<T>&)>  f_): f(std::move(f_)) {};
+    //virtual void integrate(const Toupie & toup, const double& dt) {};
 };
+typedef Integrateur<std::array<double, 5> > Integrateur5;

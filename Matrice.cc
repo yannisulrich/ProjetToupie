@@ -23,12 +23,16 @@ Matrice::Matrice(const double & m00, const double & m11, const double & m22):
     m({m00,0,0,0,m11,0,0,0,m22})
 {}
 
-//accès en const
+
+//accès en const, utilisé uniquement pour cette propriété.
 double Matrice::get_value(const int &line, const int &col) const {
     return m[line][col];
 }
 
 //opérations mathématiques
+//Nous utilisons ici une technique d'optimisation qui évite les méthodes d'accès des arrays et utilise des pointeurs mémoire,
+//profitant de la structure array de la matrice.
+//
 Matrice& Matrice::operator+=(const Matrice & mat2) {
     double* matpos0 =  & m[0][0];
     const double* mat2pos0 =  & mat2.m[0][0];
@@ -39,6 +43,7 @@ Matrice& Matrice::operator+=(const Matrice & mat2) {
 
     return *this;
 }
+//idem +=
 Matrice& Matrice::operator-=(const Matrice &mat2) {
     double* matpos0 =  & m[0][0];
     const double* mat2pos0 =  & mat2.m[0][0];
@@ -48,7 +53,8 @@ Matrice& Matrice::operator-=(const Matrice &mat2) {
     }
     return *this;
 }
-Matrice Matrice::operator*(const Matrice & mat2) { //TODO: optimize
+
+Matrice Matrice::operator*(const Matrice & mat2) { //TODO: optimize or bail
     Matrice output;
     /*
     const double* matpos0 =  & m[0][0];
@@ -65,12 +71,39 @@ Matrice Matrice::operator*(const Matrice & mat2) { //TODO: optimize
     }
     return output;
 }
+/*La fonction de multiplication d'un vecteur utilise les mêmes techniques d'optimisations que l'opérateur +=
+ * Un avantage temporel est acquis ici encore acquis en calculant les trois composantes du vecteur d'un coup,
+ * cet à dire que chaque valeur n'est bien appelée en registre qu'une fois.
+ * timing d'environ 17ns (moyenne sur 50'000 essais).
+*/
+Vecteur<array<double, 3>> Matrice::operator*(const Vecteur<array<double, 3> > & vect) const {
 
-Vecteur<array<double, 3>> Matrice::operator*(const Vecteur<array<double, 3>> & vect) const {
+    //auto start = high_resolution_clock::now();
+    const double* matpos0 =  & m[0][0];
+    const double* matpos1 =  & m[1][0];
+    const double* matpos2 =  & m[2][0];
+
+    double out0 = 0, out1 = 0, out2 = 0;
+
+    const double * vectpos2 = & vect.v_[0];
+
+    for (size_t j(0); j < 3; ++j) {
+        out0 += (*matpos0++) * (*vectpos2);
+        out1 += (*matpos1++) * (*vectpos2);
+        out2 += (*matpos2++) * (*vectpos2++);
+    }
+    Vecteur<array<double, 3> > output(array<double, 3>({out0, out1, out2}));
+
+    return output;
+}
+//même méthode pour éventuellement multiplier un Vecteur basé sur un vector à l'interne. Bien plus lent, environ
+// 140 ns (moyenne sur 50'000 essais).
+/* TODO: consider wether its necessary to keep an arbitrary vector defined.
+ * Huge pain to code, so when handing in the project it might be easier to just add the untemplated Vecteur class to comply
+Vecteur<vector<double>> Matrice::operator*(const Vecteur<vector<double> > & vect) const {
 
     //auto start = high_resolution_clock::now();
     if(vect.dim_ != 3) throw std::invalid_argument("dimension of vector is not 3");
-
 
     const double* matpos0 =  & m[0][0];
     const double* matpos1 =  & m[1][0];
@@ -78,40 +111,32 @@ Vecteur<array<double, 3>> Matrice::operator*(const Vecteur<array<double, 3>> & v
 
     double out0 = 0, out1 = 0, out2 = 0;
 
-    const double * vectpos2 = vect.beg;
+    const double * vectpos2 = & vect.v_[0];
 
     for (size_t j(0); j < 3; ++j) {
         out0 += (*matpos0++) * (*vectpos2);
         out1 += (*matpos1++) * (*vectpos2);
         out2 += (*matpos2++) * (*vectpos2++);
-
     }
-
-
-
-
-    Vecteur<array<double, 3> > output(array<double, 3>({out0, out1, out2}));
-
-    //auto stop = high_resolution_clock::now();
-    //auto duration = duration_cast<nanoseconds>(stop - start);
-    //cout << "Time taken by function multiply mat vec: " << duration.count() << " nanoseconds" << endl;
-
+    Vecteur<vector<double> > output({out0, out1, out2});
 
     return output;
 }
-
+ */
+//même technique que ci dessus, les pointeurs mémoire itèrent sur les cases de l'array.
 Matrice operator*(const double & scal, const Matrice & mat) {
     Matrice output;
-    for(size_t i(0); i < 3; ++i) {
-        for(size_t j(0); j < 3; ++j) {
-            output.m[i][j] = mat.m[i][j] * scal;
-        }
+    double * outpos = & output.m[0][0];
+    const double * matpos = & mat.m[0][0];
+    for(size_t i(0); i < 9; ++i) {
+        *outpos++ = scal * (*matpos++);
     }
     return output;
 }
 double& Matrice::operator()(const unsigned & line, const unsigned & col) { //TODO: test
     return  m[line][col];
 }
+//méthode d'affichage, qui utilise setw de la bibiliothèque <iomanip> pour aligner les colonnes.
 ostream& operator<<(ostream& out,const Matrice & mat) {
     out << "[[";
     out << setw(10) << mat.get_value(0,0) << setw(10) << mat.get_value(0,1) << setw(10) << mat.get_value(0,2);
@@ -124,7 +149,8 @@ ostream& operator<<(ostream& out,const Matrice & mat) {
     out << "]]" << endl;
     return out;
 }
-
+//Les calculs du déterminant et et de l'inverse sont largement suffisemment rapides aussi.
+// Une optimisation est plus difficile (mais possible) ici, et pas nécessaire.
 double Matrice::det() const {
     return m[0][0] * m[1][1]*m[2][2] + m[0][1]*m[1][2]*m[2][0] + m[1][0]*m[2][1]*m[0][2] -
             m[0][2]*m[1][1]*m[2][0] - m[0][1]*m[1][0]*m[2][2] - m[0][0]*m[2][1]*m[1][2];
@@ -150,6 +176,7 @@ Matrice Matrice::transp() const { //TODO: optimize
     Matrice out;
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {
+            if(i == j) continue;
             out(i,j) = m[j][i];
         }
     }

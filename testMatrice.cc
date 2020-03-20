@@ -6,30 +6,34 @@ using namespace std;
 using namespace std::chrono;
 int main() {
 
-    typedef Vecteur<vector<double> > VecteurN;
-    typedef Vecteur<array<double, 3> > Vecteur3;
     Matrice I;
     Matrice diag(1., 2., 3.);
-    Matrice mat({ 1.01, 0.02, 0.03 },
-    { 0.02, 0.021, 0.031 },
-    { 0.052, 0.02, 0.013 });
+    Matrice mat({ 1.002, 0.002, 0.003 },
+    { 0.002, 1.001, 0.0031 },
+    { 0.0052, 0.002, 1.0013 });
 
     Matrice mat2({ 1, 0.02, 0.02 },
     { 0.03, 1., 0.01 },
     { 0.10, 0.02, 1.045 });
 
     Vecteur3 v(5, 6, 7);
-    Vecteur3 v2(0.1,0.2,0.3);
-    v2 = mat*v2;
+    //Vecteur5 v2({0.00000001,0.00000002,0.0000003,1,2});
+    //v2 = 2*v2;
+    //cout << v2 << endl;
+
+    /*
+    int n = 50000;
     auto start = high_resolution_clock::now();
     start = high_resolution_clock::now();
+    for(size_t i(0); i <n; ++i) {
+        v2 = mat*v2;
+    }
 
     auto stop = high_resolution_clock::now();
-    cout << mat << endl;
-    //cout << v2 << endl;
+    cout << v2 << endl;
     auto duration = duration_cast<nanoseconds>(stop - start);
-    cout << "Time taken by function: " << duration.count() << " nanoseconds" << endl;
-
+    cout << "Time taken by function: " << duration.count()/double(n) << " nanoseconds" << endl;
+    */
     //following tests all work as of 19/03, last major changes
     /*
     cout << I.det()    << " "

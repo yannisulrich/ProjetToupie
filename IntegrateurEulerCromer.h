@@ -6,11 +6,15 @@
 
 #include "Toupie.h"
 #include "Integrateur.h"
-class IntegrateurEulerCromer: public Integrateur {
+template <typename T>
+class IntegrateurEulerCromer: Integrateur<T> {
 public:
-    IntegrateurEulerCromer(const std::function<Vecteur(const Vecteur&, const Vecteur&)> & f): Integrateur(f) {};
-    void integrate(Toupie&, const double&);
+    explicit IntegrateurEulerCromer(const std::function<Vecteur<T>(const Vecteur<T> &, const Vecteur<T> &)> &f)
+            : Integrateur<T>(f) {}
+
+    void integrate(Toupie &toupie, const double &dt) {
+        toupie.P_dot += dt * Integrateur<T>::f(toupie.P, toupie.P_dot);
+        toupie.P += dt * toupie.P_dot;
+    }
 };
-
-
-
+typedef IntegrateurEulerCromer<std::array<double, 5> > IntegrateurEulerCromer5;
