@@ -12,9 +12,9 @@ template <typename T>
 class Integrateur {
 protected:
 
-    const std::function<Vecteur<T>(const Vecteur<T>&, const Vecteur<T>&)> f;
+    const std::function<VecteurArray<T>(const VecteurArray<T>&, const VecteurArray<T>&)> f;
 public:
-    explicit Integrateur(std::function<Vecteur<T>(const Vecteur<T>&, const Vecteur<T>&)>  f_): f(std::move(f_)) {};
+    explicit Integrateur(std::function<VecteurArray<T>(const VecteurArray<T>&, const VecteurArray<T>&)>  f_): f(std::move(f_)) {};
     //virtual void integrate(const Toupie & toup, const double& dt) {};
 };
 typedef Integrateur<std::array<double, 5> > Integrateur5;

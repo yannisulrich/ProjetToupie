@@ -9,7 +9,7 @@
 template <typename T>
 class IntegrateurEulerCromer: Integrateur<T> {
 public:
-    explicit IntegrateurEulerCromer(const std::function<Vecteur<T>(const Vecteur<T> &, const Vecteur<T> &)> &f)
+    explicit IntegrateurEulerCromer(const std::function<VecteurArray<T>(const VecteurArray<T> &, const VecteurArray<T> &)> &f)
             : Integrateur<T>(f) {}
 
     void integrate(Toupie &toupie, const double &dt) {

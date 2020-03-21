@@ -1,21 +1,31 @@
-cmake_minimum_required(VERSION 3.15)
-#project(TestVecteur)
-project(TestMatrice)
-#project(TestToupie)
-#project(TestIntegrateur)
+cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_CXX_STANDARD 20)
-set(VERBOSE 1)
+project(ToupieMain LANGUAGES CXX)
 
-#SET(CMAKE_CXX_COMPILER /usr/local/bin/icpc)
-#set(CMAKE_CXX_COMPILER /usr/bin/gcc)
-#set( CMAKE_CXX_FLAGS "-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -mavx2 -O3 -D NOFUNCCALL -qopt-report=1 -qopt-report-phase=vec")
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops")
-#set(CMAKE_CXX_FLAGS "")
 
+find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 
-#add_executable(TestVecteur Matrice.cc Matrice.h VecteurArray.cc VecteurArray.h Toupie.cc Toupie.h vecteurtest.cpp Integrateur.cc Integrateur.h IntegrateurEulerCromer.cc IntegrateurEulerCromer.h)
-add_executable(TestMatrice Matrice.cc Matrice.h VecteurArray.cc VecteurArray.h testMatrice.cc Vecteur.h Vecteur.cc)
-#add_executable(TestToupie Matrice.cc Matrice.h VecteurArray.cc VecteurArray.h Toupie.cc Toupie.h testToupie.cc ConeSimple.h ConeSimple.cc)
-#add_executable(TestIntegrateur Matrice.cc Matrice.h VecteurArray.cc VecteurArray.h Toupie.cc Toupie.h ConeSimple.h ConeSimple.cc Integrateur.cc Integrateur.h IntegrateurEulerCromer.h IntegrateurEulerCromer.cc testIntegrateur.cc constantes.h constantes.cc)
+set(TS_FILES ToupieMain_en_150.ts)
 
+add_executable(ToupieMain
+          main.cpp
+          mainwindow.cpp
+          mainwindow.h
+          mainwindow.ui
+    ${TS_FILES}
+  )
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/MathCore)
+add_subdirectory(MathCore)
+target_link_libraries(ToupieMain PUBLIC MathCore)
+
+target_link_libraries(ToupieMain PRIVATE Qt5::Widgets)
+
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
