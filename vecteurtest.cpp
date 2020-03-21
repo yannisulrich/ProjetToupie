@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "Vecteur.h"
+#include "VecteurArray.h"
 
 using namespace std;
 int main() {

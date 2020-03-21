@@ -74,9 +74,9 @@ Matrice Matrice::operator*(const Matrice & mat2) { //TODO: optimize or bail
 /*La fonction de multiplication d'un vecteur utilise les mêmes techniques d'optimisations que l'opérateur +=
  * Un avantage temporel est acquis ici encore acquis en calculant les trois composantes du vecteur d'un coup,
  * cet à dire que chaque valeur n'est bien appelée en registre qu'une fois.
- * timing d'environ 17ns (moyenne sur 50'000 essais).
+ * timing d'environ 17ns (moyenne sur 50'000 essais uniquement avec -funroll-loops, qui est possiblement redondant).
 */
-Vecteur<array<double, 3>> Matrice::operator*(const Vecteur<array<double, 3> > & vect) const {
+VecteurArray<array<double, 3>> Matrice::operator*(const VecteurArray<array<double, 3> > & vect) const {
 
     //auto start = high_resolution_clock::now();
     const double* matpos0 =  & m[0][0];
@@ -92,37 +92,11 @@ Vecteur<array<double, 3>> Matrice::operator*(const Vecteur<array<double, 3> > & 
         out1 += (*matpos1++) * (*vectpos2);
         out2 += (*matpos2++) * (*vectpos2++);
     }
-    Vecteur<array<double, 3> > output(array<double, 3>({out0, out1, out2}));
+    VecteurArray<array<double, 3> > output(out0, out1, out2);
 
     return output;
 }
-//même méthode pour éventuellement multiplier un Vecteur basé sur un vector à l'interne. Bien plus lent, environ
-// 140 ns (moyenne sur 50'000 essais).
-/* TODO: consider wether its necessary to keep an arbitrary vector defined.
- * Huge pain to code, so when handing in the project it might be easier to just add the untemplated Vecteur class to comply
-Vecteur<vector<double>> Matrice::operator*(const Vecteur<vector<double> > & vect) const {
 
-    //auto start = high_resolution_clock::now();
-    if(vect.dim_ != 3) throw std::invalid_argument("dimension of vector is not 3");
-
-    const double* matpos0 =  & m[0][0];
-    const double* matpos1 =  & m[1][0];
-    const double* matpos2 =  & m[2][0];
-
-    double out0 = 0, out1 = 0, out2 = 0;
-
-    const double * vectpos2 = & vect.v_[0];
-
-    for (size_t j(0); j < 3; ++j) {
-        out0 += (*matpos0++) * (*vectpos2);
-        out1 += (*matpos1++) * (*vectpos2);
-        out2 += (*matpos2++) * (*vectpos2++);
-    }
-    Vecteur<vector<double> > output({out0, out1, out2});
-
-    return output;
-}
- */
 //même technique que ci dessus, les pointeurs mémoire itèrent sur les cases de l'array.
 Matrice operator*(const double & scal, const Matrice & mat) {
     Matrice output;
@@ -172,7 +146,7 @@ Matrice Matrice::inv() {
 
     return out;
 }
-Matrice Matrice::transp() const { //TODO: optimize
+Matrice Matrice::transp() const { //TODO: optimize or not, if needed
     Matrice out;
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {

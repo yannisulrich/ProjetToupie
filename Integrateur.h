@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "Toupie.h"
-#include "Vecteur.h"
+#include "VecteurArray.h"
 template <typename T>
 class Integrateur {
 protected:

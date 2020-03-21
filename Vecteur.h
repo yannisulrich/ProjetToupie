@@ -11,26 +11,24 @@
 #include <iostream>
 #include <memory>
 #include <iomanip>
-template <typename T>
-class Vecteur {
+
+class VecteurN {
     friend class Matrice; //ceci sert a accélérer la multiplication matricielle
-private:
-    T v_;
+protected:
+    std::vector<double> v_;
     size_t dim_;
 public:
     //constructeurs
+    VecteurN(const std::initializer_list<double> & input): dim_(input.size()), v_(input) {}
 
-    //Vecteur(const std::initializer_list<double> &input): dim_(input.size()), v_(input) {}
-    explicit Vecteur(const std::array<double, 3> & input);
-    explicit Vecteur(const std::array<double, 5> & input);
 
-    explicit Vecteur(const unsigned int & d);
+    explicit VecteurN(const unsigned int & d): dim_(d), v_(std::vector<double>(d)) {}
 
-    Vecteur(const double & x, const double & y, const double & z): dim_(3), v_(T({x,y,z})) {}
-    Vecteur(const Vecteur<T> & vect2) noexcept: v_(T(vect2.v_)), dim_(vect2.dim_) {}
+    VecteurN(const double & x, const double & y, const double & z): dim_(3), v_({x,y,z}) {}
 
-    [[nodiscard]] T v() const; //accès aux attributs
-    void setVect(const T & input);
+
+    [[nodiscard]] std::vector<double> v() const; //accès aux attributs
+    void setVect(const std::vector<double> & input);
     [[nodiscard]] unsigned int dim() const;
     [[nodiscard]] double getCoord(const size_t & coord) const;
 
@@ -38,44 +36,24 @@ public:
     void set_coord(const size_t & coord, const double & value);
 
 
-    void dimcheck(const Vecteur<T>&) const; //comparaison
-    bool operator==(const Vecteur<T>& v2) const;
-    bool operator!=(const Vecteur<T>& v2) const;
+    void dimcheck(const VecteurN&) const; //comparaison
+    bool operator==(const VecteurN& v2) const;
+    bool operator!=(const VecteurN& v2) const;
 
-
-    Vecteur<T> & operator+=(const Vecteur<T>& v2); //operations mathématiques
-    Vecteur<T> & operator-=(const Vecteur<T>& v2);
-    friend const Vecteur<T> operator* (const double & scal, Vecteur<T> vect) {
-        vect *= scal;
-        return vect;
-    }
-    Vecteur<T>& operator*=(const double &);
-    double operator*(const Vecteur<T>& v2) const;
-    const Vecteur<T> operator-() const;
-    Vecteur<T> operator^(const Vecteur<T> & vect2) const;
+    [[nodiscard]] double norm() const;
+    const VecteurN operator~() const;
+    VecteurN & operator+=(const VecteurN& v2); //operations mathématiques
+    VecteurN & operator-=(const VecteurN& v2);
+    friend const VecteurN operator* (const double & scal, VecteurN vect);
+    VecteurN& operator*=(const double &);
+    double operator*(const VecteurN& v2) const;
+    const VecteurN operator-() const;
+    VecteurN operator^(const VecteurN & vect2) const;
 
     double& operator[](size_t coord);
-    friend std::ostream& operator<<(std::ostream& out, const Vecteur<T> & vect) {
-        for(double i : vect.v_) out  << i << std::setw(15);
-        out << std::setw(-15);
-        return out;};
+    friend std::ostream& operator<<(std::ostream& out, const VecteurN & vect);
 };
 
-template <class T>
-const Vecteur<T> operator+(Vecteur<T> v1, const Vecteur<T>& v2) {
-    v1.dimcheck(v2);
-    v1 += v2;
-    return v1;
-};
-template <class T>
-const Vecteur<T> operator-(Vecteur<T> v1, const Vecteur<T>& v2) {
-    v1.dimcheck(v2);
-    v1 -= v2;
-    return v1;
-};
 
-//typedef Vecteur<std::vector<double> > VecteurN;
-typedef Vecteur<std::array<double, 3> > Vecteur3;
-typedef Vecteur<std::array<double, 5> > Vecteur5;
 
 

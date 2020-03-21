@@ -5,7 +5,7 @@
 
 
 #pragma once
-#include "Vecteur.h"
+#include "VecteurArray.h"
 #include <vector>
 #include <array>
 

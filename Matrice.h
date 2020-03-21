@@ -21,7 +21,7 @@ Les operateurs +, -, * sont aussi implémentés. + et - utilisent les définitio
 La multiplication d'une matrice par un scalaire (double) est possible par opérateur * surchargé. Cette fonction est un friend
  pour garder le scalaire à gauche.
 
-La multiplication d'un vecteur par un objet matrice est possible (Matrice * Vecteur, dans cet ordre).
+La multiplication d'un vecteur par un objet matrice est possible (Matrice * VecteurArray, dans cet ordre).
 
 Il est possible de calculer la transposée, le déterminant, et l'inverse d'une matrice, avec retour d'un nouvel objet pour
 l'inverse et la transposée.
@@ -34,7 +34,7 @@ Afin d'éviter le plus d'erreurs possibles, cette classe essaie d'être le plus 
 
 #pragma once
 #include <array>
-#include "Vecteur.h"
+#include "VecteurArray.h"
 #include <initializer_list>
 class Matrice {
 private:
@@ -54,8 +54,8 @@ public:
 
     friend Matrice operator*(const double &, const Matrice &);
 
-    [[nodiscard]] Vecteur<std::array<double, 3>> operator*(const Vecteur<std::array<double, 3>> &) const;
-    [[nodiscard]] Vecteur<std::vector<double>> operator*(const Vecteur<std::vector<double> > & vect) const;
+    [[nodiscard]] VecteurArray<std::array<double, 3>> operator*(const VecteurArray<std::array<double, 3>> &) const;
+    [[nodiscard]] VecteurArray<std::vector<double>> operator*(const VecteurArray<std::vector<double> > & vect) const;
 
     [[nodiscard]] Matrice transp() const;
     [[nodiscard]] double det() const;

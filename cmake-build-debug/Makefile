@@ -111,98 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named TestIntegrateur
+# Target rules for targets named TestMatrice
 
 # Build rule for target.
-TestIntegrateur: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 TestIntegrateur
-.PHONY : TestIntegrateur
+TestMatrice: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 TestMatrice
+.PHONY : TestMatrice
 
 # fast build rule for target.
-TestIntegrateur/fast:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/build
-.PHONY : TestIntegrateur/fast
-
-ConeSimple.o: ConeSimple.cc.o
-
-.PHONY : ConeSimple.o
-
-# target to build an object file
-ConeSimple.cc.o:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/ConeSimple.cc.o
-.PHONY : ConeSimple.cc.o
-
-ConeSimple.i: ConeSimple.cc.i
-
-.PHONY : ConeSimple.i
-
-# target to preprocess a source file
-ConeSimple.cc.i:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/ConeSimple.cc.i
-.PHONY : ConeSimple.cc.i
-
-ConeSimple.s: ConeSimple.cc.s
-
-.PHONY : ConeSimple.s
-
-# target to generate assembly for a file
-ConeSimple.cc.s:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/ConeSimple.cc.s
-.PHONY : ConeSimple.cc.s
-
-Integrateur.o: Integrateur.cc.o
-
-.PHONY : Integrateur.o
-
-# target to build an object file
-Integrateur.cc.o:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Integrateur.cc.o
-.PHONY : Integrateur.cc.o
-
-Integrateur.i: Integrateur.cc.i
-
-.PHONY : Integrateur.i
-
-# target to preprocess a source file
-Integrateur.cc.i:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Integrateur.cc.i
-.PHONY : Integrateur.cc.i
-
-Integrateur.s: Integrateur.cc.s
-
-.PHONY : Integrateur.s
-
-# target to generate assembly for a file
-Integrateur.cc.s:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Integrateur.cc.s
-.PHONY : Integrateur.cc.s
-
-IntegrateurEulerCromer.o: IntegrateurEulerCromer.cc.o
-
-.PHONY : IntegrateurEulerCromer.o
-
-# target to build an object file
-IntegrateurEulerCromer.cc.o:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/IntegrateurEulerCromer.cc.o
-.PHONY : IntegrateurEulerCromer.cc.o
-
-IntegrateurEulerCromer.i: IntegrateurEulerCromer.cc.i
-
-.PHONY : IntegrateurEulerCromer.i
-
-# target to preprocess a source file
-IntegrateurEulerCromer.cc.i:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/IntegrateurEulerCromer.cc.i
-.PHONY : IntegrateurEulerCromer.cc.i
-
-IntegrateurEulerCromer.s: IntegrateurEulerCromer.cc.s
-
-.PHONY : IntegrateurEulerCromer.s
-
-# target to generate assembly for a file
-IntegrateurEulerCromer.cc.s:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/IntegrateurEulerCromer.cc.s
-.PHONY : IntegrateurEulerCromer.cc.s
+TestMatrice/fast:
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/build
+.PHONY : TestMatrice/fast
 
 Matrice.o: Matrice.cc.o
 
@@ -210,7 +129,7 @@ Matrice.o: Matrice.cc.o
 
 # target to build an object file
 Matrice.cc.o:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Matrice.cc.o
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/Matrice.cc.o
 .PHONY : Matrice.cc.o
 
 Matrice.i: Matrice.cc.i
@@ -219,7 +138,7 @@ Matrice.i: Matrice.cc.i
 
 # target to preprocess a source file
 Matrice.cc.i:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Matrice.cc.i
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/Matrice.cc.i
 .PHONY : Matrice.cc.i
 
 Matrice.s: Matrice.cc.s
@@ -228,35 +147,8 @@ Matrice.s: Matrice.cc.s
 
 # target to generate assembly for a file
 Matrice.cc.s:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Matrice.cc.s
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/Matrice.cc.s
 .PHONY : Matrice.cc.s
-
-Toupie.o: Toupie.cc.o
-
-.PHONY : Toupie.o
-
-# target to build an object file
-Toupie.cc.o:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Toupie.cc.o
-.PHONY : Toupie.cc.o
-
-Toupie.i: Toupie.cc.i
-
-.PHONY : Toupie.i
-
-# target to preprocess a source file
-Toupie.cc.i:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Toupie.cc.i
-.PHONY : Toupie.cc.i
-
-Toupie.s: Toupie.cc.s
-
-.PHONY : Toupie.s
-
-# target to generate assembly for a file
-Toupie.cc.s:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Toupie.cc.s
-.PHONY : Toupie.cc.s
 
 Vecteur.o: Vecteur.cc.o
 
@@ -264,7 +156,7 @@ Vecteur.o: Vecteur.cc.o
 
 # target to build an object file
 Vecteur.cc.o:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Vecteur.cc.o
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/Vecteur.cc.o
 .PHONY : Vecteur.cc.o
 
 Vecteur.i: Vecteur.cc.i
@@ -273,7 +165,7 @@ Vecteur.i: Vecteur.cc.i
 
 # target to preprocess a source file
 Vecteur.cc.i:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Vecteur.cc.i
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/Vecteur.cc.i
 .PHONY : Vecteur.cc.i
 
 Vecteur.s: Vecteur.cc.s
@@ -282,62 +174,62 @@ Vecteur.s: Vecteur.cc.s
 
 # target to generate assembly for a file
 Vecteur.cc.s:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/Vecteur.cc.s
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/Vecteur.cc.s
 .PHONY : Vecteur.cc.s
 
-constantes.o: constantes.cc.o
+VecteurArray.o: VecteurArray.cc.o
 
-.PHONY : constantes.o
-
-# target to build an object file
-constantes.cc.o:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/constantes.cc.o
-.PHONY : constantes.cc.o
-
-constantes.i: constantes.cc.i
-
-.PHONY : constantes.i
-
-# target to preprocess a source file
-constantes.cc.i:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/constantes.cc.i
-.PHONY : constantes.cc.i
-
-constantes.s: constantes.cc.s
-
-.PHONY : constantes.s
-
-# target to generate assembly for a file
-constantes.cc.s:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/constantes.cc.s
-.PHONY : constantes.cc.s
-
-testIntegrateur.o: testIntegrateur.cc.o
-
-.PHONY : testIntegrateur.o
+.PHONY : VecteurArray.o
 
 # target to build an object file
-testIntegrateur.cc.o:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/testIntegrateur.cc.o
-.PHONY : testIntegrateur.cc.o
+VecteurArray.cc.o:
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/VecteurArray.cc.o
+.PHONY : VecteurArray.cc.o
 
-testIntegrateur.i: testIntegrateur.cc.i
+VecteurArray.i: VecteurArray.cc.i
 
-.PHONY : testIntegrateur.i
+.PHONY : VecteurArray.i
 
 # target to preprocess a source file
-testIntegrateur.cc.i:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/testIntegrateur.cc.i
-.PHONY : testIntegrateur.cc.i
+VecteurArray.cc.i:
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/VecteurArray.cc.i
+.PHONY : VecteurArray.cc.i
 
-testIntegrateur.s: testIntegrateur.cc.s
+VecteurArray.s: VecteurArray.cc.s
 
-.PHONY : testIntegrateur.s
+.PHONY : VecteurArray.s
 
 # target to generate assembly for a file
-testIntegrateur.cc.s:
-	$(MAKE) -f CMakeFiles/TestIntegrateur.dir/build.make CMakeFiles/TestIntegrateur.dir/testIntegrateur.cc.s
-.PHONY : testIntegrateur.cc.s
+VecteurArray.cc.s:
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/VecteurArray.cc.s
+.PHONY : VecteurArray.cc.s
+
+testMatrice.o: testMatrice.cc.o
+
+.PHONY : testMatrice.o
+
+# target to build an object file
+testMatrice.cc.o:
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/testMatrice.cc.o
+.PHONY : testMatrice.cc.o
+
+testMatrice.i: testMatrice.cc.i
+
+.PHONY : testMatrice.i
+
+# target to preprocess a source file
+testMatrice.cc.i:
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/testMatrice.cc.i
+.PHONY : testMatrice.cc.i
+
+testMatrice.s: testMatrice.cc.s
+
+.PHONY : testMatrice.s
+
+# target to generate assembly for a file
+testMatrice.cc.s:
+	$(MAKE) -f CMakeFiles/TestMatrice.dir/build.make CMakeFiles/TestMatrice.dir/testMatrice.cc.s
+.PHONY : testMatrice.cc.s
 
 # Help Target
 help:
@@ -347,31 +239,19 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... TestIntegrateur"
-	@echo "... ConeSimple.o"
-	@echo "... ConeSimple.i"
-	@echo "... ConeSimple.s"
-	@echo "... Integrateur.o"
-	@echo "... Integrateur.i"
-	@echo "... Integrateur.s"
-	@echo "... IntegrateurEulerCromer.o"
-	@echo "... IntegrateurEulerCromer.i"
-	@echo "... IntegrateurEulerCromer.s"
+	@echo "... TestMatrice"
 	@echo "... Matrice.o"
 	@echo "... Matrice.i"
 	@echo "... Matrice.s"
-	@echo "... Toupie.o"
-	@echo "... Toupie.i"
-	@echo "... Toupie.s"
 	@echo "... Vecteur.o"
 	@echo "... Vecteur.i"
 	@echo "... Vecteur.s"
-	@echo "... constantes.o"
-	@echo "... constantes.i"
-	@echo "... constantes.s"
-	@echo "... testIntegrateur.o"
-	@echo "... testIntegrateur.i"
-	@echo "... testIntegrateur.s"
+	@echo "... VecteurArray.o"
+	@echo "... VecteurArray.i"
+	@echo "... VecteurArray.s"
+	@echo "... testMatrice.o"
+	@echo "... testMatrice.i"
+	@echo "... testMatrice.s"
 .PHONY : help
 
 

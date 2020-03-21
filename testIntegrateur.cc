@@ -3,7 +3,7 @@
 //
 #include "IntegrateurEulerCromer.h"
 #include "ConeSimple.h"
-#include "Vecteur.h"
+#include "VecteurArray.h"
 #include <iostream>
 #include <chrono>
 
@@ -16,7 +16,7 @@ Vecteur5 f(const Vecteur5&, const Vecteur5&) {
 int main() {
     FILE* gnuplotPipe = popen("gnuplot -persist","w");
     ofstream sortie;
-    double dt = 0.01;
+    double dt = 0.001;
     sortie.open("gnuplotdata.txt", ios::out);
     ConeSimple cone(Vecteur5({0,1,0,0,0}),Vecteur5({1,3,0,0,0}), 1.0, 1.0, 0.127);
     cout << cone;

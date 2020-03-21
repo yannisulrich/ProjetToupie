@@ -2,7 +2,7 @@
 // Created by Yannis on 06.03.20.
 //
 #pragma once
-#include "Vecteur.h"
+#include "VecteurArray.h"
 #include "Matrice.h"
 #include <fstream>
 #include <iostream>

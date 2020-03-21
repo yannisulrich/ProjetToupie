@@ -1,3 +1,4 @@
+#include "VecteurArray.h"
 #include "Vecteur.h"
 #include "Matrice.h"
 #include <iostream>
@@ -16,7 +17,13 @@ int main() {
     { 0.03, 1., 0.01 },
     { 0.10, 0.02, 1.045 });
 
-    Vecteur3 v(5, 6, 7);
+    Vecteur3 v(0., 0., 0.000000001);
+    Vecteur5 v2(1,2,3,4,5);
+    VecteurN v3({1,2,2});
+    cout << v3.norm() << "     " << v2.norm() << endl;
+    cout << ~v << endl;
+    cout << 2*v3 << endl;
+    cout << v << endl;
     //Vecteur5 v2({0.00000001,0.00000002,0.0000003,1,2});
     //v2 = 2*v2;
     //cout << v2 << endl;

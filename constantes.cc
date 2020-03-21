@@ -3,6 +3,6 @@
 //
 
 #include "constantes.h"
-#include "Vecteur.h"
+#include "VecteurArray.h"
 
 extern const Vecteur3 g(0.0, 0.0, -9.81);
