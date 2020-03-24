@@ -10,3 +10,4 @@
 #include <array>
 
 extern const Vecteur3 g;
+extern Vecteur5 f(const double & t, const Vecteur5& P_, const Vecteur5& P_dot_);

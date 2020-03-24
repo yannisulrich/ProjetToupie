@@ -11,12 +11,12 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Simulateur de Toupie</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTextBrowser" name="textBrowser">
+     <widget class="QTextBrowser" name="Description">
       <property name="html">
        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -62,7 +62,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="spinBox_3">
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_t">
         <property name="minimumSize">
          <size>
           <width>100</width>
@@ -95,12 +95,15 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="spinBox_2">
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_o">
         <property name="minimumSize">
          <size>
           <width>100</width>
           <height>0</height>
          </size>
+        </property>
+        <property name="accelerated">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -128,7 +131,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="spinBox">
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_u">
         <property name="minimumSize">
          <size>
           <width>100</width>
@@ -178,7 +181,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="Integrator">
         <property name="minimumSize">
          <size>
           <width>220</width>
@@ -239,7 +242,7 @@ p, li { white-space: pre-wrap; }
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="pushButtonG">
         <property name="text">
          <string>Lancer la simulation graphique!</string>
         </property>
@@ -259,7 +262,7 @@ p, li { white-space: pre-wrap; }
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="pushButtonT">
         <property name="text">
          <string>Lancer la simulation sur fichier</string>
         </property>
@@ -281,7 +284,7 @@ p, li { white-space: pre-wrap; }
      </layout>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="pathToFile">
       <property name="minimumSize">
        <size>
         <width>350</width>

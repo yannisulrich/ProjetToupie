@@ -1,9 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 set(CMAKE_VERBOSE_MAKEFILE ON)
-#project(TestVecteur)
-#project(TestMatrice)
-#project(TestToupie)
-project(TestIntegrateur)
+
+project(Tests)
 
 set(CMAKE_CXX_STANDARD 17)
 set(VERBOSE 1)
@@ -18,12 +16,14 @@ set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops")
 
 
 include_directories(.. ../..)
+include_directories(.. ../Integrateurs)
 add_subdirectory(.. cmake-build-debug)
-#add_executable(TestIntegrateur testIntegrateur.cc ../Matrice.h)
 
-#add_executable(TestVecteur Matrice.cc Matrice.h VecteurArray.cc VecteurArray.h Toupie.cc Toupie.h vecteurtest.cpp Integrateur.cc Integrateur.h IntegrateurEulerCromer.cc IntegrateurEulerCromer.h)
-#add_executable(TestMatrice Matrice.cc Matrice.h VecteurArray.cc VecteurArray.h testMatrice.cc Vecteur.h Vecteur.cc)
-#add_executable(TestToupie Matrice.cc Matrice.h VecteurArray.cc VecteurArray.h Toupie.cc Toupie.h testToupie.cc ConeSimple.h ConeSimple.cc)
-add_executable(TestIntegrateur testIntegrateur.cc)
+#Ceci sert à choisir quel fichier test doit être exécuté.
 
-target_link_libraries(TestIntegrateur PUBLIC MathCore)
+#add_executable(Tests testVecteur.cpp)
+add_executable(Tests testMatrice.cc)
+#add_executable(Tests testToupie.cc)
+#add_executable(Tests testIntegrateur.cc)
+
+target_link_libraries(Tests PUBLIC MathCore)

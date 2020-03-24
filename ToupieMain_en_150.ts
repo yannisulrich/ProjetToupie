@@ -4,76 +4,76 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="mainwindow.ui" line="14"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="213"/>
-        <source>MainWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="190"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="235"/>
+        <location filename="mainwindow.ui" line="193"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="236"/>
         <source>Euler-Cromer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="195"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="236"/>
+        <location filename="mainwindow.ui" line="198"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="237"/>
         <source>Newmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="200"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="237"/>
+        <location filename="mainwindow.ui" line="203"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="238"/>
         <source>Runge-Kutta d&apos;ordre 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="173"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="234"/>
+        <location filename="mainwindow.ui" line="176"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="235"/>
         <source>Intégrateur:</source>
         <oldsource>Intégrateur</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="mainwindow.ui" line="14"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="214"/>
+        <source>Simulateur de Toupie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="mainwindow.ui" line="57"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="231"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="232"/>
         <source>θ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="90"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="232"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="233"/>
         <source>ω</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="123"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="233"/>
+        <location filename="mainwindow.ui" line="126"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="234"/>
         <source>μ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="244"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="239"/>
+        <location filename="mainwindow.ui" line="247"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="240"/>
         <source>Lancer la simulation graphique!</source>
         <oldsource>Lancer la simulation!</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="264"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="240"/>
+        <location filename="mainwindow.ui" line="267"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="241"/>
         <source>Lancer la simulation sur fichier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="295"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="242"/>
+        <location filename="mainwindow.ui" line="298"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="243"/>
         <source> chemin d&apos;accès au fichier, absolu ou relatif</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="312"/>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="243"/>
+        <location filename="mainwindow.ui" line="315"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="244"/>
         <source>test</source>
         <translation type="unfinished"></translation>
     </message>
@@ -97,7 +97,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cmake-build-debug/ToupieMain_autogen/include/ui_mainwindow.h" line="214"/>
+        <location filename="Main Window/build-ToupieMain-Desktop_Qt_5_14_1_clang_64bit-Debug/ToupieMain_autogen/include/ui_mainwindow.h" line="215"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }

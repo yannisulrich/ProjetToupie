@@ -8,6 +8,5 @@
 #include "Matrice.h"
 #include "Toupie.h"
 #include "ConeSimple.h"
-#include "Integrateur.h"
-#include "IntegrateurEulerCromer.h"
+#include "Integrateurs/All_Integrateurs.h"
 #include "constantes.h"

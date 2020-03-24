@@ -74,7 +74,8 @@ Matrice Matrice::operator*(const Matrice & mat2) { //TODO: optimize or bail
 /*La fonction de multiplication d'un vecteur utilise les mêmes techniques d'optimisations que l'opérateur +=
  * Un avantage temporel est acquis ici encore acquis en calculant les trois composantes du vecteur d'un coup,
  * cet à dire que chaque valeur n'est bien appelée en registre qu'une fois.
- * timing d'environ 17ns (moyenne sur 50'000 essais uniquement avec -funroll-loops, qui est possiblement redondant).
+ * timing d'environ 17ns (moyenne sur 50'000 essais uniquement avec -funroll-loops, qui est possiblement redondant, et bien sûr que les défauts
+ * de cache sont réduits au maximum par le compilateur).
 */
 VecteurArray<array<double, 3>> Matrice::operator*(const VecteurArray<array<double, 3> > & vect) const {
 

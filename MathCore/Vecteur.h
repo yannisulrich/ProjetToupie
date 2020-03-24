@@ -2,7 +2,12 @@
 // Created by Yannis on 27.02.20.
 //
 #pragma once
-
+/*
+ * Voir le fichier VecteurArray.h pour de plus amples explications sur la structure des différentes classes vecteur.
+ * Cette classe enveloppe un std::vector<double> et comporte les méthodes d'accès et de calcul nécessitées au projet.
+ * Les méthodes sont identiques à celles de VecteurArray, à l'exception de la méthode "augmente" qui ajoute une valeur double
+ * à la fin du vecteur. Les constructeurs sont propres, et leur fonctionnement présenté ci-dessous.
+ */
 
 #include <initializer_list>
 #include <memory>
@@ -13,18 +18,17 @@
 #include <iomanip>
 
 class VecteurN {
-    friend class Matrice; //ceci sert a accélérer la multiplication matricielle
 protected:
     std::vector<double> v_;
     size_t dim_;
 public:
     //constructeurs
-    VecteurN(const std::initializer_list<double> & input): dim_(input.size()), v_(input) {}
+    VecteurN(const std::initializer_list<double> & input): dim_(input.size()), v_(input) {} //valeurs quelconques
 
 
-    explicit VecteurN(const unsigned int & d): dim_(d), v_(std::vector<double>(d)) {}
+    explicit VecteurN(const unsigned int & d): dim_(d), v_(std::vector<double>(d)) {} //d = dimension, initialisation des valeurs à 0
 
-    VecteurN(const double & x, const double & y, const double & z): dim_(3), v_({x,y,z}) {}
+    VecteurN(const double & x, const double & y, const double & z): dim_(3), v_({x,y,z}) {} //vecteur à 3 dimensions
 
 
     [[nodiscard]] std::vector<double> v() const; //accès aux attributs
@@ -33,7 +37,6 @@ public:
     [[nodiscard]] double getCoord(const size_t & coord) const;
 
     void augmente(const double & value); //operations basiques
-    void set_coord(const size_t & coord, const double & value);
 
 
     void dimcheck(const VecteurN&) const; //comparaison
@@ -51,6 +54,7 @@ public:
     VecteurN operator^(const VecteurN & vect2) const;
 
     double& operator[](size_t coord);
+
     friend std::ostream& operator<<(std::ostream& out, const VecteurN & vect);
 };
 

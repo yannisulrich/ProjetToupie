@@ -43,11 +43,6 @@ double VecteurN::getCoord(const size_t & Coord) const {
     return v_[Coord];
 }
 
-void VecteurN::set_coord(const size_t & coord, const double & value) {
-    if(coord < 0) throw invalid_argument( "received negative value" );
-    v_[coord] = value;
-}
-
 
 //operations basiques utiles
 
@@ -92,7 +87,6 @@ VecteurN & VecteurN::operator-=(const VecteurN& v2) {
     const double * vect2pos(&v2.v_[0]);
     for(size_t i = 0; i < dim_; ++ i) {
         (*vect1pos++) -= (*vect2pos++);
-        //(*v_)[i] -= (*v2.v_)[i];
     }
     return *this;
 }

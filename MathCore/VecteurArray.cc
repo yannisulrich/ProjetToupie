@@ -39,12 +39,6 @@ unsigned int VecteurArray<T>::dim() const {
     return dim_;
 }
 
-template <>
-void VecteurArray<vector<double> >::augmente(const double & value) {
-    v_.push_back(value);
-    dim_ += 1;
-}
-
 template <class T>
 double VecteurArray<T>::getCoord(const size_t & Coord) const {
     if(Coord > (v_.size()-1)) {
@@ -52,23 +46,12 @@ double VecteurArray<T>::getCoord(const size_t & Coord) const {
     }
     return v_[Coord];
 }
-template <class T>
-void VecteurArray<T>::set_coord(const size_t & coord, const double & value) {
-    if(coord < 0) throw invalid_argument( "received negative value" );
-    v_[coord] = value;
-}
 
 
 //operations basiques utiles
-template <class T>
-void VecteurArray<T>::dimcheck(const VecteurArray<T>& v2) const {
-    if (dim_ != v2.dim_){
-        throw invalid_argument( "dimensions do not match" );
-    }
-}
+
 template <class T>
 bool VecteurArray<T>::operator==(const VecteurArray<T>& v2) const {
-    dimcheck(v2);
     for(size_t i(0); i < v_.size(); ++i) {
         if (abs((v_)[i] - (v2.v_)[i]) > 1e-10) {
             return false;
@@ -84,8 +67,6 @@ bool VecteurArray<T>::operator!=(const VecteurArray<T>& v2) const {
 template <class T>
 VecteurArray<T> & VecteurArray<T>::operator+=(const VecteurArray<T>& v2) {
 
-    dimcheck(v2);
-
     double * vect1pos(& v_[0]);
     const double * vect2pos(& v2.v_[0]);
 
@@ -97,7 +78,6 @@ VecteurArray<T> & VecteurArray<T>::operator+=(const VecteurArray<T>& v2) {
 }
 template <class T>
 VecteurArray<T> & VecteurArray<T>::operator-=(const VecteurArray<T>& v2) {
-    dimcheck(v2);
     double * vect1pos(& v_[0]);
     const double * vect2pos(&v2.v_[0]);
     for(size_t i = 0; i < dim_; ++ i) {
@@ -124,7 +104,6 @@ const VecteurArray<T> operator*(const double & scal, VecteurArray<T> vect) {
 }
 template <class T>
 double VecteurArray<T>::operator*(const VecteurArray<T>& v2) const {
-    dimcheck(v2);
     double output(0);
     for(size_t i(0); i < dim_; ++i) {
         output += v_[i] * v2.v_[i];
@@ -153,7 +132,7 @@ VecteurArray<array<double, 3> > VecteurArray<array<double, 3> >::operator^(const
 
 template <class T>
 double &VecteurArray<T>::operator[](size_t coord) { //read-write access
-    return (double &)(v_)[coord];
+    return v_[coord];
 }
 
 template class VecteurArray<array<double, 3>>;
