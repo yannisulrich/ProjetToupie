@@ -10,7 +10,11 @@
  * de presque 10).
  *
  * Les operations mathématiques possibles entres vecteurs sont implémentés (même le produit vectoriel pour les vecteurs de dim 3),
- * ainsi que toutes les méthodes demandées par la donnée. L'opérateur [] est surchargé pour permettre l'accès (rw) à une valeur.
+ * ainsi que toutes les méthodes demandées par la donnée. Les opérateurs + et - utilisent les opérateurs += et -=.
+ * La multiplication par un double est possible.
+ *L'opérateur ~ dénote une méthode qui retourne le vecteur unitaire de même direction et sens que l'objet.
+ *
+ * L'opérateur [] est surchargé pour permettre l'accès (rw) à une valeur.
  * L'affichage est fait au moyen d'une méthode friend.
  *
  * Des typedef sont faits pour les VecteurArray contenant des arrays de taille 3 et 5: on peut utiliser Vecteur3 et Vecteur5.
@@ -50,7 +54,7 @@ public:
     bool operator!=(const VecteurArray<T>& v2) const;
 
     [[nodiscard]] double norm() const;
-    const VecteurArray<T> operator~() const;
+    const VecteurArray<T> operator~() const; // vecteur unitaire pointant dans la même direction et le même sens
     VecteurArray<T> & operator+=(const VecteurArray<T>& v2); //operations mathématiques
     VecteurArray<T> & operator-=(const VecteurArray<T>& v2);
     friend const VecteurArray<T> operator* (const double & scal, VecteurArray<T> vect) {
