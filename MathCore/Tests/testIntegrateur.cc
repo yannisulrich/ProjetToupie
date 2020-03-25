@@ -18,9 +18,7 @@ Vecteur5 sinus(const double & t, const Vecteur5& P_, const Vecteur5& P_dot_) {
     return out;
 }
 int main() {
-    IntegrateurEulerCromer5 integEC(f);
-    IntegrateurNewmark5 integN(f);
-    IntegrateurRungeKutta5 integR(f);
+
 
     FILE* gnuplotPipe = popen("gnuplot -persist","w");
     ofstream sortie;
@@ -29,13 +27,17 @@ int main() {
     double e = 0.001;
     unsigned int n = static_cast<int>(0.05/dt);
 
+    IntegrateurEulerCromer5 integEC(f);
+    IntegrateurNewmark5 integN(f, e);
+    IntegrateurRungeKutta5 integR(f);
+
     sortie.open("gnuplotdata.txt", ios::out);
     ConeSimple cone(Vecteur5(0,1,0,0,0),Vecteur5(1,3,0,0,0), 1.0, 1.0, 0.127);
     Vecteur5 v(0,1,1,0,0);
     auto start = high_resolution_clock::now();
 
     for(int t(0); t < T/(n*dt); ++t) {
-        integR.integrateMultiple(n, cone, dt, e);
+        integR.integrateMultiple(n, cone, dt);
         //cout << cone << endl;
         //cone.imprimeFichierP(sortie);
     }

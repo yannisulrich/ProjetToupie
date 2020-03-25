@@ -7,13 +7,13 @@
 
 //TODO: see if ever used
 template <class T>
-void IntegrateurEulerCromer<T>::integrate(Toupie &toupie, const double & dt,const double & t) const {
+void IntegrateurEulerCromer<T>::integrate(Toupie &toupie, const double & dt,const double & t) {
     toupie.P_dot += dt * this->f(t, toupie.P, toupie.P_dot);
     toupie.P += dt * toupie.P_dot;
 }
 
 template<typename T>
-void IntegrateurEulerCromer<T>::integrateMultiple(const unsigned int & n, Toupie &toupie, const double &dt, const double & t) const {
+void IntegrateurEulerCromer<T>::integrateMultiple(const unsigned int & n, Toupie &toupie, const double &dt, const double & t) {
     for(size_t i(0); i < n; ++i) {
         integrate( toupie, dt, t + i*dt);
     }

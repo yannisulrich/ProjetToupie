@@ -22,8 +22,8 @@ add_subdirectory(.. cmake-build-debug)
 #Ceci sert à choisir quel fichier test doit être exécuté.
 
 #add_executable(Tests testVecteur.cpp)
-add_executable(Tests testMatrice.cc)
+#add_executable(Tests testMatrice.cc)
 #add_executable(Tests testToupie.cc)
-#add_executable(Tests testIntegrateur.cc)
+add_executable(Tests testIntegrateur.cc)
 
 target_link_libraries(Tests PUBLIC MathCore)

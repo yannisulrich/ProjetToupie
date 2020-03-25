@@ -24,7 +24,6 @@
  */
 #pragma once
 
-
 #include <initializer_list>
 #include <memory>
 #include <vector>
@@ -32,6 +31,7 @@
 #include <iostream>
 #include <memory>
 #include <iomanip>
+
 template <typename T>
 class VecteurArray {
     friend class Matrice; //ceci sert a accélérer la multiplication matricielle.

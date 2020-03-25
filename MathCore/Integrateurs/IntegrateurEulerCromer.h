@@ -12,8 +12,8 @@ public:
     explicit IntegrateurEulerCromer(const std::function<VecteurArray<T>(const double & t, const VecteurArray<T> &, const VecteurArray<T> &)> &f)
             : Integrateur<T>(f) {}
 
-    void integrate(Toupie &toupie, const double &dt, const double & t = 0) const;
-    void integrateMultiple(const unsigned int&, Toupie & toup, const double& dt, const double & t = 0) const;
+    void integrate(Toupie &toupie, const double &dt, const double & t = 0);
+    void integrateMultiple(const unsigned int&, Toupie & toup, const double& dt, const double & t = 0);
 };
 
 
