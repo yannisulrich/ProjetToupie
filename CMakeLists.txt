@@ -26,6 +26,12 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/Math
 add_subdirectory(MathCore)
 target_link_libraries(ToupieMain PUBLIC MathCore)
 
+
 target_link_libraries(ToupieMain PRIVATE Qt5::Widgets)
 
+#traductions
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+
+
+
+
