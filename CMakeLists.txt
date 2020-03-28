@@ -1,6 +1,13 @@
-cmake_minimum_required(VERSION 3.5)
-
+cmake_minimum_required(VERSION 3.15)
 project(ToupieMain LANGUAGES CXX)
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+# Set Qt directory here
+set(customQtRoot "C:\\Qt\\5.14.1\\mingw73_32")
+IF(WIN32)
+    message(STATUS "Will link Qt for Windows.")
+    list(APPEND CMAKE_PREFIX_PATH ${customQtRoot})
+ENDIF()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
@@ -9,7 +16,7 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops")
+# set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops")
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 
@@ -21,16 +28,30 @@ add_executable(ToupieMain
           mainwindow.h
           mainwindow.ui
     ${TS_FILES}
-        )
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/MathCore)
+  )
+
+set(projectIncludes ${CMAKE_SOURCE_DIR}
+        ${CMAKE_SOURCE_DIR}/MathCore
+        ${CMAKE_SOURCE_DIR}/MathCore/Integrateurs)
+include_directories(${projectIncludes})
+
 add_subdirectory(MathCore)
 target_link_libraries(ToupieMain PUBLIC MathCore)
-
-
 target_link_libraries(ToupieMain PRIVATE Qt5::Widgets)
 
+if(WIN32)
+    # Finally, need to deploy Qt
+    SET(customQtBin ${customQtRoot}\\bin)
+    SET(customQtDeploy ${customQtBin}\\windeployqt)
+    SET(customQtDeployLoc ${CMAKE_BINARY_DIR})
+    add_custom_command(TARGET ToupieMain POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E env PATH="${customQtBin}"
+            ${customQtDeploy} $<TARGET_FILE:ToupieMain>
+            COMMENT "Calling windeployqt...")
+endif()
+
 #traductions
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+#qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 
 
