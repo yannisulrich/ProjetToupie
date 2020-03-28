@@ -23,11 +23,13 @@ add_executable(ToupieMain
           mainwindow.ui
     ${TS_FILES}
   )
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/MathCore)
+
+set(projectIncludes ${CMAKE_SOURCE_DIR}
+        ${CMAKE_SOURCE_DIR}/MathCore
+        ${CMAKE_SOURCE_DIR}/MathCore/Integrateurs)
+include_directories(${projectIncludes})
+
 add_subdirectory(MathCore)
-target_link_libraries(ToupieMain PUBLIC MathCore)
-
-
 target_link_libraries(ToupieMain PUBLIC MathCore)
 target_link_libraries(ToupieMain PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets)
 
