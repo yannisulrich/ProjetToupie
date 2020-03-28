@@ -14,11 +14,10 @@ std::vector<Toupie* > toupies;
 public:
     Systeme(const Systeme&) = delete;
     Systeme & operator=(const Systeme&) = delete;
-    Systeme(Toupie & toupies_) {
-        toupies.push_back(&toupies_);
-    }
+    Systeme(const std::initializer_list<Toupie* >& toupies_): toupies(toupies_) {}
+
     //void addToupie(Toupie &);
-    [[nodiscard]] std::vector<std::unique_ptr<Toupie> > getToupies() const;
+    [[nodiscard]] std::vector<Toupie * > getToupies() const;
     friend std::ostream& operator<<(std::ostream& out, const Systeme & systeme);
 
 };

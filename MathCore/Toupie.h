@@ -18,12 +18,12 @@ protected:
 public:
     Vecteur5 P;
     Vecteur5 P_dot;
-    //TODO: consider if these two should be public
+    //TODO: think about wether these two should be public
     Toupie(std::function<Vecteur5(const double & t, const Vecteur5& P, const Vecteur5& P_dot)>  f,
             const Vecteur5 & P_, const Vecteur5 & P_dot_, const Matrice &  I_, std::string  type_):
             f_(std::move(f)), P(P_), P_dot(P_dot_), Ig(I_), type(std::move(type_)) {};
 
-
+    virtual ~Toupie() {};
     [[nodiscard]] Vecteur5 getP() const;
     [[nodiscard]] Vecteur5 getP_dot() const;
     void setP(const Vecteur5&);

@@ -44,7 +44,6 @@ public:
     VecteurArray():v_(T()), dim_(v_.size())   {} //const avec valeurs à 0
     VecteurArray(const double &, const double &, const double &); //const. pour 3 valeurs
     VecteurArray(const double &, const double &, const double &, const double &, const double &); //const. pour 5 valeurs
-
     [[nodiscard]] T v() const; //accès aux attributs
     void setVect(const T & input);
     [[nodiscard]] unsigned int dim() const;
@@ -76,12 +75,12 @@ template <class T>
 const VecteurArray<T> operator+(VecteurArray<T> v1, const VecteurArray<T>& v2) {
     v1 += v2;
     return v1;
-};
+}
 template <class T>
 const VecteurArray<T> operator-(VecteurArray<T> v1, const VecteurArray<T>& v2) {
     v1 -= v2;
     return v1;
-};
+}
 
 typedef VecteurArray<std::array<double, 3> > Vecteur3;
 typedef VecteurArray<std::array<double, 5> > Vecteur5;

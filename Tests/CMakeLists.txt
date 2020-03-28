@@ -4,6 +4,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 project(TestSys)
 
+
 set(CMAKE_CXX_STANDARD 17)
 set(VERBOSE 1)
 
@@ -15,10 +16,10 @@ set(VERBOSE 1)
 set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops")
 #set(CMAKE_CXX_FLAGS "")
 
-
+add_subdirectory(../MathCore)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_SOURCE_DIR}/../MathCore ${CMAKE_CURRENT_SOURCE_DIR}/../Graphics)
-include_directories(.. ../MathCore ../Graphics)
-add_subdirectory(.. cmake-build-debug)
+#include_directories(.. ../MathCore ../Graphics)
+#add_subdirectory(.. cmake-build-debug)
 #add_subdirectory(../MathCore ../Graphics)
 #Ceci sert à choisir quel fichier test doit être exécuté.
 

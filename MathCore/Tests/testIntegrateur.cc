@@ -52,5 +52,4 @@ int main() {
     fprintf(gnuplotPipe,"exit \n");   // exit gnuplot
     pclose(gnuplotPipe);
 
-    return 0;
 }

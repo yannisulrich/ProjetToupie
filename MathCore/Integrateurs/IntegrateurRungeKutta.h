@@ -12,8 +12,8 @@ public:
     explicit IntegrateurRungeKutta():
             Integrateur(), k1(), k2(), k3(), k4(), k1p(), k2p(), k3p(), k4p(), P_n(), P_dot_n() {}
 
-    void integrate(Toupie &, const double & dt, const double & t = 0);
-    void integrateMultiple(const unsigned int& k, Toupie & toupie, const double& dt,const double& t = 0);
+    void integrate(Toupie &, const double & dt, const double & t = 0) override;
+    void integrateMultiple(const unsigned int& k, Toupie & toupie, const double& dt,const double& t = 0) override;
 
 };
 
