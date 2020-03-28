@@ -41,11 +41,13 @@ target_link_libraries(ToupieMain PRIVATE Qt5::Widgets)
 
 if(WIN32)
     # Finally, need to deploy Qt
-    SET(customQtDeploy ${customQtRoot}\\bin\\windeployqt)
+    SET(customQtBin ${customQtRoot}\\bin)
+    SET(customQtDeploy ${customQtBin}\\windeployqt)
     SET(customQtDeployLoc ${CMAKE_BINARY_DIR})
-    #message(STATUS "Will run ${customQtDeploy} --dir ${customQtDeployLoc} $<TARGET_FILE:ToupieMain>")
     add_custom_command(TARGET ToupieMain POST_BUILD
-            COMMAND ${customQtDeploy} --dir ${customQtDeployLoc} $<TARGET_FILE:ToupieMain>)
+            COMMAND ${CMAKE_COMMAND} -E env PATH="${customQtBin}"
+            ${customQtDeploy} $<TARGET_FILE:ToupieMain>
+            COMMENT "Calling windeployqt...")
 endif()
 
 #traductions
