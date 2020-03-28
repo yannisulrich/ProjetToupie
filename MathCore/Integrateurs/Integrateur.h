@@ -6,6 +6,7 @@
 #pragma once
 
 #include <utility>
+#include <functional>
 
 #include "../Toupie.h"
 #include "../VecteurArray.h"
