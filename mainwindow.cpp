@@ -26,15 +26,15 @@ void MainWindow::on_pushButtonT_clicked()
     int integrator = ui->Integrator->currentIndex();
     switch(integrator) {
         case 0: {
-            IntegrateurEulerCromer5 integ(f);
+            IntegrateurEulerCromer integ;
             break;
         }
         case 1: {
-            IntegrateurNewmark5 integ(f, 0.001);
+            IntegrateurNewmark5 integ(0.001);
             break;
         }
         case 2: {
-            IntegrateurRungeKutta5 integ(f);
+            IntegrateurRungeKutta5 integ;
             break;
         }
     }

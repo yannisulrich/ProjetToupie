@@ -21,7 +21,7 @@ add_executable(ToupieMain
           mainwindow.h
           mainwindow.ui
     ${TS_FILES}
-  )
+        )
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/MathCore)
 add_subdirectory(MathCore)
 target_link_libraries(ToupieMain PUBLIC MathCore)

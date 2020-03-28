@@ -6,8 +6,17 @@
 #include <iostream>
 #include <iomanip>
 
-std::ostream& operator<<(std::ostream& out, const ConeSimple & cone) {
-    out << "P: " << std::setw(10) << cone.getP() << ", P_dot: " << cone.getP_dot();
-    out << ", masse: " << cone.m << ", Longueur:  " << cone.L << ", Rayon: " << cone.R;
-    return out;
+double ConeSimple::getL() const {
+    return L;
+}
+double ConeSimple::getR() const {
+    return R;
+}
+double ConeSimple::getM() const {
+    return m;
+}
+
+void ConeSimple::affiche(std::ostream & out) const {
+    out << "P: " << std::setw(10) << P << ", P_dot: " << P_dot;
+    out << ", masse: " << m << ", Longueur:  " << L << ", Rayon: " << R;
 }

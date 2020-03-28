@@ -5,8 +5,11 @@
 #include "Toupie.h"
 #include <iostream>
 using namespace std;
-Vecteur5 Toupie::f() const {
-    return -P;
+Vecteur5 Toupie::f(const double & t,const Vecteur5& P_, const Vecteur5& P_dot_) const {
+    return f_(t, P_, P_dot_);
+}
+Vecteur5 Toupie::f(const double & t) const {
+    return f_(t, P, P_dot);
 }
 Vecteur5 Toupie::getP() const {
     return P;
@@ -18,10 +21,6 @@ Vecteur5 Toupie::getP_dot() const {
 
 Matrice Toupie::getI() const {
     return Ig;
-}
-std::ostream& operator<<(std::ostream &out, const Toupie &toup) {
-    out << "P: " << toup.getP() << ", P_dot: " << toup.getP_dot();
-    return out;
 }
 void Toupie::setP(const Vecteur5 & P_) {
     P = P_;
@@ -43,6 +42,10 @@ std::ofstream & Toupie::imprimeFichierP_dot(std::ofstream &out) {
     }
     out << endl;
     return out;
+}
+
+std::string Toupie::getType() const {
+    return type;
 }
 
 
