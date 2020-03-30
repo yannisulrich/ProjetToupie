@@ -8,6 +8,7 @@
 #include <iostream>
 #include <utility>
 #include <string>
+#include <functional>
 #include "../Graphics/Graphics.h"
 #include "../Graphics/Dessinable.h"
 #include "../Graphics/SupportADessin.h"

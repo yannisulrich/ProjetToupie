@@ -28,7 +28,7 @@ void Toupie::setP(const Vecteur5 & P_) {
 void Toupie::setP_dot(const Vecteur5 & P_dot_) {
     P_dot = P_dot_;
 }
-
+/* TODO: clean up
 std::ofstream & Toupie::imprimeFichierP(std::ofstream &out) {
     for(double i: P.v()) {
         out << i << " ";
@@ -43,7 +43,7 @@ std::ofstream & Toupie::imprimeFichierP_dot(std::ofstream &out) {
     out << endl;
     return out;
 }
-
+*/
 std::string Toupie::getType() const {
     return type;
 }
