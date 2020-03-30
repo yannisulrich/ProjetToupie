@@ -31,9 +31,9 @@ IntegrateurEulerCromer herite (en public) de Integrateur.
 
 
 P8.1
-Le type de méthode que nous avons choisi d'implémenter est une méthode virtuelle pure, car:
+Le type de méthode que nous avons choisi d'implémenter est une méthode virtuelle (pure pour SupportADessin et Dessinable), car:
 - nous avons besoin de polymorphisme
-- Dessiner un objet de la classe SupportADessin n'a pas de sens, il faut savoir dans quelle sous-classe on se situe.
+- Dessiner un objet de la classe Dessinable n'a pas de sens, il faut savoir dans quelle sous-classe on se situe.
 
 P8.2
 Nous utilisons le polymorphisme grâce à la classe abstraite Integrateur. De cette manière la
@@ -41,7 +41,7 @@ Nous utilisons le polymorphisme grâce à la classe abstraite Integrateur. De ce
 P8.3
 Il faut faire attention aux copies d'objets et au destructeur. Par la règle des 3, nous avons aussi explicité le "copy assignment operator".
 Nous avons opté d'interdire la copie, et que le destructeur ne detruise pas les toupies, uniquement les références. Nous interdisons la copie
-car elle n'a pas vraiment de sens dans notre scenario.
+car elle n'a pas vraiment de sens dans notre scenario, et ceci évite donc des erreurs.
 
 P8.4
-La classe système contient un vecteur de unique_ptr sur des toupies. L'initialisation
+La classe système contient un vecteur de pointeurs sur des toupies.

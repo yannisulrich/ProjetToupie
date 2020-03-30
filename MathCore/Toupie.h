@@ -8,9 +8,11 @@
 #include <iostream>
 #include <utility>
 #include <string>
+#include "../Graphics/Graphics.h"
+#include "../Graphics/Dessinable.h"
+#include "../Graphics/SupportADessin.h"
 
-class Toupie {
-    friend class Integrateur;
+class Toupie: public Dessinable {
 protected:
     Matrice Ig;
     const std::function<Vecteur5(const double & t, const Vecteur5& P, const Vecteur5& P_dot)> f_;
@@ -19,8 +21,8 @@ public:
     Vecteur5 P;
     Vecteur5 P_dot;
     //TODO: think about wether these two should be public
-    Toupie(std::function<Vecteur5(const double & t, const Vecteur5& P, const Vecteur5& P_dot)>  f,
-            const Vecteur5 & P_, const Vecteur5 & P_dot_, const Matrice &  I_, std::string  type_):
+    Toupie(SupportADessin* support_, std::function<Vecteur5(const double & t, const Vecteur5& P, const Vecteur5& P_dot)>  f,
+            const Vecteur5 & P_, const Vecteur5 & P_dot_, const Matrice &  I_, std::string  type_): Dessinable(support_),
             f_(std::move(f)), P(P_), P_dot(P_dot_), Ig(I_), type(std::move(type_)) {};
 
     virtual ~Toupie() {};

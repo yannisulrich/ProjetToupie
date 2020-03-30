@@ -5,3 +5,4 @@
 
 #include "Dessinable.h"
 #include "SupportADessin.h"
+#include "text/TextViewer.h"

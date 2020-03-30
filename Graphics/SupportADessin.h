@@ -3,13 +3,15 @@
 //
 #pragma once
 
-#include "MathCore.h"
+class Toupie;
 
 class SupportADessin {
 public:
     virtual ~SupportADessin() {}
-    SupportADessin(const SupportADessin&) = delete;
-    virtual void dessine(ConeSimple const&) = 0;
+
+    //SupportADessin(const SupportADessin&) = delete;
+
+    virtual void dessine(Toupie const&) = 0;
     //virtual void dessine(Systeme const&) = 0;
 };
 

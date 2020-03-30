@@ -1,13 +1,19 @@
 cmake_minimum_required(VERSION 3.15)
 project(ToupieMain LANGUAGES CXX)
+
+
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
+
+#set(CMAKE_CXX_COMPILER /usr/bin/gcc)
 # Set Qt directory here
+
 set(customQtRoot "C:\\Qt\\5.14.1\\mingw73_32")
 IF(WIN32)
     message(STATUS "Will link Qt for Windows.")
     list(APPEND CMAKE_PREFIX_PATH ${customQtRoot})
 ENDIF()
+
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
@@ -32,10 +38,15 @@ add_executable(ToupieMain
 
 set(projectIncludes ${CMAKE_SOURCE_DIR}
         ${CMAKE_SOURCE_DIR}/MathCore
-        ${CMAKE_SOURCE_DIR}/MathCore/Integrateurs)
+        ${CMAKE_SOURCE_DIR}/MathCore/Integrateurs
+        ${CMAKE_SOURCE_DIR}/Tests
+        ${CMAKE_SOURCE_DIR}/Graphics)
 include_directories(${projectIncludes})
 
 add_subdirectory(MathCore)
+add_subdirectory(Tests)
+add_subdirectory(Graphics)
+
 target_link_libraries(ToupieMain PUBLIC MathCore)
 target_link_libraries(ToupieMain PRIVATE Qt5::Widgets)
 

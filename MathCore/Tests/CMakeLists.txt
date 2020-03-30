@@ -9,9 +9,9 @@
 #add_executable(TestVecteur testVecteur.cpp)
 #add_executable(TestMatrice testMatrice.cc)
 #add_executable(TestToupie testToupie.cc)
-add_executable(TestIntegrateur testIntegrateur.cc)
+#add_executable(TestIntegrateur testIntegrateur.cc)
 
 #target_link_libraries(TestVecteur PUBLIC MathCore)
 #target_link_libraries(TestMatrice  PUBLIC MathCore)
 #target_link_libraries(TestToupie  PUBLIC MathCore)
-target_link_libraries(TestIntegrateur  PUBLIC MathCore)
+#target_link_libraries(TestIntegrateur  PUBLIC MathCore)
