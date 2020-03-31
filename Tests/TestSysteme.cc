@@ -14,13 +14,13 @@ int main() {
     auto cone1 = new ConeSimple(output, f, Vecteur5(0,1,0,0,0),Vecteur5(1,3,0,0,0), 1.0, 1.0, 0.127);
     auto cone2 = new ConeSimple(output, f, Vecteur5(0,2,0,0,0),Vecteur5(1,3,0,0,0), 1.0, 1.0, 0.127);
 
-    Systeme systeme({cone1, cone2});
+    Systeme systeme({cone1, cone2}, output);
     //Systeme systeme({new ConeSimple(f, Vecteur5(0, 1, 0, 0, 0), Vecteur5(1, 3, 0, 0, 0), 1.0, 1.0, 0.127), new ConeSimple(f, Vecteur5(0, 1, 0, 0, 0), Vecteur5(1, 3, 0, 0, 0), 1.0, 1.0, 0.127)});
 
-    cout << systeme << endl;
+    systeme.dessine();
 
     cone1->P[0] = 1;
 
-    cout << systeme << endl;
+    systeme.dessine();
     cone1->dessine();
 }

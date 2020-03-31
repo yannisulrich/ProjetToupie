@@ -10,12 +10,11 @@ class TextViewer: public SupportADessin {
 private:
     std::ostream& out;
 public:
-    explicit TextViewer(std::ostream &out)
-            : out(out)
-    {}
-    virtual ~TextViewer() {}
+    explicit TextViewer(std::ostream &out): out(out) {}
+    ~TextViewer() override = default;
 
-    virtual void dessine(Toupie const&) override;
+    void dessine(Toupie const&) override;
+    void dessine(Systeme const&) override;
 };
 
 

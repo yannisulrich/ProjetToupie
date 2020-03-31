@@ -26,10 +26,16 @@ public:
     virtual void dessine() override
     { support->dessine(*this); }
 
+
     double getL() const;
     double getR() const;
     double getM() const;
+
+    void afficheFile(std::ostream&) const override;
+
     void affiche(std::ostream&) const override;
+
+    void afficheSimple(std::ostream&) const override;
 
 };
 

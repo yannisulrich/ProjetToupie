@@ -38,9 +38,11 @@ public:
     [[nodiscard]]Vecteur5 f(const double & t,const Vecteur5& P_, const Vecteur5& P_dot_) const;
     [[nodiscard]] Vecteur5 f(const double & t) const;
     virtual void affiche(std::ostream&) const = 0;
-    friend std::ostream& operator<<(std::ostream& out, const Toupie & toupie) {toupie.affiche(out); return out;};
-    std::ofstream & imprimeFichierP(std::ofstream& out);
-    std::ofstream & imprimeFichierP_dot(std::ofstream &out);
+    virtual void afficheFile(std::ostream&) const = 0;
+    virtual void afficheSimple(std::ostream&) const = 0;
+    friend std::ostream& operator<<(std::ostream& out, const Toupie & toupie) {toupie.afficheSimple(out); return out;};
+    //std::ofstream & imprimeFichierP(std::ofstream& out);
+    //std::ofstream & imprimeFichierP_dot(std::ofstream &out);
 
 };
 

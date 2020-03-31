@@ -19,8 +19,12 @@ std::vector<Toupie* > Systeme::getToupies() const {
     return toupies;
 }
 
-/*
 void Systeme::addToupie(Toupie & toupie) {
-    toupies.push_back(static_cast<const std::unique_ptr<Toupie>>(&toupie));
+    toupies.push_back(&toupie);
 }
-*/
+
+void Systeme::integrate(Integrateur * integrateur, const double& dt, const double& t) {
+    for(auto i : toupies) {
+        integrateur->integrate(*i, dt, t);
+    }
+}
