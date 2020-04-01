@@ -4,10 +4,8 @@
 
 #include "Vecteur.h"
 #include <stdexcept>
-#include <iostream>
 #include<string>
 #include<cmath>
-#include <chrono>
 
 
 using namespace std;

@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Integrateur.h"
+#include "../VecteurArray.h"
 
 template <int n>
 class IntegrateurNewmark: public Integrateur {
@@ -15,8 +16,7 @@ public:
     Integrateur(),q(), r(), s(), P_n(), P_dot_n(), e_(e) {}
 
     double & e() {return e_;}
-    void integrate(Toupie & toupie, const double & dt, const double & t = 0.);
-    void integrateMultiple(const unsigned int&, Toupie & toup, const double& dt, const double & t = 0.);
+    void integrate(Toupie & toupie, const double & dt, const double & t) override;
 };
 
 

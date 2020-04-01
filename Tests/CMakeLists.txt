@@ -13,7 +13,7 @@
 #Ceci sert à choisir quel fichier test doit être exécuté.
 
 
-add_executable(TestSys testSysteme.cc ../Systeme.h ../Systeme.cc)
+add_executable(TestSys ExerciceP9b.cc ../Systeme.h ../Systeme.cc)
 
 target_link_libraries(TestSys PUBLIC MathCore)
 target_link_libraries(TestSys PUBLIC  Graphics)

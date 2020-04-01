@@ -1,9 +1,11 @@
 //
 // Created by Yannis on 22.03.20.
 //
+#pragma once
 
 #include "Integrateur.h"
-#pragma once
+#include "../VecteurArray.h"
+
 template <int n>
 class IntegrateurRungeKutta: public Integrateur {
 private:
@@ -12,9 +14,7 @@ public:
     explicit IntegrateurRungeKutta():
             Integrateur(), k1(), k2(), k3(), k4(), k1p(), k2p(), k3p(), k4p(), P_n(), P_dot_n() {}
 
-    void integrate(Toupie &, const double & dt, const double & t = 0) override;
-    void integrateMultiple(const unsigned int& k, Toupie & toupie, const double& dt,const double& t = 0) override;
-
+    void integrate(Toupie &, const double & dt, const double & t) override;
 };
 
 typedef IntegrateurRungeKutta<5> IntegrateurRungeKutta5;

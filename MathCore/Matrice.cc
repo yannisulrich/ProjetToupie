@@ -54,13 +54,8 @@ Matrice& Matrice::operator-=(const Matrice &mat2) {
     return *this;
 }
 
-Matrice Matrice::operator*(const Matrice & mat2) { //TODO: optimize or bail
+Matrice Matrice::operator*(const Matrice & mat2) {
     Matrice output;
-    /*
-    const double* matpos0 =  & m[0][0];
-    const double* mat2pos0 =  & (*mat2.m)[0][0];
-    double* outpos0 =  & (*output.m)[0][0];
-    */
 
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {
@@ -108,7 +103,7 @@ Matrice operator*(const double & scal, const Matrice & mat) {
     }
     return output;
 }
-double& Matrice::operator()(const unsigned & line, const unsigned & col) { //TODO: test
+double& Matrice::operator()(const unsigned & line, const unsigned & col) {
     return  m[line][col];
 }
 //méthode d'affichage, qui utilise setw de la bibiliothèque <iomanip> pour aligner les colonnes.
@@ -147,7 +142,7 @@ Matrice Matrice::inv() {
 
     return out;
 }
-Matrice Matrice::transp() const { //TODO: optimize or not, if needed
+Matrice Matrice::transp() const {
     Matrice out;
     for(size_t i(0); i < 3; ++i) {
         for(size_t j(0); j < 3; ++j) {

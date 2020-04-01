@@ -3,14 +3,15 @@
 //
 
 #include "IntegrateurNewmark.h"
-#include <iostream>
+#include "Toupies/Toupie.h"
 
-template<int n>
-void IntegrateurNewmark<n>::integrate(Toupie & toupie, const double & dt, const double & t) {
+
+template<>
+void IntegrateurNewmark<5>::integrate(Toupie & toupie, const double & dt, const double & t) {
     P_dot_n = toupie.P_dot;
     P_n = toupie.P;
     s = toupie.f(t, P_n, P_dot_n);
-    q.setVect(std::array<double, n>());
+    q.setVect(std::array<double, 5>());
     while((P_n - q)*(P_n - q) > e_ * e_) {
         q = P_n;
         r = toupie.f(t, P_n, P_dot_n);
@@ -19,13 +20,6 @@ void IntegrateurNewmark<n>::integrate(Toupie & toupie, const double & dt, const 
     }
     toupie.P = P_n;
     toupie.P_dot = P_dot_n;
-}
-
-template<int n>
-void IntegrateurNewmark<n>::integrateMultiple(const unsigned int & k, Toupie &toup, const double &dt, const double & t) {
-    for(size_t i(0); i < k; ++i) {
-        integrate(toup, dt, t + i * dt);
-    }
 }
 
 template class IntegrateurNewmark<5>;

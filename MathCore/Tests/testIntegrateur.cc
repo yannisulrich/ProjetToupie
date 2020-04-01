@@ -2,7 +2,7 @@
 // Created by Yannis on 12.03.20.
 //
 #include "All_Integrateurs.h"
-#include "ConeSimple.h"
+#include "MathCore/Toupies/ConeSimple.h"
 #include "VecteurArray.h"
 #include "constantes.h"
 #include <iostream>

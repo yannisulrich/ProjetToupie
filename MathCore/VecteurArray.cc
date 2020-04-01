@@ -13,7 +13,11 @@ using namespace std;
 using namespace std::chrono;
 
 //constructeurs conditionnels suivant le type de v_
-
+template<>
+VecteurArray<array<double, 2> >::VecteurArray(const double & a, const double & b) {
+    dim_ = 2;
+    v_ = array<double, 2>({a, b});
+}
 template<> VecteurArray<array<double, 3>>::VecteurArray(const double & a, const double & b, const double & c) {
     dim_ = 3;
     v_ = array<double, 3>({a,b,c});
@@ -131,10 +135,13 @@ VecteurArray<array<double, 3> > VecteurArray<array<double, 3> >::operator^(const
 }
 
 template <class T>
-double &VecteurArray<T>::operator[](size_t coord) { //read-write access
+double & VecteurArray<T>::operator[](size_t coord) { //read-write access
     return v_[coord];
 }
 
+
+
+template class VecteurArray<array<double, 2>>;
 template class VecteurArray<array<double, 3>>;
 template class VecteurArray<array<double, 5>>;
 

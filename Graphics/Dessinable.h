@@ -6,13 +6,14 @@
 
 #include "SupportADessin.h"
 
+
 class Dessinable {
 protected:
 SupportADessin* support;
 public:
-    Dessinable(SupportADessin* support): support(support) {}
+    explicit Dessinable(SupportADessin* support): support(support) {}
 
-    virtual void dessine() = 0;
+    virtual void dessine() const = 0;
 };
 
 

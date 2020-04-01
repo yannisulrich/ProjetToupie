@@ -4,15 +4,13 @@
 
 #pragma once
 
-#include "Toupie.h"
 #include "Integrateur.h"
 
 
-class IntegrateurEulerCromer: Integrateur {
+class IntegrateurEulerCromer: public Integrateur {
 public:
     explicit IntegrateurEulerCromer() = default;
 
-    void integrate(Toupie &toupie, const double &dt, const double & t = 0) override;
-    void integrateMultiple(const unsigned int&, Toupie & toup, const double& dt, const double & t = 0) override;
+    void integrate(Toupie &toupie, const double &dt, const double & t) override;
 };
 

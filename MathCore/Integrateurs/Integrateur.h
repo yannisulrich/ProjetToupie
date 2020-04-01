@@ -7,13 +7,20 @@
 
 #include <utility>
 #include <functional>
-
+/*
 #include "../Toupie.h"
 #include "../VecteurArray.h"
+ */
+class Toupie;
 
 class Integrateur {
 public:
     Integrateur() = default;
     virtual void integrate(Toupie & toupie, const double& dt, const double & t) = 0;
-    virtual void integrateMultiple(const unsigned int& n, Toupie & toup, const double& dt, const double& t) = 0;
+
+    virtual void integrateMultiple(const size_t & n, Toupie & toupie, const double& dt, const double& t) {
+        for(size_t i(0); i < n; ++i) {
+            integrate(toupie, dt, t + i*dt);
+        }
+    };
 };

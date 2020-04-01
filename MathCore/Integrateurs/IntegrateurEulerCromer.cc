@@ -3,19 +3,15 @@
 //
 
 #include "IntegrateurEulerCromer.h"
-#include "../Toupie.h"
-
-//TODO: see if ever used
+#include "Toupies/Toupie.h"
+#include <iostream>
 
 void IntegrateurEulerCromer::integrate(Toupie &toupie, const double & dt,const double & t) {
+    //std::cout << toupie.P << std::endl;
     toupie.P_dot += dt * toupie.f(t);
     toupie.P += dt * toupie.P_dot;
+    //std::cout << toupie.P << std::endl;
 }
 
 
-void IntegrateurEulerCromer::integrateMultiple(const unsigned int & n, Toupie &toupie, const double &dt, const double & t) {
-    for(size_t i(0); i < n; ++i) {
-        integrate( toupie, dt, t + i*dt);
-    }
-}
 

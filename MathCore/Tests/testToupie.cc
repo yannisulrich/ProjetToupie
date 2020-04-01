@@ -2,7 +2,7 @@
 // Created by Yannis on 11.03.20.
 //
 
-#include "ConeSimple.h"
+#include "MathCore/Toupies/ConeSimple.h"
 #include <iostream>
 using namespace std;
 

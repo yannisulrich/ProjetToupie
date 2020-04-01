@@ -42,6 +42,7 @@ public:
     //constructeurs
     explicit VecteurArray(const T &input): dim_(input.size()), v_(input) {} //construction pour tailles quelconques
     VecteurArray():v_(T()), dim_(v_.size())   {} //const avec valeurs à 0
+    VecteurArray(const double &, const double &); //const. pour 2 valeurs
     VecteurArray(const double &, const double &, const double &); //const. pour 3 valeurs
     VecteurArray(const double &, const double &, const double &, const double &, const double &); //const. pour 5 valeurs
     [[nodiscard]] T v() const; //accès aux attributs
@@ -67,7 +68,7 @@ public:
 
     double& operator[](size_t coord);
     friend std::ostream& operator<<(std::ostream& out, const VecteurArray<T> & vect) {
-        for(double i : vect.v_) out << std::setw(10) << i;
+        for(double i : vect.v_) out << std::setw(15) << i;
         return out;};
 };
 
@@ -82,6 +83,7 @@ const VecteurArray<T> operator-(VecteurArray<T> v1, const VecteurArray<T>& v2) {
     return v1;
 }
 
+typedef VecteurArray<std::array<double, 2> > Vecteur2;
 typedef VecteurArray<std::array<double, 3> > Vecteur3;
 typedef VecteurArray<std::array<double, 5> > Vecteur5;
 

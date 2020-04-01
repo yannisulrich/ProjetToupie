@@ -10,4 +10,8 @@
 #include <array>
 
 extern const Vecteur3 g;
-extern Vecteur5 f(const double & t, const Vecteur5& P_, const Vecteur5& P_dot_);
+template <class T>
+VecteurArray<T> sinus(const double & t, const VecteurArray<T>& P, const VecteurArray<T>& P_dot) {
+    VecteurArray<T> out(- P);
+    return out;
+}

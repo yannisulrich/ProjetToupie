@@ -47,7 +47,7 @@ public:
     Matrice(const double & m11, const double & m22, const double & m33); //matrices diagonales
 
     double& operator()(const unsigned & line, const unsigned & col); //accès aux éléments read write
-
+    [[nodiscard]] double getCoord(const int& i, const int& j) const {return m[i][j];}
     Matrice& operator+=(const Matrice &); //surcharge des opérateurs élémentaires
     Matrice& operator-=(const Matrice &);
     [[nodiscard]] Matrice operator*(const Matrice &);
@@ -55,7 +55,6 @@ public:
     friend Matrice operator*(const double &, const Matrice &);
 
     [[nodiscard]] VecteurArray<std::array<double, 3>> operator*(const VecteurArray<std::array<double, 3>> &) const;
-    [[nodiscard]] VecteurArray<std::vector<double>> operator*(const VecteurArray<std::vector<double> > & vect) const;
 
     [[nodiscard]] Matrice transp() const;
     [[nodiscard]] double det() const;

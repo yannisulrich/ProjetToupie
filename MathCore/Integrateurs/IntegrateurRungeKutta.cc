@@ -3,9 +3,10 @@
 //
 
 #include "IntegrateurRungeKutta.h"
+#include "Toupies/Toupie.h"
 
-template <int n>
-void IntegrateurRungeKutta<n>::integrate(Toupie & toupie, const double & dt, const double & t) {
+template <>
+void IntegrateurRungeKutta<5>::integrate(Toupie & toupie, const double & dt, const double & t) {
     k1 = toupie.P_dot;
     k1p = toupie.f(t, toupie.P, toupie.P_dot);
     k2 = toupie.P_dot + dt/2 * k1p;
@@ -18,10 +19,5 @@ void IntegrateurRungeKutta<n>::integrate(Toupie & toupie, const double & dt, con
     toupie.P += dt/6 * (k1 + 2*k2 + 2*k3 + k4);
     toupie.P_dot += dt/6 * (k1p + 2*k2p + 2*k3p + k4p);
 }
-template <int n>
-void IntegrateurRungeKutta<n>::integrateMultiple(const unsigned int& k, Toupie & toupie, const double& dt,const double& t) {
-    for(size_t i(0); i < k; ++i) {
-        integrate(toupie, dt, t + i*dt);
-    }
-}
+
 template class IntegrateurRungeKutta<5>;
