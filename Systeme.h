@@ -25,8 +25,11 @@ public:
     void addConeSymFixe(const Vecteur5 & P, const Vecteur5 & P_dot,
             const double &L, const double &R, const double &m);
 
-    void addTippeTop(const Vecteur5 & P, const Vecteur5 & P_dot,
+    void addTippeTopRolls(const Vecteur5 & P, const Vecteur5 & P_dot,
                         const double &R, const double &h, const double &m);
+
+    void addTippeTopFriction(const Vecteur5 & P, const Vecteur5 & P_dot,
+                          const double &R, const double &h, const double& mu, const double &m);
 
     [[nodiscard]] std::vector<Toupie * > getToupies() const;
     friend std::ostream& operator<<(std::ostream& out, const Systeme & systeme);

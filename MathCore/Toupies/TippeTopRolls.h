@@ -8,7 +8,7 @@
 #include <cmath>
 #include <stdexcept>
 
-class TippeTop: public Toupie {
+class TippeTopRolls: public Toupie {
 private:
     double R;
     double h;
@@ -19,7 +19,7 @@ private:
 
 public:
 
-    TippeTop(SupportADessin* support, const Vecteur5& P, const Vecteur5& P_dot, const double& R, const double& h, const double& m):
+    TippeTopRolls(SupportADessin* support, const Vecteur5& P, const Vecteur5& P_dot, const double& R, const double& h, const double& m):
     R(R), h(h), alpha(3*h*h/(4*R*(R + h))),
     Toupie(support, P, P_dot, Matrice(m/5*(2 - 5*(3*h*h/(4*R*(R + h)))*(3*h*h/(4*R*(R + h))))*R*R + 0.45*m*h*h*(h - R)/(h + R),
                                       m/5*(2 - 5*(3*h*h/(4*R*(R + h)))*(3*h*h/(4*R*(R + h))))*R*R + 0.45*m*h*h*(h - R)/(h + R),

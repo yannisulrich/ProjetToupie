@@ -5,6 +5,8 @@
 #include "Systeme.h"
 
 #include <utility>
+
+
 using namespace std;
 std::ostream& operator<<(std::ostream& out, const Systeme & systeme) {
     std::vector<Toupie* > toupies = systeme.getToupies();
@@ -27,10 +29,12 @@ void Systeme::addConeSymFixe(const Vecteur5 &P, const Vecteur5 &P_dot, const dou
     toupies.push_back(new ConeSymFixe(support, P, P_dot, L, R, m));
 
 }
-void Systeme::addTippeTop(const Vecteur5 &P, const Vecteur5 &P_dot, const double &R, const double &h, const double &m) {
-    toupies.push_back(new TippeTop(support, P, P_dot, R, h, m));
+void Systeme::addTippeTopRolls(const Vecteur5 &P, const Vecteur5 &P_dot, const double &R, const double &h, const double &m) {
+    toupies.push_back(new TippeTopRolls(support, P, P_dot, R, h, m));
 }
-
+void Systeme::addTippeTopFriction(const Vecteur5 &P, const Vecteur5 &P_dot, const double &R, const double &h, const double & mu, const double &m) {
+    toupies.push_back(new TippeTopFriction(support, P, P_dot, R, h, mu, m));
+}
 
 void Systeme::integrate(Integrateur * integrateur, const double& dt, const double& t) {
     for(auto i : toupies) {
