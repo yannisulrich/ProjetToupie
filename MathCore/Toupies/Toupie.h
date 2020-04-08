@@ -18,9 +18,10 @@ class Toupie: public Dessinable {
 protected:
 
     Matrice Ig;
-    std::string type;
+
     double m;
 public:
+    const std::string type;
     Vecteur5 P;
     Vecteur5 P_dot;
 

@@ -38,6 +38,15 @@ void Systeme::addTippeTopFriction(const Vecteur5 &P, const Vecteur5 &P_dot, cons
 
 void Systeme::integrate(Integrateur * integrateur, const double& dt, const double& t) {
     for(auto i : toupies) {
+        if(i->type == "Tippe Top Inverseur") {
+            try {
+                dynamic_cast<TippeTopFriction &>(*i).update(dt);
+            }
+            catch(std::bad_cast& bc) {
+                std::cerr << "bad_cast caught: " << bc.what() << '\n';
+                std::cerr << "Est-ce que vous avez essayé de manuellement donner le type 'Tippe Top Inverseur' à une toupie?" << endl;
+            }
+        }
         integrateur->integrate(*i, dt, t);
     }
 }
@@ -45,6 +54,18 @@ void Systeme::integrate(Integrateur * integrateur, const double& dt, const doubl
 void Systeme::integrateMultiple(const size_t & n, Integrateur * integrateur, const double & dt, const double &t) {
     for(size_t i(0); i < n; ++i) {
         integrate(integrateur, dt, t + i*dt);
+    }
+    for(auto i : toupies) {
+        if(i->type == "Tippe Top Inverseur") {
+            try {
+                dynamic_cast<TippeTopFriction &>(*i).update(n*dt);
+            }
+            catch(std::bad_cast& bc) {
+                std::cerr << "bad_cast caught: " << bc.what() << '\n';
+                std::cerr << "Est-ce que vous avez essayé de manuellement donner le type 'Tippe Top Inverseur' à une toupie?" << endl;
+            }
+        }
+        integrateur->integrateMultiple(n, *i, dt, t);
     }
 }
 
