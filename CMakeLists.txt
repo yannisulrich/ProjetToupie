@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.15)
 project(ToupieMain LANGUAGES CXX)
 
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
-
 
 #set(CMAKE_CXX_COMPILER /usr/bin/gcc)
 # Set Qt directory here
@@ -56,7 +54,7 @@ if(WIN32)
     SET(customQtDeploy ${customQtBin}\\windeployqt)
     SET(customQtDeployLoc ${CMAKE_BINARY_DIR})
     add_custom_command(TARGET ToupieMain POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E env PATH="${customQtBin}"
+            COMMAND ${CMAKE_COMMAND} -E env PATH="${customQtBin}\;C:\\Qt\\Tools\\mingw730_64\\bin"
             ${customQtDeploy} $<TARGET_FILE:ToupieMain>
             COMMENT "Calling windeployqt...")
 endif()

@@ -14,3 +14,38 @@ Implémentation de la classe abstraite Integrateur et de l'integrateur Euler-Cro
 Semaine 6: implémentation des intégrateurs restants, finalisation de VecteurArray. Travail de compréhension pour le graphisme.
 Création d'une fenêtre principale du programme à partir de laquelle une simulation pourra être demarrée.
 
+Week 2
+We created the Vecteur class, as well as well as giving it the necessary methods for us to be able to modify a vector’s values and add dimensions to it or to display the vector.
+
+Week 3
+We then promptly deleted all of the previous week’s work, and now separated the code into a header and .cc file. It was not necessary to create a makefile, as our compilator (CLion) did this automatically.
+We also looked up exactly what #pragma once did before adding it, so we were sure of what it did.
+
+Week 4
+We used operator overloading in order to turn what were previously functions into simple uses of the standard C++ operators +, *, == and so forth.
+We then redid everything we had done up to the present for 3 by 3 matrices.
+The only minor challenge we faced was understanding how and where to put const in order to create a definition for each operator that worked well.
+For example, if the output of a vector times a scalar was a “const vecteur”, and we tried to multiply it by a scalar again, it initially gave an error as our scalar multiplication (an overload on *) was badly defined for the “const vecteur” type.
+However, with a liberal sprinkling of const in the correct places, as well as taking time to understand what exactly the computer understood from all our bugs, we managed to straighten out all the code.
+The trickiest part (for Tanish) was understanding whether these operator overloads could access or how to make them access parts of the “Vecteur” class that were private.
+
+Week 5
+Our first real work on the project kicked off with the creation of the Toupie class, and its subclass “Cone Simple”.
+We (= Yannis, the physics guy) had to begin integrate mathematics from the formula booklet and understanding exactly what these equations were modelling.
+We also created the Integrateur class (again, with much poring over equations from the formula booklet) for the modification of vectors with time.
+Yannis also attacked gnuplot and came up with some pretty nice plots whilst I took my time to understand exactly what an integrateur was (you can begin to see which one of us is faster...).
+Yannis also took it upon himself to optimise the various methods in the Matrice and Vecteur classes, and managed to reduce the computation time for multiplication from hundreds of milliseconds to tens of nanoseconds.
+
+Week 6
+Now the big stuff began to arrive with the creation of the Dessinable class and its method dessine(), as well as creating the System class in order to properly simulate the evolution of a spinning top as well as eventually simulating multiple tops.
+It was at this point when disaster struck, with Yannis’ code no longer compiling on my computer.
+We went through nearly 2 weeks of debugging, with a LOT of help from the assistants and the internet, and repeated abuse of  MAKE verbose-1 in Windows Powershell to try and understand what was going wrong.
+In this time, we also found a large variety of strange things going on in my PC, such as the fact I had 5 different versions of MinGW and CLion only recognised the oldest one, or that it was possible to crash your computer trying to simulate a top.
+Eventually, we pulled through and managed to rectify the code thanks to the assistants’ unerring efforts.
+We also generalised the idea of a vector in N dimensions in our code, so that we could easily switch between 3-dimensional and 5-dimensional vectors and because this allowed to even further optimise the computing time it took to run the project.
+A user window was also created so that the user of the program could input their exact values for the simulation and run it.
+The decision was also made to continue with the more general model of a top that does not assume a stationary contact point, even if this was not asked for in the course, as this would be a more faithful physical model.
+
+Week 7
+Now the nightmare that was graphics came into play.
+It took Yannis a good few days and Tanish one and a half weeks to understand fully how to create models and manipulate them in Qt.
