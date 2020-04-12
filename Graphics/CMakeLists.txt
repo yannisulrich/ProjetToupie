@@ -1,2 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
-add_library(Graphics Dessinable.h SupportADessin.h TextViewer/TextViewer.cc TextViewer/TextViewer.h FileViewer/FileViewer.cc FileViewer/FileViewer.h)
+add_library(GraphicsCore Dessinable.h SupportADessin.h)
+add_subdirectory(FileViewer)
+add_subdirectory(TextViewer)
+add_subdirectory(OpenGLViewer)
