@@ -3,114 +3,429 @@
 #include "TippeTopFriction.h"
 #include <cmath>
 
-
-
+using namespace std;
 
 
 void TippeTopFriction::affiche(std::ostream & out) const {
     out << "P: " << P << ", P_dot: " << P_dot;
-    out << ", masse: " << m << ", Rayon:  " << R << ", h: " << h;
+    out << ", masse: " << m << ", Rayon:  " << R << ", epsilon: " << epsilon;
 }
 
-Vecteur5 TippeTopFriction::f(const double &t) const {
-    double I1 = Ig.getCoord(0,0);
-    double sinTheta = sin(P.getCoord(0));
-    double sinPsi = sin(P.getCoord(1));
-    double cosTheta = cos(P.getCoord(0));
-    double cosPsi = cos(P.getCoord(1));
-    double theta = P.getCoord(0);
-    double theta_dot = P_dot.getCoord(0);
-    double psi_dot = P_dot.getCoord(1);
-    double phi_dot = P_dot.getCoord(2);
-    double I3 = Ig.getCoord(2,2);
-    double vx = P_dot.getCoord(3);
-    double vy = P_dot.getCoord(4);
-    return Vecteur5(
-            (mu*R*vx*(1 - alpha*cosTheta)*(9.81*I1*m + alpha*m*R*(-(I3*psi_dot*(phi_dot + psi_dot*cosTheta)*pow(sinTheta,2)) +
-                                                                 I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-            (I1*(I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta))) +
-            (sinTheta*(I1*pow(psi_dot,2)*cosTheta - I3*psi_dot*(phi_dot + psi_dot*cosTheta) -
-                         (alpha*R*(9.81*I1*m + alpha*m*R*(-(I3*psi_dot*(phi_dot + psi_dot*cosTheta)*pow(sinTheta,2)) +
-                                                       I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-                         (I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta))))/I1,
+void TippeTopFriction::accels( double t, double* p, double* pdot, void* data)
+{
+    //(theta, psi, phi, x, y)
+    double theta, psi, phi, x, y, thetadot, psidot, phidot, xdot, ydot;
+    double sinTheta, cosTheta, cotTheta, sinPhi, cosPhi, sinPsi, cosPsi;
+    double m, I1, I3;
 
-            (1/sinTheta*(-2*I1*psi_dot*theta_dot*cosTheta + I3*theta_dot*(phi_dot + psi_dot*cosTheta) -
-                         (mu*R*vy*(alpha - cosTheta)*(9.81*I1*m + alpha*m*R*(-(I3*psi_dot*(phi_dot + psi_dot*cosTheta)*pow(sinTheta,2)) +
-                                                                            I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-                         (I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta))))/I1,
+    //I1 = Ig.getCoord(0,0);
+    //I3 = Ig.getCoord(2,2);
 
-            (alpha*I3*m*mu*psi_dot*pow(R,2)*pow(cosTheta,3)*(alpha*(2*I1 - I3)*theta_dot*vx - (I1 - I3)*psi_dot*vy*sinTheta) +
-             (alpha*I3*m*pow(R,2)*cosTheta*tan(M_PI_2-theta)*(-2*I1*mu*pow(theta_dot,2)*vy*cosTheta +
-                                                           2*sinTheta*(mu*(-(alpha*I3*phi_dot) + (-2*I1 + I3)*psi_dot)*theta_dot*vx +
-                                                                         psi_dot*(I3*mu*phi_dot*vy - alpha*I3*(theta_dot + mu*psi_dot*vy) + alpha*I1*(2*theta_dot + mu*psi_dot*vy))*sinTheta)))/2. +
-             I1*(-(I3*(I3*phi_dot*theta_dot - alpha*9.81*m*mu*R*vy)*tan(M_PI_2-theta)) +
-                 sinTheta*(I1*(I3*psi_dot*theta_dot - 9.81*m*mu*R*vy) - alpha*I3*m*mu*psi_dot*pow(R,2)*theta_dot*vx*sinTheta +
-                             alpha*I3*m*psi_dot*pow(R,2)*(alpha*theta_dot + mu*phi_dot*vy)*pow(sinTheta,2))) +
-             cosTheta*(I1*I3*(2*I1*psi_dot*theta_dot - I3*psi_dot*theta_dot + m*mu*R*(-9.81 + pow(alpha,2)*R*pow(theta_dot,2))*vy)*tan(M_PI_2-theta) -
-                         alpha*m*pow(R,2)*(-(pow(I3,2)*mu*phi_dot*theta_dot*vx) +
-                                             (pow(I1,2)*mu*pow(theta_dot,2)*vy + alpha*pow(I3,2)*phi_dot*(theta_dot + mu*psi_dot*vy))*sinTheta -
-                                             alpha*I1*I3*mu*psi_dot*theta_dot*vx*pow(sinTheta,2) + I1*(I1 - I3)*mu*pow(psi_dot,2)*vy*pow(sinTheta,3))))/
-            (I1*I3*(I1 + alpha*m*mu*pow(R,2)*vx*(-1 + alpha*cosTheta)*sinTheta + pow(alpha,2)*m*pow(R,2)*pow(sinTheta,2))),
+    auto * constants = static_cast<double*>(data);
 
-            psi_dot*vy - (mu*vx*(I1 + m*pow(R,2)*pow(-1 + alpha*cosTheta,2))*
-                         (9.81*I1*m + alpha*m*R*(-(I3*psi_dot*(phi_dot + psi_dot*cosTheta)*pow(sinTheta,2)) +
-                                              I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-                        (I1*m*(I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta))) +
-            (R*sinTheta*(-(psi_dot*(I1 - I3 + alpha*I3*cosTheta)*(phi_dot + psi_dot*cosTheta)) -
-                           alpha*I1*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)) +
-                           (alpha*R*(1 - alpha*cosTheta)*(9.81*I1*m + alpha*m*R*(-(I3*psi_dot*(phi_dot + psi_dot*cosTheta)*pow(sinTheta,2)) +
-                                                                                I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-                           (I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta))))/I1,
+    double R = *constants;
+    double epsilon = *(constants+1);
+    double mu = *(constants+2);
+    m = *(constants+3);
+    I1 = *(constants+4);
+    I3 = *(constants+5);
 
-            -(psi_dot*vx) + (R*theta_dot*(alpha*I3 + (I1 - I3)*cosTheta)*(phi_dot + psi_dot*cosTheta))/I1 -
-            (mu*vy*(I1*I3 + I3*m*pow(R,2)*pow(alpha - cosTheta,2) + I1*m*pow(R,2)*pow(sinTheta,2))*
-             (9.81*I1*m + alpha*m*R*(-(I3*psi_dot*(phi_dot + psi_dot*cosTheta)*pow(sinTheta,2)) +
-                                  I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-            (I1*I3*m*(I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta)))
-            );
+    pdot[0] = p[5];
+    pdot[1] = p[6];
+    pdot[2] = p[7];
+    pdot[3] = p[8];
+    pdot[4] = p[9];
+
+    theta = p[0];
+    psi = p[1];
+    phi = p[2];
+    x = p[3];
+    y = p[4];
+
+    thetadot = p[5];
+    psidot = p[6];
+    phidot = p[7];
+    xdot = p[8];
+    ydot = p[9];
+
+    sinTheta = sin(theta);
+    sinPsi = sin(psi);
+    sinPhi = sin(phi);
+
+    cosTheta = cos(theta);
+    cosPsi = cos(psi);
+    cosPhi = cos(phi);
+
+    cotTheta = tan(M_PI_2 - theta);
+
+    pdot[5] = -((0. - 9.81*m*mu*(R - 1.*epsilon*cosTheta)*(-1.*ydot*cosPsi + thetadot*(-1.*R + epsilon*cosTheta) + xdot*sinPsi) -
+                 1.*epsilon*m*mu*pow(thetadot,2)*cosTheta*(R - 1.*epsilon*cosTheta)*
+                 (-1.*ydot*cosPsi + thetadot*(-1.*R + epsilon*cosTheta) + xdot*sinPsi) +  I1 *phidot*psidot*pow(cosPhi,2)*sinTheta +
+                 2.*pow(epsilon,2)*m*pow(thetadot,2)*cosTheta*sinTheta +  I1 *phidot*psidot*pow(sinPhi,2)*sinTheta +
+                  I1 *phidot*cosPhi*(thetadot*sinPhi - 1.*psidot*cosPhi*sinTheta) - 1.* I1 *phidot*sinPhi*(thetadot*cosPhi + psidot*sinPhi*sinTheta) +
+                 0.5*(19.62*epsilon*m*sinTheta - 2.*pow(epsilon,2)*m*pow(thetadot,2)*cosTheta*sinTheta +
+                      2.* I3 *psidot*(phidot + psidot*cosTheta)*sinTheta + 2.* I1 *psidot*cosPhi*cosTheta*(thetadot*sinPhi - 1.*psidot*cosPhi*sinTheta) -
+                      2.* I1 *psidot*cosTheta*sinPhi*(thetadot*cosPhi + psidot*sinPhi*sinTheta)))/
+                ( I1 *pow(cosPhi,2) +  I1 *pow(sinPhi,2) - 1.*epsilon*m*mu*(R - 1.*epsilon*cosTheta)*
+                                                     (-1.*ydot*cosPsi + thetadot*(-1.*R + epsilon*cosTheta) + xdot*sinPsi)*sinTheta + pow(epsilon,2)*m*pow(sinTheta,2)));
+
+
+
+    pdot[6] = (-2.*(-0.5* I3 *pow(epsilon,3)*m*mu*phidot*pow(psidot,2) - 0.5* I3 *pow(epsilon,2)*m*mu*pow(phidot,2)*psidot*R -
+                    0.5* I3 *pow(epsilon,3)*m*mu*pow(psidot,3)*cosTheta + 0.5* I3 *epsilon*m*mu*pow(phidot,2)*psidot*pow(R,2)*cosTheta +
+                    0.5* I1 *pow(epsilon,3)*m*mu*pow(psidot,3)*pow(cosPhi,2)*cosTheta +
+                    0.5* I1 *pow(epsilon,2)*m*mu*phidot*pow(psidot,2)*R*pow(cosPhi,2)*cosTheta +
+                    0.5* I3 *pow(epsilon,2)*m*mu*pow(psidot,3)*R*pow(cosTheta,2) + 0.5* I3 *epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*pow(cosTheta,2) -
+                    0.5* I1 *pow(epsilon,2)*m*mu*pow(psidot,3)*R*pow(cosPhi,2)*pow(cosTheta,2) -
+                    0.5* I1 *epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*pow(cosPhi,2)*pow(cosTheta,2) - 0.5* I3 *pow(epsilon,2)*m*psidot*thetadot*cotTheta +
+                    1.* I1 *pow(epsilon,2)*m*psidot*thetadot*pow(cosPhi,2)*cotTheta - 0.5* I3 *pow(epsilon,2)*m*mu*pow(psidot,2)*xdot*cosPsi*cotTheta +
+                    0.5* I3 *epsilon*m*mu*phidot*psidot*R*xdot*cosPsi*cotTheta +
+                    0.5* I1 *pow(epsilon,2)*m*mu*pow(psidot,2)*xdot*pow(cosPhi,2)*cosPsi*cotTheta +
+                    0.5* I3 *epsilon*m*mu*pow(psidot,2)*R*xdot*cosPsi*cosTheta*cotTheta -
+                    0.5* I1 *epsilon*m*mu*pow(psidot,2)*R*xdot*pow(cosPhi,2)*cosPsi*cosTheta*cotTheta -
+                    0.5* I3 *pow(epsilon,3)*m*mu*phidot*pow(thetadot,2)*pow(cotTheta,2) +
+                    1.* I3 *pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*pow(cotTheta,2) -
+                    2.5* I1 *pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*pow(cosPhi,2)*pow(cotTheta,2) -
+                    0.5* I1 *epsilon*m*mu*phidot*pow(R,2)*pow(thetadot,2)*pow(cosPhi,2)*pow(cotTheta,2) +
+                    0.5* I3 *pow(epsilon,2)*m*mu*psidot*thetadot*ydot*cosPsi*pow(cotTheta,2) -
+                    1.* I1 *pow(epsilon,2)*m*mu*psidot*thetadot*ydot*pow(cosPhi,2)*cosPsi*pow(cotTheta,2) -
+                    0.5* I3 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*cosTheta*pow(cotTheta,2) +
+                    1.* I1 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*pow(cosPhi,2)*cosTheta*pow(cotTheta,2) -
+                    0.5* I3 *pow(epsilon,2)*m*phidot*thetadot*(1/sinTheta) - 0.5* I3 *pow(epsilon,2)*m*mu*phidot*psidot*xdot*cosPsi*(1/sinTheta) +
+                    1.* I3 *pow(epsilon,2)*m*mu*phidot*R*pow(thetadot,2)*cotTheta*(1/sinTheta) -
+                    0.5* I3 *epsilon*m*mu*psidot*pow(R,2)*pow(thetadot,2)*cotTheta*(1/sinTheta) -
+                    4.905* I1 *epsilon*m*mu*psidot*R*pow(cosPhi,2)*cotTheta*(1/sinTheta) - 4.905* I1 *m*mu*phidot*pow(R,2)*pow(cosPhi,2)*cotTheta*(1/sinTheta) +
+                    0.5* I1 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*pow(cosPhi,2)*cotTheta*(1/sinTheta) +
+                    0.5* I1 *pow(epsilon,2)*m*mu*phidot*R*pow(thetadot,2)*pow(cosPhi,2)*cotTheta*(1/sinTheta) +
+                    1.* I1 *epsilon*m*mu*psidot*pow(R,2)*pow(thetadot,2)*pow(cosPhi,2)*cotTheta*(1/sinTheta) +
+                    0.5* I3 *pow(epsilon,2)*m*mu*phidot*thetadot*ydot*cosPsi*cotTheta*(1/sinTheta) -
+                    0.5* I3 *epsilon*m*mu*psidot*R*thetadot*ydot*cosPsi*cotTheta*(1/sinTheta) +
+                    1.* I1 *epsilon*m*mu*psidot*R*thetadot*ydot*pow(cosPhi,2)*cosPsi*cotTheta*(1/sinTheta) -
+                    0.5* I1 *epsilon*m*mu*R*pow(thetadot,2)*xdot*pow(cosPhi,2)*cosPsi*pow(cotTheta,2)*(1/sinTheta) -
+                    0.5* I3 *epsilon*m*mu*phidot*pow(R,2)*pow(thetadot,2)*pow((1/sinTheta),2) +
+                    4.905* I1 *pow(epsilon,2)*m*mu*psidot*pow(cosPhi,2)*pow((1/sinTheta),2) + 4.905* I1 *epsilon*m*mu*phidot*R*pow(cosPhi,2)*pow((1/sinTheta),2) -
+                    0.5* I3 *epsilon*m*mu*phidot*R*thetadot*ydot*cosPsi*pow((1/sinTheta),2) - 0.5* I1 * I3 *psidot*thetadot*pow(cosPhi,2)*cotTheta*pow((1/sinTheta),2) +
+                    1.*pow( I1 ,2)*psidot*thetadot*pow(cosPhi,4)*cotTheta*pow((1/sinTheta),2) -
+                    4.905* I1 *m*mu*R*xdot*pow(cosPhi,2)*cosPsi*cotTheta*pow((1/sinTheta),2) +
+                    0.5* I1 *pow(epsilon,2)*m*mu*pow(thetadot,2)*xdot*pow(cosPhi,2)*cosPsi*cotTheta*pow((1/sinTheta),2) -
+                    0.5* I1 * I3 *phidot*thetadot*pow(cosPhi,2)*pow((1/sinTheta),3) + 4.905* I1 *epsilon*m*mu*xdot*pow(cosPhi,2)*cosPsi*pow((1/sinTheta),3) +
+                    0.5* I1 *pow(epsilon,3)*m*mu*pow(psidot,3)*cosTheta*pow(sinPhi,2) +
+                    0.5* I1 *pow(epsilon,2)*m*mu*phidot*pow(psidot,2)*R*cosTheta*pow(sinPhi,2) -
+                    0.5* I1 *pow(epsilon,2)*m*mu*pow(psidot,3)*R*pow(cosTheta,2)*pow(sinPhi,2) -
+                    0.5* I1 *epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*pow(cosTheta,2)*pow(sinPhi,2) +
+                    1.* I1 *pow(epsilon,2)*m*psidot*thetadot*cotTheta*pow(sinPhi,2) +
+                    0.5* I1 *pow(epsilon,2)*m*mu*pow(psidot,2)*xdot*cosPsi*cotTheta*pow(sinPhi,2) -
+                    0.5* I1 *epsilon*m*mu*pow(psidot,2)*R*xdot*cosPsi*cosTheta*cotTheta*pow(sinPhi,2) -
+                    2.5* I1 *pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*pow(cotTheta,2)*pow(sinPhi,2) -
+                    0.5* I1 *epsilon*m*mu*phidot*pow(R,2)*pow(thetadot,2)*pow(cotTheta,2)*pow(sinPhi,2) -
+                    1.* I1 *pow(epsilon,2)*m*mu*psidot*thetadot*ydot*cosPsi*pow(cotTheta,2)*pow(sinPhi,2) +
+                    1.* I1 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*cosTheta*pow(cotTheta,2)*pow(sinPhi,2) -
+                    4.905* I1 *epsilon*m*mu*psidot*R*cotTheta*(1/sinTheta)*pow(sinPhi,2) - 4.905* I1 *m*mu*phidot*pow(R,2)*cotTheta*(1/sinTheta)*pow(sinPhi,2) +
+                    0.5* I1 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*cotTheta*(1/sinTheta)*pow(sinPhi,2) +
+                    0.5* I1 *pow(epsilon,2)*m*mu*phidot*R*pow(thetadot,2)*cotTheta*(1/sinTheta)*pow(sinPhi,2) +
+                    1.* I1 *epsilon*m*mu*psidot*pow(R,2)*pow(thetadot,2)*cotTheta*(1/sinTheta)*pow(sinPhi,2) +
+                    1.* I1 *epsilon*m*mu*psidot*R*thetadot*ydot*cosPsi*cotTheta*(1/sinTheta)*pow(sinPhi,2) -
+                    0.5* I1 *epsilon*m*mu*R*pow(thetadot,2)*xdot*cosPsi*pow(cotTheta,2)*(1/sinTheta)*pow(sinPhi,2) +
+                    4.905* I1 *pow(epsilon,2)*m*mu*psidot*pow((1/sinTheta),2)*pow(sinPhi,2) + 4.905* I1 *epsilon*m*mu*phidot*R*pow((1/sinTheta),2)*pow(sinPhi,2) -
+                    0.5* I1 * I3 *psidot*thetadot*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,2) +
+                    2.*pow( I1 ,2)*psidot*thetadot*pow(cosPhi,2)*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,2) -
+                    4.905* I1 *m*mu*R*xdot*cosPsi*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,2) +
+                    0.5* I1 *pow(epsilon,2)*m*mu*pow(thetadot,2)*xdot*cosPsi*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,2) -
+                    0.5* I1 * I3 *phidot*thetadot*pow((1/sinTheta),3)*pow(sinPhi,2) + 4.905* I1 *epsilon*m*mu*xdot*cosPsi*pow((1/sinTheta),3)*pow(sinPhi,2) +
+                    1.*pow( I1 ,2)*psidot*thetadot*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,4) -
+                    0.5* I3 *pow(epsilon,2)*m*mu*pow(psidot,2)*ydot*cotTheta*sinPsi + 0.5* I3 *epsilon*m*mu*phidot*psidot*R*ydot*cotTheta*sinPsi +
+                    0.5* I1 *pow(epsilon,2)*m*mu*pow(psidot,2)*ydot*pow(cosPhi,2)*cotTheta*sinPsi +
+                    0.5* I3 *epsilon*m*mu*pow(psidot,2)*R*ydot*cosTheta*cotTheta*sinPsi -
+                    0.5* I1 *epsilon*m*mu*pow(psidot,2)*R*ydot*pow(cosPhi,2)*cosTheta*cotTheta*sinPsi -
+                    0.5* I3 *pow(epsilon,2)*m*mu*psidot*thetadot*xdot*pow(cotTheta,2)*sinPsi +
+                    1.* I1 *pow(epsilon,2)*m*mu*psidot*thetadot*xdot*pow(cosPhi,2)*pow(cotTheta,2)*sinPsi -
+                    0.5* I3 *pow(epsilon,2)*m*mu*phidot*psidot*ydot*(1/sinTheta)*sinPsi -
+                    0.5* I3 *pow(epsilon,2)*m*mu*phidot*thetadot*xdot*cotTheta*(1/sinTheta)*sinPsi +
+                    0.5* I3 *epsilon*m*mu*psidot*R*thetadot*xdot*cotTheta*(1/sinTheta)*sinPsi -
+                    1.* I1 *epsilon*m*mu*psidot*R*thetadot*xdot*pow(cosPhi,2)*cotTheta*(1/sinTheta)*sinPsi -
+                    0.5* I1 *epsilon*m*mu*R*pow(thetadot,2)*ydot*pow(cosPhi,2)*pow(cotTheta,2)*(1/sinTheta)*sinPsi +
+                    0.5* I3 *epsilon*m*mu*phidot*R*thetadot*xdot*pow((1/sinTheta),2)*sinPsi -
+                    4.905* I1 *m*mu*R*ydot*pow(cosPhi,2)*cotTheta*pow((1/sinTheta),2)*sinPsi +
+                    0.5* I1 *pow(epsilon,2)*m*mu*pow(thetadot,2)*ydot*pow(cosPhi,2)*cotTheta*pow((1/sinTheta),2)*sinPsi +
+                    4.905* I1 *epsilon*m*mu*ydot*pow(cosPhi,2)*pow((1/sinTheta),3)*sinPsi +
+                    0.5* I1 *pow(epsilon,2)*m*mu*pow(psidot,2)*ydot*cotTheta*pow(sinPhi,2)*sinPsi -
+                    0.5* I1 *epsilon*m*mu*pow(psidot,2)*R*ydot*cosTheta*cotTheta*pow(sinPhi,2)*sinPsi +
+                    1.* I1 *pow(epsilon,2)*m*mu*psidot*thetadot*xdot*pow(cotTheta,2)*pow(sinPhi,2)*sinPsi -
+                    1.* I1 *epsilon*m*mu*psidot*R*thetadot*xdot*cotTheta*(1/sinTheta)*pow(sinPhi,2)*sinPsi -
+                    0.5* I1 *epsilon*m*mu*R*pow(thetadot,2)*ydot*pow(cotTheta,2)*(1/sinTheta)*pow(sinPhi,2)*sinPsi -
+                    4.905* I1 *m*mu*R*ydot*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,2)*sinPsi +
+                    0.5* I1 *pow(epsilon,2)*m*mu*pow(thetadot,2)*ydot*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,2)*sinPsi +
+                    4.905* I1 *epsilon*m*mu*ydot*pow((1/sinTheta),3)*pow(sinPhi,2)*sinPsi))/
+              ( I1 *(pow(cosPhi,2) + pow(sinPhi,2))*(pow(epsilon,2)*m - 2.*pow(epsilon,2)*m*mu*R*thetadot*cotTheta -
+                                                  1.*pow(epsilon,2)*m*mu*ydot*cosPsi*cotTheta + 1.*pow(epsilon,3)*m*mu*thetadot*cosTheta*cotTheta +
+                                                  1.*epsilon*m*mu*pow(R,2)*thetadot*(1/sinTheta) + 1.*epsilon*m*mu*R*ydot*cosPsi*(1/sinTheta) +  I1 *pow(cosPhi,2)*pow((1/sinTheta),2) +
+                                                   I1 *pow((1/sinTheta),2)*pow(sinPhi,2) + 1.*pow(epsilon,2)*m*mu*xdot*cotTheta*sinPsi - 1.*epsilon*m*mu*R*xdot*(1/sinTheta)*sinPsi));
+
+
+
+    pdot[7]= (2.*(0. + 0.5* I1 * I3 *pow(epsilon,2)*m*mu*phidot*pow(psidot,2)*R*pow(cosPhi,2) +
+                  0.5* I1 * I3 *epsilon*m*mu*pow(phidot,2)*psidot*pow(R,2)*pow(cosPhi,2) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(psidot,3)*R*pow(cosPhi,2)*cosTheta +
+                  0.5* I1 * I3 *epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*pow(cosPhi,2)*cosTheta -
+                  0.5*pow( I1 ,2)*pow(epsilon,2)*m*mu*pow(psidot,3)*R*pow(cosPhi,4)*cosTheta -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*pow(cosPhi,4)*cosTheta +
+                  0.5* I1 * I3 *epsilon*m*mu*pow(psidot,2)*R*xdot*pow(cosPhi,2)*cosPsi*cotTheta -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*pow(psidot,2)*R*xdot*pow(cosPhi,4)*cosPsi*cotTheta -
+                  0.5*pow( I3 ,2)*pow(epsilon,3)*m*mu*pow(psidot,3)*pow(cotTheta,2) +
+                  0.5*pow( I3 ,2)*epsilon*m*mu*pow(phidot,2)*psidot*pow(R,2)*pow(cotTheta,2) +
+                  0.5* I1 * I3 *pow(epsilon,3)*m*mu*pow(psidot,3)*pow(cosPhi,2)*pow(cotTheta,2) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*phidot*pow(psidot,2)*R*pow(cosPhi,2)*pow(cotTheta,2) +
+                  0.5* I1 * I3 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*pow(cosPhi,2)*pow(cotTheta,2) +
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*mu*pow(psidot,3)*R*cosTheta*pow(cotTheta,2) +
+                  0.5*pow( I3 ,2)*epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*cosTheta*pow(cotTheta,2) -
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(psidot,3)*R*pow(cosPhi,2)*cosTheta*pow(cotTheta,2) -
+                  0.5* I1 * I3 *epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*pow(cosPhi,2)*cosTheta*pow(cotTheta,2) +
+                  0.5*pow( I3 ,2)*epsilon*m*mu*pow(psidot,2)*R*xdot*cosPsi*pow(cotTheta,3) -
+                  0.5* I1 * I3 *epsilon*m*mu*pow(psidot,2)*R*xdot*pow(cosPhi,2)*cosPsi*pow(cotTheta,3) -
+                  0.5*pow( I3 ,2)*pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*pow(cotTheta,4) +
+                  1.* I1 * I3 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*pow(cosPhi,2)*pow(cotTheta,4) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*psidot*thetadot*pow(cosPhi,2)*(1/sinTheta) +
+                  0.5* I1 * I3 *epsilon*m*mu*phidot*psidot*R*xdot*pow(cosPhi,2)*cosPsi*(1/sinTheta) -
+                  0.5*pow( I3 ,2)*pow(epsilon,3)*m*mu*phidot*pow(psidot,2)*cotTheta*(1/sinTheta) -
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*mu*pow(phidot,2)*psidot*R*cotTheta*(1/sinTheta) -
+                  1.* I1 * I3 *pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*pow(cosPhi,2)*cotTheta*(1/sinTheta) -
+                  0.5*pow( I1 ,2)*pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*pow(cosPhi,4)*cotTheta*(1/sinTheta) -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*phidot*pow(R,2)*pow(thetadot,2)*pow(cosPhi,4)*cotTheta*(1/sinTheta) -
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*psidot*thetadot*ydot*pow(cosPhi,2)*cosPsi*cotTheta*(1/sinTheta) -
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*psidot*thetadot*pow(cotTheta,2)*(1/sinTheta) +
+                  1.* I1 * I3 *pow(epsilon,2)*m*psidot*thetadot*pow(cosPhi,2)*pow(cotTheta,2)*(1/sinTheta) -
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*mu*pow(psidot,2)*xdot*cosPsi*pow(cotTheta,2)*(1/sinTheta) +
+                  0.5*pow( I3 ,2)*epsilon*m*mu*phidot*psidot*R*xdot*cosPsi*pow(cotTheta,2)*(1/sinTheta) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(psidot,2)*xdot*pow(cosPhi,2)*cosPsi*pow(cotTheta,2)*(1/sinTheta) -
+                  0.5*pow( I3 ,2)*pow(epsilon,3)*m*mu*phidot*pow(thetadot,2)*pow(cotTheta,3)*(1/sinTheta) +
+                  1.*pow( I3 ,2)*pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*pow(cotTheta,3)*(1/sinTheta) -
+                  2.5* I1 * I3 *pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*pow(cosPhi,2)*pow(cotTheta,3)*(1/sinTheta) -
+                  0.5* I1 * I3 *epsilon*m*mu*phidot*pow(R,2)*pow(thetadot,2)*pow(cosPhi,2)*pow(cotTheta,3)*(1/sinTheta) +
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*mu*psidot*thetadot*ydot*cosPsi*pow(cotTheta,3)*(1/sinTheta) -
+                  1.* I1 * I3 *pow(epsilon,2)*m*mu*psidot*thetadot*ydot*pow(cosPhi,2)*cosPsi*pow(cotTheta,3)*(1/sinTheta) +
+                  0.5* I1 * I3 *epsilon*m*mu*psidot*pow(R,2)*pow(thetadot,2)*pow(cosPhi,2)*pow((1/sinTheta),2) -
+                  4.905*pow( I1 ,2)*epsilon*m*mu*psidot*R*pow(cosPhi,4)*pow((1/sinTheta),2) -
+                  4.905*pow( I1 ,2)*m*mu*phidot*pow(R,2)*pow(cosPhi,4)*pow((1/sinTheta),2) +
+                  0.5* I1 * I3 *epsilon*m*mu*psidot*R*thetadot*ydot*pow(cosPhi,2)*cosPsi*pow((1/sinTheta),2) -
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*phidot*thetadot*cotTheta*pow((1/sinTheta),2) -
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*mu*phidot*psidot*xdot*cosPsi*cotTheta*pow((1/sinTheta),2) -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*R*pow(thetadot,2)*xdot*pow(cosPhi,4)*cosPsi*cotTheta*pow((1/sinTheta),2) +
+                  1.*pow( I3 ,2)*pow(epsilon,2)*m*mu*phidot*R*pow(thetadot,2)*pow(cotTheta,2)*pow((1/sinTheta),2) -
+                  0.5*pow( I3 ,2)*epsilon*m*mu*psidot*pow(R,2)*pow(thetadot,2)*pow(cotTheta,2)*pow((1/sinTheta),2) -
+                  4.905* I1 * I3 *epsilon*m*mu*psidot*R*pow(cosPhi,2)*pow(cotTheta,2)*pow((1/sinTheta),2) -
+                  4.905* I1 * I3 *m*mu*phidot*pow(R,2)*pow(cosPhi,2)*pow(cotTheta,2)*pow((1/sinTheta),2) +
+                  0.5* I1 * I3 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*pow(cosPhi,2)*pow(cotTheta,2)*pow((1/sinTheta),2) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*phidot*R*pow(thetadot,2)*pow(cosPhi,2)*pow(cotTheta,2)*pow((1/sinTheta),2) +
+                  1.* I1 * I3 *epsilon*m*mu*psidot*pow(R,2)*pow(thetadot,2)*pow(cosPhi,2)*pow(cotTheta,2)*pow((1/sinTheta),2) +
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*mu*phidot*thetadot*ydot*cosPsi*pow(cotTheta,2)*pow((1/sinTheta),2) -
+                  0.5*pow( I3 ,2)*epsilon*m*mu*psidot*R*thetadot*ydot*cosPsi*pow(cotTheta,2)*pow((1/sinTheta),2) +
+                  1.* I1 * I3 *epsilon*m*mu*psidot*R*thetadot*ydot*pow(cosPhi,2)*cosPsi*pow(cotTheta,2)*pow((1/sinTheta),2) -
+                  0.5* I1 * I3 *epsilon*m*mu*R*pow(thetadot,2)*xdot*pow(cosPhi,2)*cosPsi*pow(cotTheta,3)*pow((1/sinTheta),2) +
+                  0.5*pow( I1 ,2)* I3 *psidot*thetadot*pow(cosPhi,4)*pow((1/sinTheta),3) -
+                  4.905*pow( I1 ,2)*m*mu*R*xdot*pow(cosPhi,4)*cosPsi*pow((1/sinTheta),3) -
+                  0.5*pow( I3 ,2)*epsilon*m*mu*phidot*pow(R,2)*pow(thetadot,2)*cotTheta*pow((1/sinTheta),3) +
+                  4.905* I1 * I3 *pow(epsilon,2)*m*mu*psidot*pow(cosPhi,2)*cotTheta*pow((1/sinTheta),3) +
+                  4.905* I1 * I3 *epsilon*m*mu*phidot*R*pow(cosPhi,2)*cotTheta*pow((1/sinTheta),3) -
+                  0.5*pow( I3 ,2)*epsilon*m*mu*phidot*R*thetadot*ydot*cosPsi*cotTheta*pow((1/sinTheta),3) -
+                  0.5* I1 *pow( I3 ,2)*psidot*thetadot*pow(cosPhi,2)*pow(cotTheta,2)*pow((1/sinTheta),3) +
+                  1.*pow( I1 ,2)* I3 *psidot*thetadot*pow(cosPhi,4)*pow(cotTheta,2)*pow((1/sinTheta),3) -
+                  4.905* I1 * I3 *m*mu*R*xdot*pow(cosPhi,2)*cosPsi*pow(cotTheta,2)*pow((1/sinTheta),3) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(thetadot,2)*xdot*pow(cosPhi,2)*cosPsi*pow(cotTheta,2)*pow((1/sinTheta),3) -
+                  0.5* I1 *pow( I3 ,2)*phidot*thetadot*pow(cosPhi,2)*cotTheta*pow((1/sinTheta),4) +
+                  4.905* I1 * I3 *epsilon*m*mu*xdot*pow(cosPhi,2)*cosPsi*cotTheta*pow((1/sinTheta),4) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*phidot*pow(psidot,2)*R*pow(sinPhi,2) +
+                  0.5* I1 * I3 *epsilon*m*mu*pow(phidot,2)*psidot*pow(R,2)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(psidot,3)*R*cosTheta*pow(sinPhi,2) +
+                  0.5* I1 * I3 *epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*cosTheta*pow(sinPhi,2) -
+                  1.*pow( I1 ,2)*pow(epsilon,2)*m*mu*pow(psidot,3)*R*pow(cosPhi,2)*cosTheta*pow(sinPhi,2) -
+                  1.*pow( I1 ,2)*epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*pow(cosPhi,2)*cosTheta*pow(sinPhi,2) +
+                  0.5* I1 * I3 *epsilon*m*mu*pow(psidot,2)*R*xdot*cosPsi*cotTheta*pow(sinPhi,2) -
+                  1.*pow( I1 ,2)*epsilon*m*mu*pow(psidot,2)*R*xdot*pow(cosPhi,2)*cosPsi*cotTheta*pow(sinPhi,2) +
+                  0.5* I1 * I3 *pow(epsilon,3)*m*mu*pow(psidot,3)*pow(cotTheta,2)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*phidot*pow(psidot,2)*R*pow(cotTheta,2)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*pow(cotTheta,2)*pow(sinPhi,2) -
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(psidot,3)*R*cosTheta*pow(cotTheta,2)*pow(sinPhi,2) -
+                  0.5* I1 * I3 *epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*cosTheta*pow(cotTheta,2)*pow(sinPhi,2) -
+                  0.5* I1 * I3 *epsilon*m*mu*pow(psidot,2)*R*xdot*cosPsi*pow(cotTheta,3)*pow(sinPhi,2) +
+                  1.* I1 * I3 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*pow(cotTheta,4)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*psidot*thetadot*(1/sinTheta)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *epsilon*m*mu*phidot*psidot*R*xdot*cosPsi*(1/sinTheta)*pow(sinPhi,2) -
+                  1.* I1 * I3 *pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*cotTheta*(1/sinTheta)*pow(sinPhi,2) -
+                  1.*pow( I1 ,2)*pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*pow(cosPhi,2)*cotTheta*(1/sinTheta)*pow(sinPhi,2) -
+                  1.*pow( I1 ,2)*epsilon*m*mu*phidot*pow(R,2)*pow(thetadot,2)*pow(cosPhi,2)*cotTheta*(1/sinTheta)*pow(sinPhi,2) -
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*psidot*thetadot*ydot*cosPsi*cotTheta*(1/sinTheta)*pow(sinPhi,2) +
+                  1.* I1 * I3 *pow(epsilon,2)*m*psidot*thetadot*pow(cotTheta,2)*(1/sinTheta)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(psidot,2)*xdot*cosPsi*pow(cotTheta,2)*(1/sinTheta)*pow(sinPhi,2) -
+                  2.5* I1 * I3 *pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*pow(cotTheta,3)*(1/sinTheta)*pow(sinPhi,2) -
+                  0.5* I1 * I3 *epsilon*m*mu*phidot*pow(R,2)*pow(thetadot,2)*pow(cotTheta,3)*(1/sinTheta)*pow(sinPhi,2) -
+                  1.* I1 * I3 *pow(epsilon,2)*m*mu*psidot*thetadot*ydot*cosPsi*pow(cotTheta,3)*(1/sinTheta)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *epsilon*m*mu*psidot*pow(R,2)*pow(thetadot,2)*pow((1/sinTheta),2)*pow(sinPhi,2) -
+                  9.81*pow( I1 ,2)*epsilon*m*mu*psidot*R*pow(cosPhi,2)*pow((1/sinTheta),2)*pow(sinPhi,2) -
+                  9.81*pow( I1 ,2)*m*mu*phidot*pow(R,2)*pow(cosPhi,2)*pow((1/sinTheta),2)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *epsilon*m*mu*psidot*R*thetadot*ydot*cosPsi*pow((1/sinTheta),2)*pow(sinPhi,2) -
+                  1.*pow( I1 ,2)*epsilon*m*mu*R*pow(thetadot,2)*xdot*pow(cosPhi,2)*cosPsi*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,2) -
+                  4.905* I1 * I3 *epsilon*m*mu*psidot*R*pow(cotTheta,2)*pow((1/sinTheta),2)*pow(sinPhi,2) -
+                  4.905* I1 * I3 *m*mu*phidot*pow(R,2)*pow(cotTheta,2)*pow((1/sinTheta),2)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *pow(epsilon,3)*m*mu*psidot*pow(thetadot,2)*pow(cotTheta,2)*pow((1/sinTheta),2)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*phidot*R*pow(thetadot,2)*pow(cotTheta,2)*pow((1/sinTheta),2)*pow(sinPhi,2) +
+                  1.* I1 * I3 *epsilon*m*mu*psidot*pow(R,2)*pow(thetadot,2)*pow(cotTheta,2)*pow((1/sinTheta),2)*pow(sinPhi,2) +
+                  1.* I1 * I3 *epsilon*m*mu*psidot*R*thetadot*ydot*cosPsi*pow(cotTheta,2)*pow((1/sinTheta),2)*pow(sinPhi,2) -
+                  0.5* I1 * I3 *epsilon*m*mu*R*pow(thetadot,2)*xdot*cosPsi*pow(cotTheta,3)*pow((1/sinTheta),2)*pow(sinPhi,2) +
+                  1.*pow( I1 ,2)* I3 *psidot*thetadot*pow(cosPhi,2)*pow((1/sinTheta),3)*pow(sinPhi,2) -
+                  9.81*pow( I1 ,2)*m*mu*R*xdot*pow(cosPhi,2)*cosPsi*pow((1/sinTheta),3)*pow(sinPhi,2) +
+                  4.905* I1 * I3 *pow(epsilon,2)*m*mu*psidot*cotTheta*pow((1/sinTheta),3)*pow(sinPhi,2) +
+                  4.905* I1 * I3 *epsilon*m*mu*phidot*R*cotTheta*pow((1/sinTheta),3)*pow(sinPhi,2) -
+                  0.5* I1 *pow( I3 ,2)*psidot*thetadot*pow(cotTheta,2)*pow((1/sinTheta),3)*pow(sinPhi,2) +
+                  2.*pow( I1 ,2)* I3 *psidot*thetadot*pow(cosPhi,2)*pow(cotTheta,2)*pow((1/sinTheta),3)*pow(sinPhi,2) -
+                  4.905* I1 * I3 *m*mu*R*xdot*cosPsi*pow(cotTheta,2)*pow((1/sinTheta),3)*pow(sinPhi,2) +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(thetadot,2)*xdot*cosPsi*pow(cotTheta,2)*pow((1/sinTheta),3)*pow(sinPhi,2) -
+                  0.5* I1 *pow( I3 ,2)*phidot*thetadot*cotTheta*pow((1/sinTheta),4)*pow(sinPhi,2) +
+                  4.905* I1 * I3 *epsilon*m*mu*xdot*cosPsi*cotTheta*pow((1/sinTheta),4)*pow(sinPhi,2) -
+                  0.5*pow( I1 ,2)*pow(epsilon,2)*m*mu*pow(psidot,3)*R*cosTheta*pow(sinPhi,4) -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*phidot*pow(psidot,2)*pow(R,2)*cosTheta*pow(sinPhi,4) -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*pow(psidot,2)*R*xdot*cosPsi*cotTheta*pow(sinPhi,4) -
+                  0.5*pow( I1 ,2)*pow(epsilon,2)*m*mu*psidot*R*pow(thetadot,2)*cotTheta*(1/sinTheta)*pow(sinPhi,4) -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*phidot*pow(R,2)*pow(thetadot,2)*cotTheta*(1/sinTheta)*pow(sinPhi,4) -
+                  4.905*pow( I1 ,2)*epsilon*m*mu*psidot*R*pow((1/sinTheta),2)*pow(sinPhi,4) -
+                  4.905*pow( I1 ,2)*m*mu*phidot*pow(R,2)*pow((1/sinTheta),2)*pow(sinPhi,4) -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*R*pow(thetadot,2)*xdot*cosPsi*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,4) +
+                  0.5*pow( I1 ,2)* I3 *psidot*thetadot*pow((1/sinTheta),3)*pow(sinPhi,4) -
+                  4.905*pow( I1 ,2)*m*mu*R*xdot*cosPsi*pow((1/sinTheta),3)*pow(sinPhi,4) +
+                  1.*pow( I1 ,2)* I3 *psidot*thetadot*pow(cotTheta,2)*pow((1/sinTheta),3)*pow(sinPhi,4) +
+                  0.5* I1 * I3 *epsilon*m*mu*pow(psidot,2)*R*ydot*pow(cosPhi,2)*cotTheta*sinPsi -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*pow(psidot,2)*R*ydot*pow(cosPhi,4)*cotTheta*sinPsi +
+                  0.5*pow( I3 ,2)*epsilon*m*mu*pow(psidot,2)*R*ydot*pow(cotTheta,3)*sinPsi -
+                  0.5* I1 * I3 *epsilon*m*mu*pow(psidot,2)*R*ydot*pow(cosPhi,2)*pow(cotTheta,3)*sinPsi +
+                  0.5* I1 * I3 *epsilon*m*mu*phidot*psidot*R*ydot*pow(cosPhi,2)*(1/sinTheta)*sinPsi +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*psidot*thetadot*xdot*pow(cosPhi,2)*cotTheta*(1/sinTheta)*sinPsi -
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*mu*pow(psidot,2)*ydot*pow(cotTheta,2)*(1/sinTheta)*sinPsi +
+                  0.5*pow( I3 ,2)*epsilon*m*mu*phidot*psidot*R*ydot*pow(cotTheta,2)*(1/sinTheta)*sinPsi +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(psidot,2)*ydot*pow(cosPhi,2)*pow(cotTheta,2)*(1/sinTheta)*sinPsi -
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*mu*psidot*thetadot*xdot*pow(cotTheta,3)*(1/sinTheta)*sinPsi +
+                  1.* I1 * I3 *pow(epsilon,2)*m*mu*psidot*thetadot*xdot*pow(cosPhi,2)*pow(cotTheta,3)*(1/sinTheta)*sinPsi -
+                  0.5* I1 * I3 *epsilon*m*mu*psidot*R*thetadot*xdot*pow(cosPhi,2)*pow((1/sinTheta),2)*sinPsi -
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*mu*phidot*psidot*ydot*cotTheta*pow((1/sinTheta),2)*sinPsi -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*R*pow(thetadot,2)*ydot*pow(cosPhi,4)*cotTheta*pow((1/sinTheta),2)*sinPsi -
+                  0.5*pow( I3 ,2)*pow(epsilon,2)*m*mu*phidot*thetadot*xdot*pow(cotTheta,2)*pow((1/sinTheta),2)*sinPsi +
+                  0.5*pow( I3 ,2)*epsilon*m*mu*psidot*R*thetadot*xdot*pow(cotTheta,2)*pow((1/sinTheta),2)*sinPsi -
+                  1.* I1 * I3 *epsilon*m*mu*psidot*R*thetadot*xdot*pow(cosPhi,2)*pow(cotTheta,2)*pow((1/sinTheta),2)*sinPsi -
+                  0.5* I1 * I3 *epsilon*m*mu*R*pow(thetadot,2)*ydot*pow(cosPhi,2)*pow(cotTheta,3)*pow((1/sinTheta),2)*sinPsi -
+                  4.905*pow( I1 ,2)*m*mu*R*ydot*pow(cosPhi,4)*pow((1/sinTheta),3)*sinPsi +
+                  0.5*pow( I3 ,2)*epsilon*m*mu*phidot*R*thetadot*xdot*cotTheta*pow((1/sinTheta),3)*sinPsi -
+                  4.905* I1 * I3 *m*mu*R*ydot*pow(cosPhi,2)*pow(cotTheta,2)*pow((1/sinTheta),3)*sinPsi +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(thetadot,2)*ydot*pow(cosPhi,2)*pow(cotTheta,2)*pow((1/sinTheta),3)*sinPsi +
+                  4.905* I1 * I3 *epsilon*m*mu*ydot*pow(cosPhi,2)*cotTheta*pow((1/sinTheta),4)*sinPsi +
+                  0.5* I1 * I3 *epsilon*m*mu*pow(psidot,2)*R*ydot*cotTheta*pow(sinPhi,2)*sinPsi -
+                  1.*pow( I1 ,2)*epsilon*m*mu*pow(psidot,2)*R*ydot*pow(cosPhi,2)*cotTheta*pow(sinPhi,2)*sinPsi -
+                  0.5* I1 * I3 *epsilon*m*mu*pow(psidot,2)*R*ydot*pow(cotTheta,3)*pow(sinPhi,2)*sinPsi +
+                  0.5* I1 * I3 *epsilon*m*mu*phidot*psidot*R*ydot*(1/sinTheta)*pow(sinPhi,2)*sinPsi +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*psidot*thetadot*xdot*cotTheta*(1/sinTheta)*pow(sinPhi,2)*sinPsi +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(psidot,2)*ydot*pow(cotTheta,2)*(1/sinTheta)*pow(sinPhi,2)*sinPsi +
+                  1.* I1 * I3 *pow(epsilon,2)*m*mu*psidot*thetadot*xdot*pow(cotTheta,3)*(1/sinTheta)*pow(sinPhi,2)*sinPsi -
+                  0.5* I1 * I3 *epsilon*m*mu*psidot*R*thetadot*xdot*pow((1/sinTheta),2)*pow(sinPhi,2)*sinPsi -
+                  1.*pow( I1 ,2)*epsilon*m*mu*R*pow(thetadot,2)*ydot*pow(cosPhi,2)*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,2)*sinPsi -
+                  1.* I1 * I3 *epsilon*m*mu*psidot*R*thetadot*xdot*pow(cotTheta,2)*pow((1/sinTheta),2)*pow(sinPhi,2)*sinPsi -
+                  0.5* I1 * I3 *epsilon*m*mu*R*pow(thetadot,2)*ydot*pow(cotTheta,3)*pow((1/sinTheta),2)*pow(sinPhi,2)*sinPsi -
+                  9.81*pow( I1 ,2)*m*mu*R*ydot*pow(cosPhi,2)*pow((1/sinTheta),3)*pow(sinPhi,2)*sinPsi -
+                  4.905* I1 * I3 *m*mu*R*ydot*pow(cotTheta,2)*pow((1/sinTheta),3)*pow(sinPhi,2)*sinPsi +
+                  0.5* I1 * I3 *pow(epsilon,2)*m*mu*pow(thetadot,2)*ydot*pow(cotTheta,2)*pow((1/sinTheta),3)*pow(sinPhi,2)*sinPsi +
+                  4.905* I1 * I3 *epsilon*m*mu*ydot*cotTheta*pow((1/sinTheta),4)*pow(sinPhi,2)*sinPsi -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*pow(psidot,2)*R*ydot*cotTheta*pow(sinPhi,4)*sinPsi -
+                  0.5*pow( I1 ,2)*epsilon*m*mu*R*pow(thetadot,2)*ydot*cotTheta*pow((1/sinTheta),2)*pow(sinPhi,4)*sinPsi -
+                  4.905*pow( I1 ,2)*m*mu*R*ydot*pow((1/sinTheta),3)*pow(sinPhi,4)*sinPsi)*pow(sinTheta,2))/
+             ( I1 * I3 *(pow(cosPhi,2) + pow(sinPhi,2))*(pow(epsilon,2)*m - 2.*pow(epsilon,2)*m*mu*R*thetadot*cotTheta -
+                                                   1.*pow(epsilon,2)*m*mu*ydot*cosPsi*cotTheta + 1.*pow(epsilon,3)*m*mu*thetadot*cosTheta*cotTheta +
+                                                   1.*epsilon*m*mu*pow(R,2)*thetadot*(1/sinTheta) + 1.*epsilon*m*mu*R*ydot*cosPsi*(1/sinTheta) +  I1 *pow(cosPhi,2)*pow((1/sinTheta),2) +
+                                                    I1 *pow((1/sinTheta),2)*pow(sinPhi,2) + 1.*pow(epsilon,2)*m*mu*xdot*cotTheta*sinPsi - 1.*epsilon*m*mu*R*xdot*(1/sinTheta)*sinPsi));
+
+    pdot[8] = (1.*(9.81* I1 *mu*xdot*pow(cosPhi,2) + 1.* I1 *epsilon*mu*pow(thetadot,2)*xdot*pow(cosPhi,2)*cosTheta +
+                   9.81* I1 *mu*xdot*pow(sinPhi,2) + 1.* I1 *epsilon*mu*pow(thetadot,2)*xdot*cosTheta*pow(sinPhi,2) -
+                   9.81* I1 *mu*R*thetadot*pow(cosPhi,2)*sinPsi + 9.81* I1 *epsilon*mu*thetadot*pow(cosPhi,2)*cosTheta*sinPsi -
+                   1.* I1 *epsilon*mu*R*pow(thetadot,3)*pow(cosPhi,2)*cosTheta*sinPsi +
+                   1.* I1 *pow(epsilon,2)*mu*pow(thetadot,3)*pow(cosPhi,2)*pow(cosTheta,2)*sinPsi - 9.81* I1 *mu*R*thetadot*pow(sinPhi,2)*sinPsi +
+                   9.81* I1 *epsilon*mu*thetadot*cosTheta*pow(sinPhi,2)*sinPsi - 1.* I1 *epsilon*mu*R*pow(thetadot,3)*cosTheta*pow(sinPhi,2)*sinPsi +
+                   1.* I1 *pow(epsilon,2)*mu*pow(thetadot,3)*pow(cosTheta,2)*pow(sinPhi,2)*sinPsi +
+                   9.81* I1 *epsilon*mu*psidot*pow(cosPhi,2)*cosPsi*sinTheta + 9.81* I1 *mu*phidot*R*pow(cosPhi,2)*cosPsi*sinTheta +
+                   1.* I1 *pow(epsilon,2)*mu*psidot*pow(thetadot,2)*pow(cosPhi,2)*cosPsi*cosTheta*sinTheta +
+                   1.* I1 *epsilon*mu*phidot*R*pow(thetadot,2)*pow(cosPhi,2)*cosPsi*cosTheta*sinTheta +
+                   9.81* I1 *epsilon*mu*psidot*cosPsi*pow(sinPhi,2)*sinTheta + 9.81* I1 *mu*phidot*R*cosPsi*pow(sinPhi,2)*sinTheta +
+                   1.* I1 *pow(epsilon,2)*mu*psidot*pow(thetadot,2)*cosPsi*cosTheta*pow(sinPhi,2)*sinTheta +
+                   1.* I1 *epsilon*mu*phidot*R*pow(thetadot,2)*cosPsi*cosTheta*pow(sinPhi,2)*sinTheta -
+                   1.* I3 *epsilon*mu*phidot*psidot*xdot*pow(sinTheta,2) - 1.* I3 *epsilon*mu*pow(psidot,2)*xdot*cosTheta*pow(sinTheta,2) +
+                   1.* I1 *epsilon*mu*pow(psidot,2)*xdot*pow(cosPhi,2)*cosTheta*pow(sinTheta,2) +
+                   1.* I1 *epsilon*mu*pow(psidot,2)*xdot*cosTheta*pow(sinPhi,2)*pow(sinTheta,2) +
+                   1.* I3 *epsilon*mu*phidot*psidot*R*thetadot*sinPsi*pow(sinTheta,2) -
+                   1.* I3 *pow(epsilon,2)*mu*phidot*psidot*thetadot*cosTheta*sinPsi*pow(sinTheta,2) +
+                   1.* I3 *epsilon*mu*pow(psidot,2)*R*thetadot*cosTheta*sinPsi*pow(sinTheta,2) -
+                   1.* I1 *epsilon*mu*pow(psidot,2)*R*thetadot*pow(cosPhi,2)*cosTheta*sinPsi*pow(sinTheta,2) -
+                   1.* I3 *pow(epsilon,2)*mu*pow(psidot,2)*thetadot*pow(cosTheta,2)*sinPsi*pow(sinTheta,2) +
+                   1.* I1 *pow(epsilon,2)*mu*pow(psidot,2)*thetadot*pow(cosPhi,2)*pow(cosTheta,2)*sinPsi*pow(sinTheta,2) -
+                   1.* I1 *epsilon*mu*pow(psidot,2)*R*thetadot*cosTheta*pow(sinPhi,2)*sinPsi*pow(sinTheta,2) +
+                   1.* I1 *pow(epsilon,2)*mu*pow(psidot,2)*thetadot*pow(cosTheta,2)*pow(sinPhi,2)*sinPsi*pow(sinTheta,2) -
+                   1.* I3 *pow(epsilon,2)*mu*phidot*pow(psidot,2)*cosPsi*pow(sinTheta,3) -
+                   1.* I3 *epsilon*mu*pow(phidot,2)*psidot*R*cosPsi*pow(sinTheta,3) -
+                   1.* I3 *pow(epsilon,2)*mu*pow(psidot,3)*cosPsi*cosTheta*pow(sinTheta,3) -
+                   1.* I3 *epsilon*mu*phidot*pow(psidot,2)*R*cosPsi*cosTheta*pow(sinTheta,3) +
+                   1.* I1 *pow(epsilon,2)*mu*pow(psidot,3)*pow(cosPhi,2)*cosPsi*cosTheta*pow(sinTheta,3) +
+                   1.* I1 *epsilon*mu*phidot*pow(psidot,2)*R*pow(cosPhi,2)*cosPsi*cosTheta*pow(sinTheta,3) +
+                   1.* I1 *pow(epsilon,2)*mu*pow(psidot,3)*cosPsi*cosTheta*pow(sinPhi,2)*pow(sinTheta,3) +
+                   1.* I1 *epsilon*mu*phidot*pow(psidot,2)*R*cosPsi*cosTheta*pow(sinPhi,2)*pow(sinTheta,3)))/
+              (-1.* I1 *pow(cosPhi,2) - 1.* I1 *pow(sinPhi,2) - 1.*epsilon*m*mu*pow(R,2)*thetadot*sinTheta - 1.*epsilon*m*mu*R*ydot*cosPsi*sinTheta +
+               2.*pow(epsilon,2)*m*mu*R*thetadot*cosTheta*sinTheta + 1.*pow(epsilon,2)*m*mu*ydot*cosPsi*cosTheta*sinTheta -
+               1.*pow(epsilon,3)*m*mu*thetadot*pow(cosTheta,2)*sinTheta + 1.*epsilon*m*mu*R*xdot*sinPsi*sinTheta -
+               1.*pow(epsilon,2)*m*mu*xdot*cosTheta*sinPsi*sinTheta - 1.*pow(epsilon,2)*m*pow(sinTheta,2));
+
+
+
+
+    pdot[9] = (-1.*(9.81* I1 *mu*ydot*pow(cosPhi,2) + 9.81* I1 *mu*R*thetadot*pow(cosPhi,2)*cosPsi +
+                    1.* I1 *epsilon*mu*pow(thetadot,2)*ydot*pow(cosPhi,2)*cosTheta - 9.81* I1 *epsilon*mu*thetadot*pow(cosPhi,2)*cosPsi*cosTheta +
+                    1.* I1 *epsilon*mu*R*pow(thetadot,3)*pow(cosPhi,2)*cosPsi*cosTheta -
+                    1.* I1 *pow(epsilon,2)*mu*pow(thetadot,3)*pow(cosPhi,2)*cosPsi*pow(cosTheta,2) + 9.81* I1 *mu*ydot*pow(sinPhi,2) +
+                    9.81* I1 *mu*R*thetadot*cosPsi*pow(sinPhi,2) + 1.* I1 *epsilon*mu*pow(thetadot,2)*ydot*cosTheta*pow(sinPhi,2) -
+                    9.81* I1 *epsilon*mu*thetadot*cosPsi*cosTheta*pow(sinPhi,2) + 1.* I1 *epsilon*mu*R*pow(thetadot,3)*cosPsi*cosTheta*pow(sinPhi,2) -
+                    1.* I1 *pow(epsilon,2)*mu*pow(thetadot,3)*cosPsi*pow(cosTheta,2)*pow(sinPhi,2) +
+                    9.81* I1 *epsilon*mu*psidot*pow(cosPhi,2)*sinPsi*sinTheta + 9.81* I1 *mu*phidot*R*pow(cosPhi,2)*sinPsi*sinTheta +
+                    1.* I1 *pow(epsilon,2)*mu*psidot*pow(thetadot,2)*pow(cosPhi,2)*cosTheta*sinPsi*sinTheta +
+                    1.* I1 *epsilon*mu*phidot*R*pow(thetadot,2)*pow(cosPhi,2)*cosTheta*sinPsi*sinTheta +
+                    9.81* I1 *epsilon*mu*psidot*pow(sinPhi,2)*sinPsi*sinTheta + 9.81* I1 *mu*phidot*R*pow(sinPhi,2)*sinPsi*sinTheta +
+                    1.* I1 *pow(epsilon,2)*mu*psidot*pow(thetadot,2)*cosTheta*pow(sinPhi,2)*sinPsi*sinTheta +
+                    1.* I1 *epsilon*mu*phidot*R*pow(thetadot,2)*cosTheta*pow(sinPhi,2)*sinPsi*sinTheta -
+                    1.* I3 *epsilon*mu*phidot*psidot*ydot*pow(sinTheta,2) - 1.* I3 *epsilon*mu*phidot*psidot*R*thetadot*cosPsi*pow(sinTheta,2) -
+                    1.* I3 *epsilon*mu*pow(psidot,2)*ydot*cosTheta*pow(sinTheta,2) +
+                    1.* I1 *epsilon*mu*pow(psidot,2)*ydot*pow(cosPhi,2)*cosTheta*pow(sinTheta,2) +
+                    1.* I3 *pow(epsilon,2)*mu*phidot*psidot*thetadot*cosPsi*cosTheta*pow(sinTheta,2) -
+                    1.* I3 *epsilon*mu*pow(psidot,2)*R*thetadot*cosPsi*cosTheta*pow(sinTheta,2) +
+                    1.* I1 *epsilon*mu*pow(psidot,2)*R*thetadot*pow(cosPhi,2)*cosPsi*cosTheta*pow(sinTheta,2) +
+                    1.* I3 *pow(epsilon,2)*mu*pow(psidot,2)*thetadot*cosPsi*pow(cosTheta,2)*pow(sinTheta,2) -
+                    1.* I1 *pow(epsilon,2)*mu*pow(psidot,2)*thetadot*pow(cosPhi,2)*cosPsi*pow(cosTheta,2)*pow(sinTheta,2) +
+                    1.* I1 *epsilon*mu*pow(psidot,2)*ydot*cosTheta*pow(sinPhi,2)*pow(sinTheta,2) +
+                    1.* I1 *epsilon*mu*pow(psidot,2)*R*thetadot*cosPsi*cosTheta*pow(sinPhi,2)*pow(sinTheta,2) -
+                    1.* I1 *pow(epsilon,2)*mu*pow(psidot,2)*thetadot*cosPsi*pow(cosTheta,2)*pow(sinPhi,2)*pow(sinTheta,2) -
+                    1.* I3 *pow(epsilon,2)*mu*phidot*pow(psidot,2)*sinPsi*pow(sinTheta,3) -
+                    1.* I3 *epsilon*mu*pow(phidot,2)*psidot*R*sinPsi*pow(sinTheta,3) -
+                    1.* I3 *pow(epsilon,2)*mu*pow(psidot,3)*cosTheta*sinPsi*pow(sinTheta,3) -
+                    1.* I3 *epsilon*mu*phidot*pow(psidot,2)*R*cosTheta*sinPsi*pow(sinTheta,3) +
+                    1.* I1 *pow(epsilon,2)*mu*pow(psidot,3)*pow(cosPhi,2)*cosTheta*sinPsi*pow(sinTheta,3) +
+                    1.* I1 *epsilon*mu*phidot*pow(psidot,2)*R*pow(cosPhi,2)*cosTheta*sinPsi*pow(sinTheta,3) +
+                    1.* I1 *pow(epsilon,2)*mu*pow(psidot,3)*cosTheta*pow(sinPhi,2)*sinPsi*pow(sinTheta,3) +
+                    1.* I1 *epsilon*mu*phidot*pow(psidot,2)*R*cosTheta*pow(sinPhi,2)*sinPsi*pow(sinTheta,3)))/
+              (1.* I1 *pow(cosPhi,2) + 1.* I1 *pow(sinPhi,2) + 1.*epsilon*m*mu*pow(R,2)*thetadot*sinTheta + 1.*epsilon*m*mu*R*ydot*cosPsi*sinTheta -
+               2.*pow(epsilon,2)*m*mu*R*thetadot*cosTheta*sinTheta - 1.*pow(epsilon,2)*m*mu*ydot*cosPsi*cosTheta*sinTheta +
+               1.*pow(epsilon,3)*m*mu*thetadot*pow(cosTheta,2)*sinTheta - 1.*epsilon*m*mu*R*xdot*sinPsi*sinTheta +
+               1.*pow(epsilon,2)*m*mu*xdot*cosTheta*sinPsi*sinTheta + 1.*pow(epsilon,2)*m*pow(sinTheta,2));
 }
 
-Vecteur5 TippeTopFriction::f(const double &t, const Vecteur5 &P_, const Vecteur5 &P_dot_) const {
-    double I1 = Ig.getCoord(0,0);
-    double sinTheta = sin(P_.getCoord(0));
-    double sinPsi = sin(P_.getCoord(1));
-    double cosTheta = cos(P_.getCoord(0));
-    double cosPsi = cos(P_.getCoord(1));
-    double theta = P_.getCoord(0);
-    double theta_dot = P_dot_.getCoord(0);
-    double psi_dot = P_dot_.getCoord(1);
-    double phi_dot = P_dot_.getCoord(2);
-    double I3 = Ig.getCoord(2,2);
-    double vx = P_dot_.getCoord(3);
-    double vy = P_dot_.getCoord(4);
-    return Vecteur5(
-            (mu*R*vx*(1 - alpha*cosTheta)*(9.81*I1*m + alpha*m*R*(-(I3*phi_dot*psi_dot*pow(sinTheta,2)) +
-                                                                  I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-            (I1*(I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta))) +
-            (sinTheta*(-(I3*phi_dot*psi_dot) + I1*pow(psi_dot,2)*cosTheta -
-                       (alpha*R*(9.81*I1*m + alpha*m*R*(-(I3*phi_dot*psi_dot*pow(sinTheta,2)) +
-                                                        I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-                       (I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta))))/I1,
+int TippeTopFriction::update(const double& dt)
+{
+    lsoda.lsoda_update(accels, 10, all_params_i, all_params_live, &t, t + dt, &istate, data);
 
-            (1/sinTheta*(I3*phi_dot*theta_dot - 2*I1*psi_dot*theta_dot*cosTheta -
-                         (mu*R*vy*(alpha - cosTheta)*(9.81*I1*m + alpha*m*R*(-(I3*phi_dot*psi_dot*pow(sinTheta,2)) +
-                                                                             I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-                         (I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta))))/I1,
-            -((mu*R*vy*sinTheta*(9.81*I1*m + alpha*m*R*(-(I3*phi_dot*psi_dot*pow(sinTheta,2)) +
-                                                        I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-              (I3*(I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta)))),
-
-            psi_dot*vy - (mu*vx*(I1 + m*pow(R,2)*pow(-1 + alpha*cosTheta,2))*
-                          (9.81*I1*m + alpha*m*R*(-(I3*phi_dot*psi_dot*pow(sinTheta,2)) + I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-                         (I1*m*(I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta))) +
-            (R*sinTheta*(-(phi_dot*psi_dot*(I1 - I3 + alpha*I3*cosTheta)) - alpha*I1*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)) +
-                         (alpha*R*(1 - alpha*cosTheta)*(9.81*I1*m + alpha*m*R*(-(I3*phi_dot*psi_dot*pow(sinTheta,2)) +
-                                                                               I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-                         (I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta))))/I1,
-
-            -(psi_dot*vx) + (phi_dot*R*theta_dot*(alpha*I3 + (I1 - I3)*cosTheta))/I1 -
-            (mu*vy*(I1*I3 + I3*m*pow(R,2)*pow(alpha - cosTheta,2) + I1*m*pow(R,2)*pow(sinTheta,2))*
-             (9.81*I1*m + alpha*m*R*(-(I3*phi_dot*psi_dot*pow(sinTheta,2)) + I1*cosTheta*(pow(theta_dot,2) + pow(psi_dot,2)*pow(sinTheta,2)))))/
-            (I1*I3*m*(I1 + alpha*m*pow(R,2)*sinTheta*(-(mu*vx) + alpha*mu*vx*cosTheta + alpha*sinTheta)))
-    );
+    P.setVect({all_params_live[1],all_params_live[2],all_params_live[3],all_params_live[4],all_params_live[5]});
+    P_dot.setVect({all_params_live[6],all_params_live[7],all_params_live[8],all_params_live[9],all_params_live[10]});
+    if (istate <= 0)
+    {
+        cerr << "LSODA integrator error istate = " <<  istate << endl;
+        exit(0);
+    }
+    return 0;
 }

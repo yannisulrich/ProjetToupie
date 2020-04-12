@@ -17,7 +17,7 @@ void Toupie::afficheSimple(std::ostream & out) const {
     out << "P: " << P << ", P_dot: " << P_dot;
 }
 
-void Toupie::afficheFile(std::ostream & out) const {
+void Toupie::afficheFile(std::ostream & out) const { //TODO: ofstream& ?
     for(double i: P.v()) {
         out << i << " ";
     }
