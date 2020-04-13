@@ -16,4 +16,5 @@
 add_executable(TestSys ExerciceP9b.cc ../Systeme.h ../Systeme.cc)
 
 target_link_libraries(TestSys PUBLIC MathCore)
-target_link_libraries(TestSys PUBLIC  Graphics)
+target_link_libraries(TestSys PUBLIC GraphicsCore TextViewer FileViewer)
+

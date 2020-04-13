@@ -16,5 +16,4 @@ void FileViewer::dessine(Systeme const & sys) const {
         out << " # " << i << std::endl;
         ++i;
     }
-
 }
