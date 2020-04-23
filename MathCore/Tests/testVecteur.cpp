@@ -3,18 +3,19 @@
 //
 
 #include <iostream>
+#include "Vecteur.h"
 #include "VecteurArray.h"
 
 using namespace std;
 int main() {
 // un vecteur en 3D :
-    Vecteur vect1(1.0, 0.0, 0.0);
+    VecteurN vect1(1.0, 0.0, 0.0);
 
 // un autre vecteur en 3D
-    Vecteur vect2(0.0, 1.0,  0.0);
+    VecteurN vect2(0.0, 1.0,  0.0);
 
-    Vecteur vect3(vect1);  // copie de V1
-    Vecteur vect4(4);      // le vecteur nul en 4D
+    VecteurN vect3(vect1);  // copie de V1
+    VecteurN vect4(4);      // le vecteur nul en 4D
 
     cout << "Vecteur 1 : " << vect1 << endl;
     cout << "Vecteur 2 : " << vect2 << endl;
@@ -37,10 +38,49 @@ int main() {
     //cout << 2*vect3 << endl;
     //vect1 += 2*vect3;
     //cout << vect1 + vect2 << endl;
-    Vecteur vect5(vect1+vect2);
+    VecteurN vect5(vect1+vect2);
     //vect1[1] = 3;
     //cout << vect1 << endl;
     //cout << - vect1 << endl;
     //cout << vect5 << endl;
-    cout << (vect2^vect1);
+    cout << (vect2^vect1) << endl;
+
+    cout << "Maintenant la même chose avec la classe VecteurArray: " << endl;
+
+    // un vecteur en 3D :
+    Vecteur3 vect6(1.0, 0.0, 0.0);
+
+// un autre vecteur en 3D
+    Vecteur3 vect7(0.0, 1.0,  0.0);
+
+    Vecteur3 vect8(vect6);  // copie de V1
+    Vecteur3 vect9;      // le vecteur nul en 3D
+
+    cout << "Vecteur 6 : " << vect6 << endl;
+    cout << "Vecteur 7 : " << vect7 << endl;
+    cout << "Vecteur 8 : " << vect8 << endl;
+    cout << "Vecteur 9 : " << vect9 << endl;
+
+    cout << "Le vecteur 6 est ";
+    if (vect6 == vect7) {
+        cout << "égal au";
+    } else {
+        cout << "différent du";
+    }
+    cout << " vecteur 7," << endl << "et est ";
+    if (vect6 != vect8) {
+        cout << "différent du";
+    } else {
+        cout << "égal au";
+    }
+    cout << " vecteur 8." << endl;
+    //cout << 2*vect3 << endl;
+    //vect1 += 2*vect3;
+    //cout << vect1 + vect2 << endl;
+    Vecteur3 vect10(vect6+vect7);
+    //vect1[1] = 3;
+    //cout << vect1 << endl;
+    //cout << - vect1 << endl;
+    //cout << vect5 << endl;
+    cout << (vect7^vect6);
 }

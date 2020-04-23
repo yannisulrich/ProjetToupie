@@ -1,5 +1,6 @@
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -9,26 +10,31 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-configure_file(ads_fragment.vert ads_fragment.vert COPYONLY)
-configure_file(ads_fragment.frag ads_fragment.frag COPYONLY)
 find_package(Qt5 COMPONENTS Core Gui Widgets OpenGL REQUIRED)
+find_package(OpenGL REQUIRED)
+
+set(projectIncludes ${CMAKE_SOURCE_DIR}
+        ${CMAKE_SOURCE_DIR}/MathCore
+        ${CMAKE_SOURCE_DIR}/MathCore/Integrateurs
+        ${CMAKE_SOURCE_DIR}/Tests
+        ${CMAKE_SOURCE_DIR}/Interface
+        ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer
+        ${Qt5Widgets_INCLUDE_DIRS}
+        )
+include_directories(${projectIncludes})
 
 add_library(OpenGLViewer
         model.cpp
         modelloader.cpp
         scene.cpp
-        window.cpp
-        )
-target_link_libraries(OpenGLViewer PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL)
+        GLWindow.cc shaders.qrc models.qrc)
 
+target_include_directories(OpenGLViewer PUBLIC ${projectIncludes})
+IF(APPLE)
+    target_link_libraries(OpenGLViewer PUBLIC System MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL /usr/local/lib/libassimp.dylib "-framework OpenGL")
 
-#set(ASSIMP_LIBRARY_DIRS "lib/assimp/build/code")
-#link_directories(${ASSIMP_LIBRARY_DIRS})
+ENDIF()
 
-
-#target_link_libraries(PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL)
-
-
-
-
-
+IF(WIN32) #TODO assimp from folder
+    target_link_libraries(OpenGLViewer PUBLIC MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL)
+ENDIF()

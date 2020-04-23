@@ -2,15 +2,14 @@
 // Created by Yannis on 11.03.20.
 //
 
-#include "MathCore/Toupies/ConeSimple.h"
+#include "ConeSymFixe.h"
 #include <iostream>
 using namespace std;
 
 
 int main() {
-    Vecteur x({1,2,3});
-    Toupie toupie1(Vecteur({0,0,0}), Vecteur({0,0,0}), Matrice(1,1,1));
-    ConeSimple cone1(Vecteur({0,0,0}), Vecteur({0,0,0}), 3, 4, 5);
+    SupportVide suppvide;
+    ConeSymFixe cone1(&suppvide,Vecteur5(1,2,3,4,5), Vecteur5(6,7,8,9,10), 3, 4, 5);
 
     //cout << toupie1 << endl;
     //cout << "test";

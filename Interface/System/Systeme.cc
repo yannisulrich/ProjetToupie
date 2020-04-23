@@ -9,25 +9,34 @@
 
 using namespace std;
 std::ostream& operator<<(std::ostream& out, const Systeme & systeme) {
-    std::vector<Toupie* > toupies = systeme.getToupies();
-
+    std::vector<const Toupie* > toupies = systeme.getToupies();
     for(size_t i(0); i < toupies.size(); ++i) {
         out << "==== Toupie " << i + 1 << " :" << endl;
-        out << toupies[i]->getType() << endl;
+        out << toupies[i]->type() << endl;
         out << *toupies[i] << endl;
     }
     out << "===============" << endl;
     return out;
 }
 
-std::vector<Toupie* > Systeme::getToupies() const {
-    return toupies;
+std::vector<const Toupie *> Systeme::getToupies() const {
+    std::vector<const Toupie *> out;
+    const Toupie* p;
+    for(Toupie* toupie: toupies) {
+        p = toupie;
+        out.push_back(p);
+    }
+    return out;
 }
 
-void Systeme::addConeSymFixe(const Vecteur5 &P, const Vecteur5 &P_dot, const double &L, const double &R,
-                             const double &m) {
-    toupies.push_back(new ConeSymFixe(support, P, P_dot, L, R, m));
+void Systeme::addSymCone(const Vecteur5 &P, const Vecteur5 &P_dot, const double &L, const double &R,
+                         const double &m) {
 
+    toupies.push_back(new ConeSymFixe(support, P, P_dot, L, R, m, "cone.dae"));
+}
+void Systeme::addSymModel(const Vecteur5 &P, const Vecteur5 &P_dot, const double &I1, const double &I3, const double &m,
+                          const QString &path) {
+    toupies.push_back(new ConeSymFixe(support, P, P_dot, I1, I3, m, path, true));
 }
 void Systeme::addTippeTopRolls(const Vecteur5 &P, const Vecteur5 &P_dot, const double &R, const double &h, const double &m) {
     toupies.push_back(new TippeTopRolls(support, P, P_dot, R, h, m));
@@ -36,9 +45,9 @@ void Systeme::addTippeTopFriction(const Vecteur5 &P, const Vecteur5 &P_dot, cons
     toupies.push_back(new TippeTopFriction(support, P, P_dot, R, h, mu, m));
 }
 
-void Systeme::integrate(Integrateur * integrateur, const double& dt, const double& t) {
+void Systeme::integrate(const double& dt, const double& t) {
     for(auto i : toupies) {
-        if(i->type == "Tippe Top Inverseur") {
+        if(i->type() == "Tippe Top Inverseur") {
             try {
                 dynamic_cast<TippeTopFriction &>(*i).update(dt);
             }
@@ -47,16 +56,13 @@ void Systeme::integrate(Integrateur * integrateur, const double& dt, const doubl
                 std::cerr << "Est-ce que vous avez essayé de manuellement donner le type 'Tippe Top Inverseur' à une toupie?" << endl;
             }
         }
-        integrateur->integrate(*i, dt, t);
+        integrator->integrate(*i, dt, t);
     }
 }
 
-void Systeme::integrateMultiple(const size_t & n, Integrateur * integrateur, const double & dt, const double &t) {
-    for(size_t i(0); i < n; ++i) {
-        integrate(integrateur, dt, t + i*dt);
-    }
+void Systeme::integrateMultiple(const size_t & n, const double & dt, const double &t) {
     for(auto i : toupies) {
-        if(i->type == "Tippe Top Inverseur") {
+        if(i->type() == "Tippe Top Inverseur") {
             try {
                 dynamic_cast<TippeTopFriction &>(*i).update(n*dt);
             }
@@ -65,7 +71,10 @@ void Systeme::integrateMultiple(const size_t & n, Integrateur * integrateur, con
                 std::cerr << "Est-ce que vous avez essayé de manuellement donner le type 'Tippe Top Inverseur' à une toupie?" << endl;
             }
         }
-        integrateur->integrateMultiple(n, *i, dt, t);
+        integrator->integrateMultiple(n, *i, dt, t);
     }
 }
+
+
+
 

@@ -4,6 +4,9 @@
 #include <assimp/Importer.hpp>
 #include <QDebug>
 #include <limits>
+#include <QResource>
+#include <mach-o/dyld.h>
+#include <limits.h>
 
 ModelLoader::ModelLoader(bool transformToUnitCoordinates) :
     m_transformToUnitCoordinates(transformToUnitCoordinates)
@@ -28,14 +31,29 @@ QString findFile(QString relativeFilePath, int scanDepth)
 
 bool ModelLoader::Load(QString filePath, PathType pathType)
 {
+    char buf [PATH_MAX];
+    uint32_t bufsize = PATH_MAX;
+    if(!_NSGetExecutablePath(buf, &bufsize))
+        puts(buf);
+    qDebug() << "modeloaderExecPath" << buf;
+    qDebug() << "Modelloader: " << filePath;
+    Q_INIT_RESOURCE(models);
+    QResource modelResource(filePath);
+
+    qDebug() << "Modelloadervalid" << modelResource.isValid() << " " << modelResource.absoluteFilePath();
+
+
     QString l_filePath;
     if (pathType == RelativePath)
         l_filePath = findFile(filePath, 5);
     else
         l_filePath = filePath;
 
+    qDebug() << "lfilepath " << l_filePath;
+
     Assimp::Importer importer;
 
+    /*
     const aiScene* scene = importer.ReadFile( l_filePath.toStdString(),
             aiProcess_GenSmoothNormals      |
             aiProcess_CalcTangentSpace       |
@@ -43,7 +61,14 @@ bool ModelLoader::Load(QString filePath, PathType pathType)
             aiProcess_JoinIdenticalVertices  |
             aiProcess_SortByPType
                                               );
-
+    */
+    const aiScene* scene = importer.ReadFile( l_filePath.toStdString(),
+                                              aiProcess_GenSmoothNormals      |
+                                              aiProcess_CalcTangentSpace       |
+                                              aiProcess_Triangulate       |
+                                              aiProcess_JoinIdenticalVertices  |
+                                              aiProcess_SortByPType
+    );
     if( !scene)
     {
         qDebug() << "Error loading file: (assimp:) " << importer.GetErrorString();
@@ -304,6 +329,7 @@ void ModelLoader::transformToUnitCoordinates()
 
     // Apply transformation
     m_rootNode.data()->transformation = transformation * m_rootNode.data()->transformation;
+    qDebug() << transformation*minDimension << endl;
 }
 
 void ModelLoader::findObjectDimensions(Node *node, QMatrix4x4 transformation, QVector3D &minDimension, QVector3D &maxDimension)
@@ -337,4 +363,14 @@ void ModelLoader::findObjectDimensions(Node *node, QMatrix4x4 transformation, QV
     for (int ii=0; ii<node->nodes.size(); ++ii) {
         findObjectDimensions(&(node->nodes[ii]), transformation, minDimension, maxDimension);
     }
+}
+
+float ModelLoader::bottomPoint() {
+    double amin = std::numeric_limits<double>::max();
+    double amax = std::numeric_limits<double>::min();
+    QVector3D minDimension(amin,amin,amin);
+    QVector3D maxDimension(amax,amax,amax);
+
+    findObjectDimensions(m_rootNode.data(), QMatrix4x4(), minDimension, maxDimension);
+    return minDimension.y();
 }

@@ -1,19 +1,31 @@
 #include "scene.h"
-
-
+#include "Toupies/Toupie.h"
+#include "Integrateur.h"
+#include <iostream>
+#include <QtCore>
+using namespace std;
 void Scene::initialize()
 {
-    this->initializeOpenGLFunctions();
-    //QFileInfo info("ads_fragment.vert");
-    //qDebug() << info.absoluteFilePath();
-    createShaderProgram("ads_fragment.vert", "ads_fragment.frag");
+
+    Q_INIT_RESOURCE(shaders); //comme VueOpenGL est une library cmake, nous choisissons ce moyen de faire en sorte que les shaders soient bien trouvés.
+    QResource vertShader("://ads_fragment.vert");
+    QResource fragShader("://ads_fragment.frag");
+    createShaderProgram(vertShader.absoluteFilePath(), fragShader.absoluteFilePath());
+    m_shaderProgram.bind();
 
     setupLightingAndMatrices();
 
-    model->initialize(m_shaderProgram);
-    model2->initialize(m_shaderProgram);
+    for(auto i : system.getToupies()) i->model.initialize(m_shaderProgram);
+
     glEnable(GL_DEPTH_TEST);
     glClearColor(.9f, .9f, .93f ,1.0f);
+
+    yaw = pitch = 0;
+    r = {-4,0,0};
+    v = {0,0,0};
+    a = {0,0,0};
+    direction = {cos(pitch)*cos(yaw),sin(pitch), cos(pitch)*sin(yaw)};
+
 }
 
 void Scene::createShaderProgram(QString vShader, QString fShader)
@@ -35,7 +47,7 @@ void Scene::setupLightingAndMatrices()
 {
     m_view.setToIdentity();
     m_view.lookAt(
-                QVector3D(0.0f, 0.0f, 1.2f),    // Camera Position
+                QVector3D(3.0f, 1.5f, 0.0f),    // Camera Position
                 QVector3D(0.0f, 0.0f, 0.0f),    // Point camera looks towards
                 QVector3D(0.0f, 1.0f, 0.0f));   // Up vector
 
@@ -63,28 +75,76 @@ void Scene::resize(int w, int h)
 void Scene::update()
 {
 
-    // Clear color and depth buffers
+    // Clear buffers
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Bind shader program
-    m_shaderProgram.bind();
 
-    // Set the model matrix
-    // Translate and rotate it a bit to get a better view of the model
-    QMatrix4x4 m_model;
-    m_model.setToIdentity();
-    m_model.translate(-0.2f, 0.0f, .5f);
-    m_model.rotate(55.0f, 0.0f, 1.0f, 0.0f);
     // Set shader uniforms for light information
     m_shaderProgram.setUniformValue( "lightPosition", m_lightInfo.Position );
     m_shaderProgram.setUniformValue( "lightIntensity", m_lightInfo.Intensity );
 
-    // Bind VAO and draw everything
-    model->draw(m_shaderProgram, m_model, m_view, m_projection);
-    m_model.setToIdentity();
-    m_model.translate(-0.2f, 0.0f, .5f);
-    model2->draw(m_shaderProgram, m_model, m_view, m_projection);
+    dessine(system);
 }
 void Scene::cleanup()
 {
 }
+//Angles d'euler. 28.647889... est le facteur de conversion entre radians et degrés.
+void Scene::dessine(const Toupie & toupie) const {
+    //transformation nécessaires pour les angles d'euler.
+    QMatrix4x4 modelMatrix;
+    modelMatrix.rotate(toupie.P.getCoord(1)*28.6478897565, 0.0, 1.0, 0.0f);
+    modelMatrix.rotate(toupie.P.getCoord(0)*28.6478897565, 1.0f, 0.0, 0.0);
+    modelMatrix.rotate(toupie.P.getCoord(2)*28.6478897565, 0.0, 1.0, 0.0f);
+    modelMatrix.scale(toupie.modelScale());
+    modelMatrix.translate(0,- toupie.model.bottomPoint(),0);
+
+    toupie.model.draw(m_shaderProgram, modelMatrix, m_view, m_projection);
+}
+
+void Scene::dessine(const Systeme & sys) const {
+    for(auto i: sys.getToupies()) {
+        if(i->hasModel()) dessine(*i);
+    }
+}
+
+void Scene::integrateSystem(const double &dt, const int& integSubDiv) {
+    system.integrateMultiple(integSubDiv, dt/double(integSubDiv));
+}
+
+void Scene::deplacer(const double &dt, bool up, bool down, bool forw, bool back, bool left, bool right) {
+    //intégration Euler-Cromer avec vitesse bornée
+    directionXZPlane = direction;
+    directionXZPlane[1] = 0;
+    if(up) a += 10*QVector3D({0,1,0});
+    if(down) a -= 10*QVector3D({0,1,0});
+    if(forw) a += 10 * directionXZPlane;
+    if(back) a -= 10 * directionXZPlane;
+    if(left) a += 50* QVector3D::normal({0,1,0}, directionXZPlane);
+    if(right) a -= 50 *QVector3D::normal({0,1,0}, directionXZPlane);
+
+    a = a.normalized() * std::min(10.0f, a.length());
+
+
+    v += dt*(a - 2*v);
+    v = v.normalized() * std::min(10.0f, v.length());
+
+    r += dt * v;
+    m_view.setToIdentity();
+    m_view.lookAt(r, r + direction, {0,1,0});
+
+    a *= 0.5;
+}
+void Scene::DeltaPitchYaw(const float &p, const float &y)
+{
+    pitch += p;
+    yaw += y;
+    if(pitch > 1.50f) //Borner le pitch à une valeur absolue  < 90° permet d'éviter les problèmes quand pitch = 90°.
+        pitch = 1.50f;
+    if(pitch < -1.50f)
+        pitch = -1.50f;
+    direction = {cos(pitch)*cos(yaw),sin(pitch), cos(pitch)*sin(yaw)};
+    m_view.setToIdentity();
+    m_view.lookAt(r, r + direction, {0,1,0});
+}
+

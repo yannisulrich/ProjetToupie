@@ -4,7 +4,7 @@
 #pragma once
 
 #include "Integrateur.h"
-#include "../VecteurArray.h"
+#include "LinAlg/VecteurArray.h"
 
 template <int n>
 class IntegrateurRungeKutta: public Integrateur {

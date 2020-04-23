@@ -12,20 +12,6 @@
 using namespace std;
 using namespace std::chrono;
 
-//constructeurs conditionnels suivant le type de v_
-template<>
-VecteurArray<array<double, 2> >::VecteurArray(const double & a, const double & b) {
-    dim_ = 2;
-    v_ = array<double, 2>({a, b});
-}
-template<> VecteurArray<array<double, 3>>::VecteurArray(const double & a, const double & b, const double & c) {
-    dim_ = 3;
-    v_ = array<double, 3>({a,b,c});
-}
-template<> VecteurArray<array<double, 5>>::VecteurArray(const double & a, const double & b, const double & c, const double & d, const double & e) {
-    dim_ = 5;
-    v_ = array<double, 5>({a,b,c,d,e});
-}
 
 //accès attributs.
 template <class T>
@@ -123,11 +109,11 @@ const VecteurArray<T> VecteurArray<T>::operator~() const {
     if(norm() < 1e-10) throw invalid_argument("vector to normalise has too small norm");
     return 1/norm() * *this;
 };
-template <>
-VecteurArray<array<double, 3> > VecteurArray<array<double, 3> >::operator^(const VecteurArray<array<double, 3> >& vect2) const {
+
+Vecteur3 Vecteur3::operator^(const Vecteur3& vect2) const {
     if (dim_ != 3) throw std::invalid_argument("dimension of vector is not 3 (" + to_string(dim_) + ")");
     if (vect2.dim_ != 3) throw std::invalid_argument("dimension of input is not 3 (" + to_string(vect2.dim_) +")");
-    VecteurArray<array<double, 3> > output(0.0, 0.0, 0.0);
+    Vecteur3 output(0.0, 0.0, 0.0);
     (output.v_)[0] = (v_)[1] * (vect2.v_)[2] - (v_)[2]*(vect2.v_)[1];
     (output.v_)[1] = (v_)[2]*(vect2.v_)[0] - (v_)[0]*(vect2.v_)[2];
     (output.v_)[2] = (v_)[0]*(vect2.v_)[1] - (v_)[1]*(vect2.v_)[0];

@@ -19,8 +19,9 @@
 
 class VecteurN {
 protected:
-    std::vector<double> v_;
     size_t dim_;
+    std::vector<double> v_;
+
 public:
     //constructeurs
     VecteurN(const std::initializer_list<double> & input): dim_(input.size()), v_(input) {} //valeurs quelconques
@@ -47,6 +48,8 @@ public:
     const VecteurN operator~() const;
     VecteurN & operator+=(const VecteurN& v2); //operations mathématiques
     VecteurN & operator-=(const VecteurN& v2);
+    friend const VecteurN operator+(VecteurN v1, const VecteurN& v2);
+    friend const VecteurN operator-(VecteurN v1, const VecteurN& v2);
     friend const VecteurN operator* (const double & scal, VecteurN vect);
     VecteurN& operator*=(const double &);
     double operator*(const VecteurN& v2) const;

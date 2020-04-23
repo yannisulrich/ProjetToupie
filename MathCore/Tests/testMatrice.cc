@@ -1,3 +1,8 @@
+/*
+ * Dans ce document test, différents blocks de tests peuvent être "décommentés" pour tester la classe matrice.
+ * Il contient aussi des tests de fonctions plus avancées de vecteurs.
+ */
+
 #include "VecteurArray.h"
 #include "Vecteur.h"
 #include "Matrice.h"
@@ -18,37 +23,42 @@ int main() {
     { 0.10, 0.02, 1.045 });
 
     Vecteur3 v(0., 1., 0.);
-    Vecteur5 v2(1,2,3,4,5);
+    Vecteur3 v2(1,2,3);
+    Vecteur2 vb(1,2);
     VecteurN v3({1,2,2});
     Vecteur3 v4(1,0,0);
     VecteurArray<array<double, 4> > v5({1,2,3,4});
-    cout << (v^v4) << endl;
-    v4[1]=2;
-    cout << v4;
-    //cout << v3.norm() << "     " << v2.norm() << endl;
-    /*
-    cout << ~v << endl;
-    cout << 2*v3 << endl;
-    cout << v << endl;
-     */
-    //Vecteur5 v2({0.00000001,0.00000002,0.0000003,1,2});
-    //v2 = 2*v2;
-    //cout << v2 << endl;
+    VecteurArray<array<double, 2> > v6({1,3});
 
+    //=====================================
+    //test de conversion de vecteurs
     /*
-    int n = 50000;
+    vb = v6;
+    cout << vb << endl;
+    vb[1] = 5;
+    v6 = vb;
+    cout << v6 << endl;
+     */
+
+    //=====================================
+    //test timing
+    /*
+    int n = 500000;
     auto start = high_resolution_clock::now();
     start = high_resolution_clock::now();
     for(size_t i(0); i <n; ++i) {
-        v2 = mat*v2;
+        v2 = mat * v2;
     }
 
     auto stop = high_resolution_clock::now();
-    cout << v2 << endl;
+
     auto duration = duration_cast<nanoseconds>(stop - start);
-    cout << "Time taken by function: " << duration.count()/double(n) << " nanoseconds" << endl;
+    cout << "Time taken by function on average: " << duration.count()/double(n) << " nanoseconds" << endl;
     */
-    //following tests all work as of 19/03, last major changes
+
+    //=====================================
+    //tests divers
+
     /*
     cout << I.det()    << " "
     << diag.det() << " "

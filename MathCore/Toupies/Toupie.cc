@@ -10,9 +10,6 @@ Matrice Toupie::getIg() const {
     return Ig;
 }
 
-std::string Toupie::getType() const {
-    return type;
-}
 void Toupie::afficheSimple(std::ostream & out) const {
     out << "P: " << P << ", P_dot: " << P_dot;
 }

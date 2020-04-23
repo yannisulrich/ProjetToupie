@@ -17,9 +17,10 @@
  * L'opérateur [] est surchargé pour permettre l'accès (rw) à une valeur.
  * L'affichage est fait au moyen d'une méthode friend.
  *
- * Des typedef sont faits pour les VecteurArray contenant des arrays de taille 3 et 5: on peut utiliser Vecteur3 et Vecteur5.
+ * Des sous-classes sont définies pour les cas particuliers d'un array de dimension 2,3,5. Voir ci-dessous.
  *
- * Enfin, cette classe est "amie" avec la classe matrice pour accélérer l'accès aux valeurs lors de la multiplication matricielle.
+ * Enfin, cette classe est "amie" avec la classe matrice pour possiblement accélérer l'accès aux valeurs
+ * lors de la multiplication matricielle, et alléger la notation (permettre les pointeurs mémoire).
  *
  */
 #pragma once
@@ -34,17 +35,16 @@
 
 template <typename T>
 class VecteurArray {
-    friend class Matrice; //ceci sert a accélérer la multiplication matricielle.
+
+    friend class Matrice; //ceci sert a accélérer la multiplication matricielle et surtout alléger la notation pour celle-ci
 protected:
+
     T v_;
     size_t dim_;
 public:
     //constructeurs
     explicit VecteurArray(const T &input): dim_(input.size()), v_(input) {} //construction pour tailles quelconques
-    VecteurArray():v_(T()), dim_(v_.size())   {} //const avec valeurs à 0
-    VecteurArray(const double &, const double &); //const. pour 2 valeurs
-    VecteurArray(const double &, const double &, const double &); //const. pour 3 valeurs
-    VecteurArray(const double &, const double &, const double &, const double &, const double &); //const. pour 5 valeurs
+    VecteurArray(): v_(T()), dim_(v_.size())   {} //const avec valeurs à 0
     [[nodiscard]] T v() const; //accès aux attributs
     void setVect(const T & input);
     [[nodiscard]] unsigned int dim() const;
@@ -83,9 +83,47 @@ const VecteurArray<T> operator-(VecteurArray<T> v1, const VecteurArray<T>& v2) {
     return v1;
 }
 
-typedef VecteurArray<std::array<double, 2> > Vecteur2;
-typedef VecteurArray<std::array<double, 3> > Vecteur3;
-typedef VecteurArray<std::array<double, 5> > Vecteur5;
+//ces trois sous-classes définissent nos cas particuliers nécessaires.
+//les premiers constructeurs sont triviaux, les deuxièmes servent de constructeur de conversion,
+// utilisés nulle part dans le projet mais utiles.
+// L'autre sens de conversion est donné par la conversion triviale au type parent.
+class Vecteur2: public VecteurArray<std::array<double, 2> > {
+public:
+    Vecteur2():VecteurArray<std::array<double, 2> >() {}
+    Vecteur2(const double & a, const double & b) {
+        dim_ = 2;
+        v_ = std::array<double, 2>({a, b});
+    }
+    Vecteur2(VecteurArray<std::array<double, 2> > v2) {
+        dim_ = 2;
+        v_ = v2.v();
+    }
+};
+class Vecteur3: public VecteurArray<std::array<double, 3> > {
+public:
+    Vecteur3():VecteurArray<std::array<double, 3> >() {}
+    Vecteur3(const double & a, const double & b, const double & c) {
+        dim_ = 3;
+        v_ = std::array<double, 3>({a,b,c});
+    }
+    Vecteur3(VecteurArray<std::array<double, 3> > v2) {
+        dim_ = 3;
+        v_ = v2.v();
+    }
+    Vecteur3 operator^(const Vecteur3& vect2) const;
+};
+class Vecteur5: public VecteurArray<std::array<double, 5> > {
+public:
+    Vecteur5():VecteurArray<std::array<double, 5> >() {}
+    Vecteur5(const double & a, const double & b, const double & c, const double & d, const double & e) {
+        dim_ = 5;
+        v_ = std::array<double, 5>({a,b,c,d,e});
+    }
+    Vecteur5(VecteurArray<std::array<double, 5> > v2) {
+        dim_ = 5;
+        v_ = v2.v();
+    }
+};
 
 
 

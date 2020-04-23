@@ -66,13 +66,16 @@ public:
     // Texture information
     int numUVChannels() { return m_textureUV.size(); }
     int numUVComponents(int channel) { return m_textureUVComponents.at(channel); }
+    float bottomPoint();
+
 private:
     QSharedPointer<MaterialInfo> processMaterial(aiMaterial *mater);
     QSharedPointer<Mesh> processMesh(aiMesh *mesh);
     void processNode(const aiScene *scene, aiNode *node, Node *parentNode, Node &newNode);
-
-    void transformToUnitCoordinates();
     void findObjectDimensions(Node *node, QMatrix4x4 transformation, QVector3D &minDimension, QVector3D &maxDimension);
+    void transformToUnitCoordinates();
+
+
 
     QVector<float> m_vertices;
     QVector<float> m_normals;

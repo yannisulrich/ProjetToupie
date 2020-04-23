@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Models/cone.dae</file>
+        <file>Models/blankmodel.dae</file>
+        <file>Models/BakuMeaGan.dae</file>
+    </qresource>
+</RCC>

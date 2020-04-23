@@ -7,14 +7,15 @@
 #set(CMAKE_CXX_FLAGS "")
 
 
-#include_directories(.. ../MathCore ../Graphics)
+#include_directories(.. ../MathCore ../Interface)
 #add_subdirectory(.. cmake-build-debug)
-#add_subdirectory(../MathCore ../Graphics)
+#add_subdirectory(../MathCore ../Interface)
 #Ceci sert à choisir quel fichier test doit être exécuté.
+include_directories(..)
+add_executable(TestSysA ExerciceP9a.cc)
 
+add_executable(TestSysB ExerciceP9b.cc)
 
-add_executable(TestSys ExerciceP9b.cc ../Systeme.h ../Systeme.cc)
-
-target_link_libraries(TestSys PUBLIC MathCore)
-target_link_libraries(TestSys PUBLIC GraphicsCore TextViewer FileViewer)
+target_link_libraries(TestSysA PUBLIC System MathCore GraphicsCore TextViewer FileViewer OpenGLViewer)
+target_link_libraries(TestSysB PUBLIC System MathCore GraphicsCore TextViewer FileViewer OpenGLViewer)
 

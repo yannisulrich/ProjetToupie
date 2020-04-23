@@ -1,7 +1,7 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+//#include "ui_mainwindow.h"
 #include <iostream>
-#include "MathCore.h"
+#include "MathCore/MathCore.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
