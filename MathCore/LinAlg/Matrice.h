@@ -54,7 +54,7 @@ public:
 
     friend Matrice operator*(const double &, const Matrice &);
 
-    [[nodiscard]] VecteurArray<std::array<double, 3>> operator*(const VecteurArray<std::array<double, 3>> &) const;
+    [[nodiscard]] Vecteur3 operator*(const Vecteur3 &) const;
 
     [[nodiscard]] Matrice transp() const;
     [[nodiscard]] double det() const;

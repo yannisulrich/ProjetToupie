@@ -1,7 +1,3 @@
-//
-// Created by Yannis on 28.03.20.
-//
-
 #pragma once
 
 #include "SupportADessin.h"

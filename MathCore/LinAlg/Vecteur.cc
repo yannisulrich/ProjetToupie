@@ -90,12 +90,10 @@ VecteurN & VecteurN::operator-=(const VecteurN& v2) {
     return *this;
 }
 const VecteurN operator+(VecteurN v1, const VecteurN& v2) {
-    v1.dimcheck(v2);
     v1 += v2;
     return v1;
 };
 const VecteurN operator-(VecteurN v1, const VecteurN& v2) {
-    v1.dimcheck(v2);
     v1 -= v2;
     return v1;
 };
@@ -149,7 +147,9 @@ double & VecteurN::operator[](size_t coord) { //read-write access
 std::ostream& operator<<(std::ostream& out, const VecteurN & vect) {
     for(double i : vect.v_) out  << i << std::setw(15);
     out << std::setw(-15);
-    return out;}
+    return out;
+}
+
 
 
 

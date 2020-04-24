@@ -1,29 +1,33 @@
 #include "model.h"
 #include <iostream>
+#include <stdexcept>
+
+using namespace std;
 Model::Model(QString filepath, ModelLoader::PathType pathType, QString texturePath) :
     m_indexBuffer(QOpenGLBuffer::IndexBuffer)
   , m_filepath(filepath)
   , m_pathType(pathType)
   , m_texturePath(texturePath)
   , m_error(false)
+  , initialized(false)
+  , _bottomPoint(0)
 {
 }
 
 void Model::initialize(QOpenGLShaderProgram& m_shaderProgram)
 {
     this->initializeOpenGLFunctions();
-
+    qDebug() << "modelinitpath" << m_filepath;
     createBuffers();
     createAttributes(m_shaderProgram);
     setupMaterials();
 
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(.9f, .9f, .93f ,1.0f);
+    initialized = true;
 }
 
 void Model::createBuffers()
 {
-    ModelLoader model;
+    ModelLoader model(false);
 
     if(!model.Load(m_filepath, m_pathType))
     {
@@ -75,6 +79,7 @@ void Model::createBuffers()
     m_indexBuffer.allocate( &(*indices)[0], indices->size() * sizeof( unsigned int ) );
 
     m_rootNode = model.getNodeData();
+    _bottomPoint = model.bottomPoint();
 }
 
 void Model::createAttributes(QOpenGLShaderProgram & m_shaderProgram)
@@ -83,8 +88,6 @@ void Model::createAttributes(QOpenGLShaderProgram & m_shaderProgram)
         return;
 
     m_vao.bind();
-    // Set up the vertex array state
-    m_shaderProgram.bind();
 
     // Map vertex data to the vertex shader's layout location '0'
     m_vertexBuffer.bind();
@@ -126,8 +129,8 @@ void Model::draw(QOpenGLShaderProgram& m_shaderProgram, QMatrix4x4 objectMatrix,
     drawNode(m_shaderProgram, m_rootNode.data(), objectMatrix, view, projection);
     m_vao.release();
 }
-//TODO: check if things can be passed as reference
-void Model::drawNode(QOpenGLShaderProgram& m_shaderProgram, const Node *node, QMatrix4x4 objectMatrix, QMatrix4x4 view, QMatrix4x4 projection)
+
+void Model::drawNode(QOpenGLShaderProgram& m_shaderProgram, const Node *node, QMatrix4x4 objectMatrix, const QMatrix4x4& view, const QMatrix4x4& projection)
 {
     // Prepare matrices
     objectMatrix *= node->transformation;
@@ -169,3 +172,13 @@ void Model::setMaterialUniforms(QOpenGLShaderProgram& m_shaderProgram, MaterialI
 void Model::cleanup()
 {
 }
+
+//This function implements a guard from loading a new model when the old one is already initialized in the scene.
+void Model::loadNew(QString filepath, ModelLoader::PathType pathType, QString texturePath) {
+    if(initialized) throw std::logic_error("cannot load new model when already initialized");
+    cout << "loadNew" << endl;
+    m_filepath = std::move(filepath);
+    m_pathType = pathType;
+    m_texturePath = std::move(texturePath);
+}
+

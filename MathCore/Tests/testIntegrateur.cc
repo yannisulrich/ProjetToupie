@@ -1,12 +1,17 @@
-//
-// Created by Yannis on 12.03.20.
-//
+/*
+ * Ce fichier ne fonctionne plus après les changements demandés après le problème P7. L'adapter le ferait ressembler presque
+ * exactement aux fichiers P9a et P9b. TODO check if this file is needed.
+ */
+
+
+/*
 #include "All_Integrateurs.h"
-#include "MathCore/Toupies/ConeSimple.h"
+#include "MathCore/Toupies/ConeSymFixe.h"
 #include "VecteurArray.h"
 #include "constantes.h"
 #include <iostream>
 #include <chrono>
+
 
 using namespace std;
 using namespace std::chrono;
@@ -32,7 +37,7 @@ int main() {
     IntegrateurRungeKutta5 integR;
 
     sortie.open("gnuplotdata.txt", ios::out);
-    ConeSimple cone(f, Vecteur5(0,1,0,0,0),Vecteur5(1,3,0,0,0), 1.0, 1.0, 0.127);
+    ConeSymFixe cone(sinus, Vecteur5(0,1,0,0,0),Vecteur5(1,3,0,0,0), 1.0, 1.0, 0.127);
     Vecteur5 v(0,1,1,0,0);
     auto start = high_resolution_clock::now();
 
@@ -53,3 +58,4 @@ int main() {
     pclose(gnuplotPipe);
 
 }
+*/

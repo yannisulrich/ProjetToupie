@@ -68,11 +68,11 @@ Matrice Matrice::operator*(const Matrice & mat2) {
 }
 /*La fonction de multiplication d'un vecteur utilise les mêmes techniques d'optimisations que l'opérateur +=
  * Un avantage temporel est acquis ici encore acquis en calculant les trois composantes du vecteur d'un coup,
- * cet à dire que chaque valeur n'est bien appelée en registre qu'une fois.
+ * cet à dire que chaque valeur du vecteur et de la matrice n'est bien appelée en registre qu'une fois.
  * timing d'environ 17ns (moyenne sur 50'000 essais uniquement avec -funroll-loops, qui est possiblement redondant, et bien sûr que les défauts
  * de cache sont réduits au maximum par le compilateur).
 */
-VecteurArray<array<double, 3>> Matrice::operator*(const VecteurArray<array<double, 3> > & vect) const {
+Vecteur3 Matrice::operator*(const Vecteur3 & vect) const {
 
     //auto start = high_resolution_clock::now();
     const double* matpos0 =  & m[0][0];
@@ -88,7 +88,7 @@ VecteurArray<array<double, 3>> Matrice::operator*(const VecteurArray<array<doubl
         out1 += (*matpos1++) * (*vectpos2);
         out2 += (*matpos2++) * (*vectpos2++);
     }
-    VecteurArray<array<double, 3> > output(out0, out1, out2);
+    Vecteur3 output(out0, out1, out2);
 
     return output;
 }

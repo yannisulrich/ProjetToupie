@@ -1,6 +1,6 @@
 
 #pragma once
-#include "SupportADessin.h"
+#include "../SupportADessin.h"
 #include <iostream>
 
 class TextViewer: public SupportADessin {
@@ -12,6 +12,9 @@ public:
 
     void dessine(Toupie const&) const override;
     void dessine(Systeme const&) const override;
+
+    void dessine(const double & t, Toupie const&) const override;
+    void dessine(const double & t, Systeme const&) const override;
 };
 
 

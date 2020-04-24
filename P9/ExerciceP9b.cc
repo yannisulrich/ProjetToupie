@@ -1,9 +1,10 @@
 //
 // Created by Yannis on 28.03.20.
 //
-#include "MathCore.h"
-#include "Graphics.h"
-#include "Systeme.h"
+#include "Integrateurs/All_Integrateurs.h"
+#include "FileViewer/FileViewer.h"
+#include "TextViewer/TextViewer.h"
+#include "System/Systeme.h"
 #include <iostream>
 #include <memory>
 #include <chrono>
@@ -12,8 +13,8 @@ using namespace std;
 using namespace std::chrono;
 int main() {
     
-    ofstream file("/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Tests/SystemeOutput.txt", ios::out);
-    //file.open("/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Tests/SystemeOutput.txt", ios::app);
+    ofstream file("/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/P9/SystemeOutput.txt", ios::out);
+    //file.open("/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/P9/SystemeOutput.txt", ios::app);
 
     FILE* gnuplotPipe = popen("gnuplot -persist","w");
     double dt = 0.01;
@@ -32,9 +33,9 @@ int main() {
     TippeTopRolls test(outText, Vecteur5(0.5, 0, 0, 0, 0), Vecteur5(0.05, 0.01, 60, 0, 0), 2.0, 1.0, 0.127);
 
 
-    Systeme systeme(outFile);
+    Systeme systeme(outFile, &integN);
 
-    systeme.addConeSymFixe(Vecteur5(0.5,0,0,0,0),Vecteur5(0.05,0,60,0,0), 1.0, 1.0, 0.127);
+    systeme.addSymCone(Vecteur5(0.5, 0, 0, 0, 0), Vecteur5(0.05, 0, 60, 0, 0), 1.0, 1.0, 0.127);
     systeme.addTippeTopFriction(Vecteur5(0.1,0,0,0,0),Vecteur5(0,0,60,0,0), 0.02, 0.0036186, 0.5, 0.13387373);
 
     //cout << systeme.getToupies()[0]->getIg() << endl;
@@ -45,7 +46,7 @@ int main() {
     auto start = high_resolution_clock::now();
 
     for(int t(0); t < T/(n*dt); ++t) {
-        systeme.integrateMultiple(n, &integEC, dt);
+        systeme.integrateMultiple(n, dt);
         systeme.dessine();
         //systeme.dessine(outText);
     }
@@ -58,13 +59,13 @@ int main() {
     cout << "Time taken by function: " << duration.count() << " microseconds" << endl;
 
     //gnuplot
-    system("grep ' # 1' /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Tests/SystemeOutput.txt "
-           "> /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Tests/SystemeOutputGrep1.txt");
-    system("grep ' # 2' /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Tests/SystemeOutput.txt "
-           "> /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Tests/SystemeOutputGrep2.txt");
+    system("grep ' # 1' /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/P9/SystemeOutput.txt "
+           "> /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/P9/SystemeOutputGrep1.txt");
+    system("grep ' # 2' /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/P9/SystemeOutput.txt "
+           "> /Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/P9/SystemeOutputGrep2.txt");
 
-    fprintf(gnuplotPipe, "plot '/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Tests/SystemeOutputGrep2.txt' using ($0/100.):1 w lp");
-    //fprintf(gnuplotPipe, ",'/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Tests/SystemeOutputGrep1.txt' using ($0/1000.):1 w lp");
+    fprintf(gnuplotPipe, "plot '/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/P9/SystemeOutputGrep2.txt' using ($0/100.):1 w lp");
+    //fprintf(gnuplotPipe, ",'/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/P9/SystemeOutputGrep1.txt' using ($0/1000.):1 w lp");
     fprintf(gnuplotPipe, "\n");
     fflush(gnuplotPipe);
     fprintf(gnuplotPipe,"exit \n");   // exit gnuplot

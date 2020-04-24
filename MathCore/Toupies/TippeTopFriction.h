@@ -43,8 +43,8 @@ public:
     int update(const double&);
 
     void affiche(std::ostream&) const override;
-    Vecteur5 f(const double &) const override {return Vecteur5(0,0,0,0,0);};
-    Vecteur5 f(const double &, const Vecteur5&, const Vecteur5&) const override {return Vecteur5(0,0,0,0,0);};
+    [[nodiscard]] Vecteur5 f(const double &) const override {return Vecteur5(0,0,0,0,0);};
+    [[nodiscard]] Vecteur5 f(const double &, const Vecteur5&, const Vecteur5&) const override {return Vecteur5(0,0,0,0,0);};
 
 
 
