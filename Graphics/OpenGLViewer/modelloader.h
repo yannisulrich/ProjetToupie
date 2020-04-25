@@ -66,6 +66,7 @@ public:
     // Texture information
     int numUVChannels() { return m_textureUV.size(); }
     int numUVComponents(int channel) { return m_textureUVComponents.at(channel); }
+
     float bottomPoint();
 
 private:

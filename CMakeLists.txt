@@ -35,6 +35,7 @@ endif()
 
 add_subdirectory(MathCore)
 add_subdirectory(P9)
+add_subdirectory(P10)
 add_subdirectory(Interface)
 add_subdirectory(Graphics)
 
@@ -52,10 +53,11 @@ add_executable(ToupieMain
           mainwindow.cpp
           mainwindow.h
           mainwindow.ui
+        ui_mainwindow.h
     ${TS_FILES}
   )
-
-target_link_libraries(ToupieMain PUBLIC MathCore)
+target_include_directories(ToupieMain PRIVATE ${projectIncludes})
+target_link_libraries(ToupieMain PRIVATE MathCore)
 target_link_libraries(ToupieMain PRIVATE Qt5::Widgets)
 
 

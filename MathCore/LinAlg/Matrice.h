@@ -47,6 +47,8 @@ public:
     Matrice(const double & m11, const double & m22, const double & m33); //matrices diagonales
 
     double& operator()(const unsigned & line, const unsigned & col); //accès aux éléments read write
+    double operator()(const unsigned & line, const unsigned & col) const; //accès aux éléments read only (const overload)
+
     [[nodiscard]] double getCoord(const int& i, const int& j) const {return m[i][j];}
     Matrice& operator+=(const Matrice &); //surcharge des opérateurs élémentaires
     Matrice& operator-=(const Matrice &);

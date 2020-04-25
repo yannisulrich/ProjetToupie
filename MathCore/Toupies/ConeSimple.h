@@ -25,9 +25,9 @@ public:
     [[nodiscard]] double getR() const;
     [[nodiscard]] double getM() const;
 
+    Vecteur4 returnIndicators() const override;
 
-
-
+    Vecteur3 translationModel() const override;
 };
 
 

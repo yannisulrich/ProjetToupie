@@ -56,7 +56,8 @@ public:
     const VecteurN operator-() const;
     VecteurN operator^(const VecteurN & vect2) const;
 
-    double& operator[](size_t coord);
+    double& operator[](const size_t& coord); //accès en read-write
+    const double& operator[](const size_t& coord) const; //accès en read only (const overload)
 
     friend std::ostream& operator<<(std::ostream& out, const VecteurN & vect);
 };

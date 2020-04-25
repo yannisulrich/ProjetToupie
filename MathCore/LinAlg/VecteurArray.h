@@ -66,7 +66,9 @@ public:
     const VecteurArray<T> operator-() const;
     VecteurArray<T> operator^(const VecteurArray<T> & vect2) const;
 
-    double& operator[](size_t coord);
+    double& operator[](const size_t& coord); //accès read write
+    double operator[](const size_t& coord) const; //acès read-only (const overload)
+
     friend std::ostream& operator<<(std::ostream& out, const VecteurArray<T> & vect) {
         for(double i : vect.v_) out << std::setw(15) << i;
         return out;};
@@ -111,6 +113,18 @@ public:
         v_ = v2.v();
     }
     Vecteur3 operator^(const Vecteur3& vect2) const;
+};
+class Vecteur4: public VecteurArray<std::array<double, 4> > {
+public:
+    Vecteur4():VecteurArray<std::array<double, 4> >() {}
+    Vecteur4(const double & a, const double & b, const double & c, const double & d) {
+        dim_ = 5;
+        v_ = std::array<double, 4>({a,b,c,d});
+    }
+    Vecteur4(VecteurArray<std::array<double, 4> > v2) {
+        dim_ = 5;
+        v_ = v2.v();
+    }
 };
 class Vecteur5: public VecteurArray<std::array<double, 5> > {
 public:

@@ -1,6 +1,4 @@
-//
-// Created by Yannis on 06.03.20.
-//
+
 #pragma once
 #include "LinAlg/VecteurArray.h"
 #include "LinAlg/Matrice.h"
@@ -14,7 +12,6 @@
 #include "Graphics/SupportADessin.h"
 #include "Graphics/OpenGLViewer/model.h"
 
-//class IntegrateurEulerCromer;
 
 
 class Toupie: public Dessinable {
@@ -24,10 +21,12 @@ class Toupie: public Dessinable {
     friend class IntegrateurNewmark;
     template <int n>
     friend class IntegrateurRungeKutta;
+
+
 protected:
 
-
-
+    mutable double cosTheta = 0, sinTheta = 0, sinPsi = 0, cosPsi = 0,sinPhi = 0, cosPhi = 0, thetadot = 0, psidot = 0, phidot = 0, xdot = 0, ydot = 0; //utilisé pour le calcul des indicateurs
+    //Ils sont mutable car modifiés pendant le calcul des indicateurs.
     Vecteur5 P;
     Vecteur5 P_dot;
 
@@ -48,7 +47,7 @@ public:
     Toupie(SupportADessin* support,
            const Vecteur5 P, const Vecteur5 P_dot, const Matrice &  Ig, const double& m, std::string  type):
            Dessinable(support), P(P), P_dot(P_dot), Ig(Ig),m(m), _type(std::move(type)), model(QString("blankmodel.dae"), ModelLoader::RelativePath)
-           {};
+           {}
 
     virtual ~Toupie() = default;
 
@@ -68,7 +67,9 @@ public:
 
     [[nodiscard]] virtual Vecteur5 f(const double &t) const = 0;
 
+    virtual Vecteur4 returnIndicators() const = 0;
 
+    virtual Vecteur3 translationModel() const = 0;
 };
 
 

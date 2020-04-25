@@ -106,6 +106,9 @@ Matrice operator*(const double & scal, const Matrice & mat) {
 double& Matrice::operator()(const unsigned & line, const unsigned & col) {
     return  m[line][col];
 }
+double Matrice::operator()(const unsigned &line, const unsigned &col) const {
+    return m[line][col];
+}
 //méthode d'affichage, qui utilise setw de la bibiliothèque <iomanip> pour aligner les colonnes.
 ostream& operator<<(ostream& out,const Matrice & mat) {
     out << "[[";
@@ -152,6 +155,8 @@ Matrice Matrice::transp() const {
     }
     return out;
 }
+
+
 
 
 

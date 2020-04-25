@@ -1,6 +1,4 @@
-//
-// Created by Yannis on 01.04.20.
-//
+
 
 #include "ConeSymFixe.h"
 #include <cmath>

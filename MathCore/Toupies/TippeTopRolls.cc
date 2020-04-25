@@ -1,6 +1,3 @@
-//
-// Created by Yannis on 01.04.20.
-//
 
 #include "TippeTopRolls.h"
 #include <cmath>
@@ -69,4 +66,48 @@ double TippeTopRolls::f3(const double &th) const {
 void TippeTopRolls::affiche(std::ostream & out) const {
         out << "P: " << P << ", P_dot: " << P_dot;
         out << ", masse: " << m << ", Rayon:  " << R << ", h: " << h;
+}
+
+Vecteur4 TippeTopRolls::returnIndicators() const {
+    /*
+     * Calcul des indicateurs constants. Ici, L'énergie mécanique, Lz, et a*(w^L) sont constants. On les retourne dans le même ordre
+     * que pour le cone simple:
+     *       L'énergie mécanique
+     *      L_A projeté sur k
+     *      (L_A projeté sur a) non applicable ici, on met 0
+     *      a*(w^L) (vaut toujours 0, comme pour le cone)
+     */
+    cosTheta = cos(P[0]);
+    cosPsi = cos(P[1]);
+    sinTheta = cos(P[0]);
+    sinPsi = cos(P[1]);
+    thetadot = P_dot[0];
+    psidot = P_dot[1];
+    phidot = P_dot[2];
+
+    return Vecteur4((1.*(0.1*(2.25*pow(h,2)*m*(h - 1.*R) + (2 - 5*pow(alpha,2))*m*pow(R,2)*(h + R))*
+                         pow(thetadot,2) + 9.81*m*R*(h + R)*(1 - alpha*cosTheta) -
+                         0.05*m*(h - 2*R)*(3*pow(h,2) + 3*h*R + 2*pow(R,2))*
+                         pow(phidot + psidot*cosTheta,2) +
+                         0.1*pow(psidot,2)*(2.25*pow(h,2)*m*(h - 1.*R) +
+                                            (2 - 5*pow(alpha,2))*m*pow(R,2)*(h + R))*pow(sinTheta,2) +
+                         0.5*m*pow(R,2)*(h + R)*(pow(alpha,2)*pow(thetadot,2) -
+                                                 2*alpha*pow(thetadot,2)*cosTheta +
+                                                 pow(thetadot,2)*pow(cosTheta,2) +
+                                                 (pow(phidot,2) + 2*alpha*phidot*psidot + pow(alpha,2)*pow(psidot,2) +
+                                                  pow(thetadot,2))*pow(sinTheta,2))))/(h + R),
+                    (0.1*(-1.*m*(h - 2*R)*(3*pow(h,2) + 3*h*R + 2*pow(R,2))*cosTheta*
+                          (phidot + psidot*cosTheta) +
+                          2.*(2.25*pow(h,2)*m*(h - 1.*R) + (2 - 5*pow(alpha,2))*m*pow(R,2)*(h + R))*
+                          thetadot*sinPsi*sinTheta -
+                          2.*psidot*(2.25*pow(h,2)*m*(h - 1.*R) +
+                                     (2 - 5*pow(alpha,2))*m*pow(R,2)*(h + R))*cosPsi*pow(sinTheta,2)))/
+                    (h + R),
+                    0,
+                    0
+            );
+}
+
+Vecteur3 TippeTopRolls::translationModel() const {
+    return Vecteur3(P_dot[3],R,P_dot[4]);
 }

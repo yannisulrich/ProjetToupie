@@ -1,6 +1,8 @@
 ###LSODA ###
 
-Our project uses an LSODA integrator library. This library was ported to C++ by Dilawar Singh.
+Our project uses this LSODA integrator library: https://github.com/dilawar/libsoda
+
+This library was ported to C++ by Dilawar Singh.
 Here is a copy of the license, granting us use:
 
 MIT License
