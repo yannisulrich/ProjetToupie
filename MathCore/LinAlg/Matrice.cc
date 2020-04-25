@@ -12,12 +12,8 @@ using namespace std;
 using namespace std::chrono;
 //constructeurs
 Matrice::Matrice(array<double, 3> const &v_0, array<double, 3> const &v_1, array<double, 3> const &v_2):
-    m({0,0,0,0,0,0,0,0,0})
+    m{{v_0,v_1,v_2}}
 {
-    m[0] = v_0;
-    m[1] = v_1;
-    m[2] = v_2;
-
 }
 Matrice::Matrice(const double & m00, const double & m11, const double & m22):
     m({m00,0,0,0,m11,0,0,0,m22})
