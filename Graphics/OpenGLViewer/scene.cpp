@@ -97,7 +97,7 @@ void Scene::dessine(const Toupie & toupie) const {
     modelMatrix.rotate(toupie.P.getCoord(0)*28.6478897565, 1.0f, 0.0, 0.0);
     modelMatrix.rotate(toupie.P.getCoord(2)*28.6478897565, 0.0, 1.0, 0.0f);
     modelMatrix.scale(toupie.modelScale());
-    modelMatrix.translate(0,- toupie.model.bottomPoint(),0);
+    if (toupie.type() == "Conique Simple") modelMatrix.translate(0,- toupie.model.bottomPoint(),0);
 
     toupie.model.draw(m_shaderProgram, modelMatrix, m_view, m_projection);
 }

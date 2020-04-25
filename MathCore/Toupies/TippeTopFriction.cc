@@ -429,3 +429,34 @@ int TippeTopFriction::update(const double& dt)
     }
     return 0;
 }
+
+Vecteur4 TippeTopFriction::returnIndicators() const {
+    /*
+     * On retourne ici uniquement l'énergie mécanique. //TODO: possibly Jellet integral? not necessary but cool
+     */
+    cosTheta = cos(P[0]);
+    cosPsi = cos(P[1]);
+    cosPhi = cos(P[2]);
+    sinTheta = cos(P[0]);
+    sinPsi = cos(P[1]);
+    sinPhi = sin(P[2]);
+    thetadot = P_dot[0];
+    psidot = P_dot[1];
+    phidot = P_dot[2];
+    xdot = P_dot[3];
+    ydot = P_dot[4];
+
+    return Vecteur4((2*9.81*m*(R - epsilon*cosTheta) + Ig(2,2)*pow(phidot + psidot*cosTheta,2) +
+                     Ig(0,0)*pow(thetadot*sinPhi - psidot*cosPhi*sinTheta,2) +
+                     Ig(0,0)*pow(thetadot*cosPhi + psidot*sinPhi*sinTheta,2) +
+                     m*(pow(xdot,2) + pow(ydot,2) +
+                        pow(epsilon,2)*pow(thetadot,2)*pow(sinTheta,2)))/2.,
+                                0,
+                                0,
+                                0
+            );
+}
+
+Vecteur3 TippeTopFriction::translationModel() const {
+    return Vecteur3(P_dot[3],R,P_dot[4]);
+}

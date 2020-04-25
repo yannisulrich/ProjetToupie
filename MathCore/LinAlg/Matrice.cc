@@ -12,12 +12,8 @@ using namespace std;
 using namespace std::chrono;
 //constructeurs
 Matrice::Matrice(array<double, 3> const &v_0, array<double, 3> const &v_1, array<double, 3> const &v_2):
-    m({0,0,0,0,0,0,0,0,0})
+    m{{v_0,v_1,v_2}}
 {
-    m[0] = v_0;
-    m[1] = v_1;
-    m[2] = v_2;
-
 }
 Matrice::Matrice(const double & m00, const double & m11, const double & m22):
     m({m00,0,0,0,m11,0,0,0,m22})
@@ -106,6 +102,9 @@ Matrice operator*(const double & scal, const Matrice & mat) {
 double& Matrice::operator()(const unsigned & line, const unsigned & col) {
     return  m[line][col];
 }
+double Matrice::operator()(const unsigned &line, const unsigned &col) const {
+    return m[line][col];
+}
 //méthode d'affichage, qui utilise setw de la bibiliothèque <iomanip> pour aligner les colonnes.
 ostream& operator<<(ostream& out,const Matrice & mat) {
     out << "[[";
@@ -152,6 +151,8 @@ Matrice Matrice::transp() const {
     }
     return out;
 }
+
+
 
 
 

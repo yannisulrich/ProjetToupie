@@ -30,6 +30,7 @@ int main() {
     VecteurArray<array<double, 4> > v5({1,2,3,4});
     VecteurArray<array<double, 2> > v6({1,3});
 
+    cout << mat;
     //=====================================
     //test de conversion de vecteurs
     /*

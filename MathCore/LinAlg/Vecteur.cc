@@ -140,7 +140,7 @@ VecteurN VecteurN::operator^(const VecteurN & vect2) const {
 }
 
 
-double & VecteurN::operator[](size_t coord) { //read-write access
+double & VecteurN::operator[](const size_t& coord) { //read-write access
     return  (v_)[coord];
 }
 
@@ -148,6 +148,10 @@ std::ostream& operator<<(std::ostream& out, const VecteurN & vect) {
     for(double i : vect.v_) out  << i << std::setw(15);
     out << std::setw(-15);
     return out;
+}
+
+const double& VecteurN::operator[](const size_t& coord) const {
+    return v_[coord];
 }
 
 

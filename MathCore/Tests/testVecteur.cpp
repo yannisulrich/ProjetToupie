@@ -55,7 +55,8 @@ int main() {
 
     Vecteur3 vect8(vect6);  // copie de V1
     Vecteur3 vect9;      // le vecteur nul en 3D
-
+    const Vecteur3 vect10;
+    cout << vect10[3] << endl; //test du lecteur const
     cout << "Vecteur 6 : " << vect6 << endl;
     cout << "Vecteur 7 : " << vect7 << endl;
     cout << "Vecteur 8 : " << vect8 << endl;

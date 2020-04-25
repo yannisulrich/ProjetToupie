@@ -108,6 +108,11 @@ template <class T>
 const VecteurArray<T> VecteurArray<T>::operator~() const {
     if(norm() < 1e-10) throw invalid_argument("vector to normalise has too small norm");
     return 1/norm() * *this;
+}
+
+template<typename T>
+double VecteurArray<T>::operator[](const size_t &coord) const {
+    return v_[coord];
 };
 
 Vecteur3 Vecteur3::operator^(const Vecteur3& vect2) const {
@@ -121,7 +126,7 @@ Vecteur3 Vecteur3::operator^(const Vecteur3& vect2) const {
 }
 
 template <class T>
-double & VecteurArray<T>::operator[](size_t coord) { //read-write access
+double & VecteurArray<T>::operator[](const size_t& coord) { //read-write access
     return v_[coord];
 }
 

@@ -1,7 +1,6 @@
-//
-// Created by Yannis on 01.04.20.
-//
 
+
+//La toupie chinoise du Support mathématique
 #pragma once
 
 #include "Toupie.h"
@@ -35,10 +34,12 @@ public:
     void affiche(std::ostream&) const override;
 
 
-
+    Vecteur4 returnIndicators() const override;
 
     void dessine() const override {
         support->dessine(*this); }
+
+    Vecteur3 translationModel() const override;
 };
 
 

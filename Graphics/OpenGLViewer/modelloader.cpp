@@ -3,10 +3,8 @@
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 #include <QDebug>
-#include <limits>
 #include <QResource>
-#include <mach-o/dyld.h>
-#include <limits.h>
+
 
 ModelLoader::ModelLoader(bool transformToUnitCoordinates) :
     m_transformToUnitCoordinates(transformToUnitCoordinates)
@@ -31,12 +29,7 @@ QString findFile(QString relativeFilePath, int scanDepth)
 
 bool ModelLoader::Load(QString filePath, PathType pathType)
 {
-    char buf [PATH_MAX];
-    uint32_t bufsize = PATH_MAX;
-    if(!_NSGetExecutablePath(buf, &bufsize))
-        puts(buf);
-    qDebug() << "modeloaderExecPath" << buf;
-    qDebug() << "Modelloader: " << filePath;
+
     Q_INIT_RESOURCE(models);
     QResource modelResource(filePath);
 
