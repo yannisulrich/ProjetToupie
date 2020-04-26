@@ -14,7 +14,6 @@ using namespace std;
 
 int main() {
     IntegrateurRungeKutta5 integR;
-    
     ofstream file("/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/Interface/SimOut.txt", ios::out);
     auto outFile = new FileViewer(file);
     auto outText = new TextViewer(cout);

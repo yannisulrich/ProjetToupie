@@ -67,5 +67,7 @@ public:
     void integrate(const double& dt, const double& t = 0);
 
     void integrateMultiple(const size_t & n, const double& dt, const double& t = 0);
+
+    void addToTraces() {for(auto i:toupies) i->addToTraces();}
 };
 

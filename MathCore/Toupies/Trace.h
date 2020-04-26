@@ -14,8 +14,9 @@ private:
 public:
 
     void push_front(const QVector3D&);
-    auto pointsBegin();
-    auto pointsEnd();
+    GLuint* pointsBegin() const;
+    const auto pointsEnd() const;
+    size_t size() const {return _points.size();}
 };
 
 template <size_t length>
@@ -32,11 +33,12 @@ void Trace<length>::push_front(const QVector3D& point) {
 
 }
 template<size_t length>
-auto Trace<length>::pointsBegin() {
-    return _points.begin();
+GLuint* Trace<length>::pointsBegin() const {
+    return &_points.front();
+    //return _points.begin();
 }
 template<size_t length>
-auto Trace<length>::pointsEnd() {
+const auto Trace<length>::pointsEnd() const {
     return _points.end();
 }
 
