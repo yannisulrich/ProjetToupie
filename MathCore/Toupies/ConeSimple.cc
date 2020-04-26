@@ -48,6 +48,11 @@ Vecteur4 ConeSimple::returnIndicators() const {
                     );
 }
 
-Vecteur3 ConeSimple::translationModel() const {
-    return Vecteur3(P[3],0,P[4]);
+QVector3D ConeSimple::translationModel() const {
+    return QVector3D(P[3],0,P[4]);
+}
+
+void ConeSimple::addToTraces() {
+    TraceA.push_front({float(P[3]),0,float(P[4])});
+    TraceG.push_front({float(cos(P[1])*sin(P[0])),float(0.75*L*cos(P[0])),float(sin(P[1])*sin(P[0]))});
 }

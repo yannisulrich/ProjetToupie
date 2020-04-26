@@ -33,16 +33,12 @@ bool ModelLoader::Load(QString filePath, PathType pathType)
     Q_INIT_RESOURCE(models);
     QResource modelResource(filePath);
 
-    qDebug() << "Modelloadervalid" << modelResource.isValid() << " " << modelResource.absoluteFilePath();
-
 
     QString l_filePath;
     if (pathType == RelativePath)
         l_filePath = findFile(filePath, 5);
     else
         l_filePath = filePath;
-
-    qDebug() << "lfilepath " << l_filePath;
 
     Assimp::Importer importer;
 

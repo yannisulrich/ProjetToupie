@@ -29,9 +29,11 @@ add_library(OpenGLViewer
         scene.cpp
         GLWindow.cc shaders.qrc models.qrc)
 
+message(${CMAKE_SOURCE_DIR})
+
 target_include_directories(OpenGLViewer PUBLIC ${projectIncludes})
 IF(APPLE)
-    target_link_libraries(OpenGLViewer PUBLIC System MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL /usr/local/lib/libassimp.dylib "-framework OpenGL")
+    target_link_libraries(OpenGLViewer PUBLIC System MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimp/libassimp.5.0.1.dylib "-framework OpenGL")
 
 ENDIF()
 

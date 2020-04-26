@@ -11,6 +11,7 @@
 #include "Graphics/Dessinable.h"
 #include "Graphics/SupportADessin.h"
 #include "Graphics/OpenGLViewer/model.h"
+#include "Trace.h"
 
 
 
@@ -40,6 +41,9 @@ protected:
     const std::string _type;
 
     mutable Model model;
+
+    Trace<10> TraceG;
+    Trace<10> TraceA;
 public:
 
 
@@ -51,25 +55,27 @@ public:
 
     virtual ~Toupie() = default;
 
-    bool hasModel() const {return _hasModel;}
+    bool hasModel() const {return _hasModel;} //accesseurs triviaux
     const QVector3D modelScale() const {return _modelScale;}
     std::string type() const {return _type;}
 
     [[nodiscard]] Matrice getIg() const;
 
-    virtual void affiche(std::ostream&) const = 0;
+    virtual void affiche(std::ostream&) const = 0; //affichages apropriés à chaque support
     void afficheFile(std::ostream&) const;
     void afficheSimple(std::ostream&) const;
 
-    friend std::ostream& operator<<(std::ostream& out, const Toupie & toupie) {toupie.afficheSimple(out); return out;};
+    friend std::ostream& operator<<(std::ostream& out, const Toupie & toupie) {toupie.afficheSimple(out); return out;}; //affichage complet
 
-    [[nodiscard]] virtual Vecteur5 f(const double &t, const Vecteur5& P, const Vecteur5& P_dot) const = 0;
+    [[nodiscard]] virtual Vecteur5 f(const double &t, const Vecteur5& P, const Vecteur5& P_dot) const = 0; //fonction d'évolution, en fonction de paramètres arbitraires
 
-    [[nodiscard]] virtual Vecteur5 f(const double &t) const = 0;
+    [[nodiscard]] virtual Vecteur5 f(const double &t) const = 0; //idem, paramètres de la toupie
 
-    virtual Vecteur4 returnIndicators() const = 0;
+    virtual Vecteur4 returnIndicators() const = 0; //les indicateurs constants (ou non) du support mathématique
 
-    virtual Vecteur3 translationModel() const = 0;
+    virtual QVector3D translationModel() const = 0; //vecteur de translation pour la représentation en 3D, propre au type de toupie
+
+    virtual void addToTraces() = 0;
 };
 
 

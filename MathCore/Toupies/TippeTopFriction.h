@@ -34,7 +34,7 @@ public:
     data{R, epsilon, mu, m, Ig(0,0), Ig(2,2)}
     {
         all_params_i = {P.getCoord(0),P.getCoord(1),P.getCoord(2),P.getCoord(3),P.getCoord(4) , P_dot.getCoord(0),P_dot.getCoord(1),P_dot.getCoord(2),P_dot.getCoord(3),P_dot.getCoord(4)};
-        if(epsilon >= 2*R) std::__throw_invalid_argument("Attempted to initialize Tippe Top  with epsilon > R");
+        if(epsilon >= R) std::__throw_invalid_argument("Attempted to initialize Tippe Top  with epsilon > R");
     }
 
     static void accels( double t, double* p, double* pdot, void* data);
@@ -46,10 +46,12 @@ public:
 
     Vecteur4 returnIndicators() const override;
 
-    Vecteur3 translationModel() const override;
+    QVector3D translationModel() const override;
 
     void dessine() const override {
         support->dessine(*this); }
+
+    void addToTraces() override ;
 };
 
 

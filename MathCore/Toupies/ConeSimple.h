@@ -27,7 +27,9 @@ public:
 
     Vecteur4 returnIndicators() const override;
 
-    Vecteur3 translationModel() const override;
+    QVector3D translationModel() const override;
+
+    void addToTraces() override;
 };
 
 

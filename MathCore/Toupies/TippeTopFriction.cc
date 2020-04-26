@@ -457,6 +457,11 @@ Vecteur4 TippeTopFriction::returnIndicators() const {
             );
 }
 
-Vecteur3 TippeTopFriction::translationModel() const {
-    return Vecteur3(P_dot[3],R,P_dot[4]);
+QVector3D TippeTopFriction::translationModel() const {
+    return QVector3D(P_dot[3],R,P_dot[4]);
+}
+
+void TippeTopFriction::addToTraces() {
+    TraceA.push_front({float(P[3]),0,float(P[4])});
+    TraceG.push_front({float(P[3]-epsilon*cos(P[1])*sin(P[0])),float(R-epsilon*cos(P[0])),float(P[4]-epsilon*sin(P[1])*sin(P[0]))});
 }
