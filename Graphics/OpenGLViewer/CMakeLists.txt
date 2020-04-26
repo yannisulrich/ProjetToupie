@@ -38,5 +38,7 @@ IF(APPLE)
 ENDIF()
 
 IF(WIN32) #TODO assimp from folder
-    target_link_libraries(OpenGLViewer PUBLIC MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimp/assimp-vc140-mt.dll opengl32)
+    add_library(assimpWin ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimp/assimp-vc140-mt.dll)
+    set_target_properties(assimpWin PROPERTIES LINKER_LANGUAGE C)
+    target_link_libraries(OpenGLViewer PUBLIC MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL assimpWin opengl32)
 ENDIF()
