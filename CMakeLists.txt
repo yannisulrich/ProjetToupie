@@ -22,16 +22,7 @@ ENDIF()
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 
-if(WIN32)
-    # Finally, need to deploy Qt
-    SET(customQtBin ${customQtRoot}\\bin)
-    SET(customQtDeploy ${customQtBin}\\windeployqt)
-    SET(customQtDeployLoc ${CMAKE_BINARY_DIR})
-    add_custom_command(TARGET ToupieMain POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E env PATH="${customQtBin}"
-            ${customQtDeploy} $<TARGET_FILE:ToupieMain>
-            COMMENT "Calling windeployqt...")
-endif()
+
 
 #test
 add_subdirectory(MathCore)
@@ -57,9 +48,23 @@ add_executable(ToupieMain
         ui_mainwindow.h
     ${TS_FILES}
   )
+
 target_include_directories(ToupieMain PRIVATE ${projectIncludes})
 target_link_libraries(ToupieMain PRIVATE MathCore)
 target_link_libraries(ToupieMain PRIVATE Qt5::Widgets)
+
+if(WIN32)
+    # Finally, need to deploy Qt
+    SET(customQtBin ${customQtRoot}\\bin)
+    SET(customQtDeploy ${customQtBin}\\windeployqt)
+    SET(customQtDeployLoc ${CMAKE_BINARY_DIR})
+    add_custom_command(TARGET ToupieMain POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E env PATH="${customQtBin}"
+            ${customQtDeploy} $<TARGET_FILE:ToupieMain>
+            COMMENT "Calling windeployqt...")
+endif()
+
+
 
 
 
