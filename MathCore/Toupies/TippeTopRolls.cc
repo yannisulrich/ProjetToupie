@@ -108,6 +108,11 @@ Vecteur4 TippeTopRolls::returnIndicators() const {
             );
 }
 
-Vecteur3 TippeTopRolls::translationModel() const {
-    return Vecteur3(P_dot[3],R,P_dot[4]);
+QVector3D TippeTopRolls::translationModel() const {
+    return QVector3D(P_dot[3],R,P_dot[4]);
+}
+
+void TippeTopRolls::addToTraces() {
+    TraceA.push_front({float(P_dot[3]),0,float(P_dot[4])});
+    TraceG.push_front({float(P_dot[3]-R*alpha*cos(P[1])*sin(P[0])),float(R-R*alpha*cos(P[0])),float(P_dot[4]-R*alpha*sin(P[1])*sin(P[0]))});
 }

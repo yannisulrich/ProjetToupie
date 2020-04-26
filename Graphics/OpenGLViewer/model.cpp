@@ -17,7 +17,6 @@ Model::Model(QString filepath, ModelLoader::PathType pathType, QString texturePa
 void Model::initialize(QOpenGLShaderProgram& m_shaderProgram)
 {
     this->initializeOpenGLFunctions();
-    qDebug() << "modelinitpath" << m_filepath;
     createBuffers();
     createAttributes(m_shaderProgram);
     setupMaterials();

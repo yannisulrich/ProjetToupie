@@ -39,7 +39,9 @@ public:
     void dessine() const override {
         support->dessine(*this); }
 
-    Vecteur3 translationModel() const override;
+    QVector3D translationModel() const override;
+
+    void addToTraces() override;
 };
 
 
