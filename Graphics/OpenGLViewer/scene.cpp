@@ -86,6 +86,8 @@ void Scene::update()
 
     dessine(system);
 
+    system.addToTraces();
+
     m_shaderProgram.setUniformValue( "MV", m_view );
     QMatrix3x3 normalMatrix = m_view.normalMatrix();
     QMatrix4x4 mvp = m_projection * m_view;
@@ -110,6 +112,7 @@ void Scene::update()
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 // Give our vertices to OpenGL.
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), system.getToupies()[0]->TraceA.pointsBegin(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);

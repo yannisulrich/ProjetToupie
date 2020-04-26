@@ -33,6 +33,7 @@ if(WIN32)
             COMMENT "Calling windeployqt...")
 endif()
 
+#test
 add_subdirectory(MathCore)
 add_subdirectory(P9)
 add_subdirectory(P10)
