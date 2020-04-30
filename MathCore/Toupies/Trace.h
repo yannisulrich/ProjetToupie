@@ -4,7 +4,11 @@
  */
 #pragma once
 #include <queue>
-#include <GL/gl.h>
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+    #include <GL/gl.h>
+#elif __APPLE__
+#include <gltypes.h>
+#endif
 #include <QVector3D>
 
 template <size_t length>

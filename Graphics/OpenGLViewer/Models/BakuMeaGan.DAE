@@ -6,15 +6,209 @@
       <authoring_tool>FBX COLLADA exporter</authoring_tool>
       <comments/>
     </contributor>
-    <created>2020-04-15T13:35:10Z</created>
+    <created>2020-04-29T19:41:58Z</created>
     <keywords/>
-    <modified>2020-04-15T13:35:10Z</modified>
+    <modified>2020-04-29T19:41:58Z</modified>
     <revision/>
     <subject/>
     <title/>
     <unit meter="0.025400" name="centimeter"/>
     <up_axis>Y_UP</up_axis>
   </asset>
+  <library_materials>
+    <material id="FBXASC0481FBXASC032-FBXASC032Default" name="FBXASC0481FBXASC032-FBXASC032Default">
+      <instance_effect url="#FBXASC0481FBXASC032-FBXASC032Default-fx"/>
+    </material>
+    <material id="FBXASC0482FBXASC032-FBXASC032Default" name="FBXASC0482FBXASC032-FBXASC032Default">
+      <instance_effect url="#FBXASC0482FBXASC032-FBXASC032Default-fx"/>
+    </material>
+    <material id="FBXASC0488FBXASC032-FBXASC032Default" name="FBXASC0488FBXASC032-FBXASC032Default">
+      <instance_effect url="#FBXASC0488FBXASC032-FBXASC032Default-fx"/>
+    </material>
+    <material id="FBXASC0487FBXASC032-FBXASC032Default" name="FBXASC0487FBXASC032-FBXASC032Default">
+      <instance_effect url="#FBXASC0487FBXASC032-FBXASC032Default-fx"/>
+    </material>
+    <material id="FBXASC0483FBXASC032-FBXASC032Default" name="FBXASC0483FBXASC032-FBXASC032Default">
+      <instance_effect url="#FBXASC0483FBXASC032-FBXASC032Default-fx"/>
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="FBXASC0481FBXASC032-FBXASC032Default-fx" name="FBXASC0481FBXASC032-FBXASC032Default">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.917647  0.737255 0.298039 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.878431  0.843137 0.458824 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">2.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="FBXASC0482FBXASC032-FBXASC032Default-fx" name="FBXASC0482FBXASC032-FBXASC032Default">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.411765  0.411765 0.411765 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.356863  0.356863 0.356863 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.107059  0.035294 0.255294 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">16.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="FBXASC0488FBXASC032-FBXASC032Default-fx" name="FBXASC0488FBXASC032-FBXASC032Default">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.000000  0.000000 0.000000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.062745  0.000000 0.019608 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">2.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="FBXASC0487FBXASC032-FBXASC032Default-fx" name="FBXASC0487FBXASC032-FBXASC032Default">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.027451  0.588235 0.945098 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.211765  0.494118 0.960784 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.072941  0.122353 0.150588 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">2.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="FBXASC0483FBXASC032-FBXASC032Default-fx" name="FBXASC0483FBXASC032-FBXASC032Default">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.349020  0.019608 0.541176 1.000000</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.082353  0.019608 0.356863 1.000000</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">2.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
   <library_geometries>
     <geometry id="FBXASC051dSolid-lib" name="FBXASC051dSolidMesh">
       <mesh>
@@ -733,7 +927,7 @@
         <vertices id="FBXASC051dSolid-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid-POSITION"/>
         </vertices>
-        <triangles count="154">
+        <triangles count="154" material="FBXASC0481FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid-UV0"/>
@@ -1458,7 +1652,7 @@
         <vertices id="FBXASC051dSolid_ncl1_1-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid_ncl1_1-POSITION"/>
         </vertices>
-        <triangles count="154">
+        <triangles count="154" material="FBXASC0481FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid_ncl1_1-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid_ncl1_1-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid_ncl1_1-UV0"/>
@@ -2183,7 +2377,7 @@
         <vertices id="FBXASC051dSolid_ncl1_2-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid_ncl1_2-POSITION"/>
         </vertices>
-        <triangles count="154">
+        <triangles count="154" material="FBXASC0481FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid_ncl1_2-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid_ncl1_2-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid_ncl1_2-UV0"/>
@@ -4776,7 +4970,7 @@
         <vertices id="FBXASC051dSolid_ncl1_3-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid_ncl1_3-POSITION"/>
         </vertices>
-        <triangles count="568">
+        <triangles count="568" material="FBXASC0482FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid_ncl1_3-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid_ncl1_3-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid_ncl1_3-UV0"/>
@@ -5501,7 +5695,7 @@
         <vertices id="FBXASC051dSolid_ncl1_4-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid_ncl1_4-POSITION"/>
         </vertices>
-        <triangles count="154">
+        <triangles count="154" material="FBXASC0481FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid_ncl1_4-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid_ncl1_4-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid_ncl1_4-UV0"/>
@@ -5773,7 +5967,7 @@
         <vertices id="FBXASC051dSolid_ncl1_5-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid_ncl1_5-POSITION"/>
         </vertices>
-        <triangles count="46">
+        <triangles count="46" material="FBXASC0481FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid_ncl1_5-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid_ncl1_5-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid_ncl1_5-UV0"/>
@@ -6113,7 +6307,7 @@
         <vertices id="FBXASC051dSolid_ncl1_6-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid_ncl1_6-POSITION"/>
         </vertices>
-        <triangles count="58">
+        <triangles count="58" material="FBXASC0488FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid_ncl1_6-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid_ncl1_6-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid_ncl1_6-UV0"/>
@@ -6704,7 +6898,7 @@
         <vertices id="FBXASC051dSolid_ncl1_7-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid_ncl1_7-POSITION"/>
         </vertices>
-        <triangles count="120">
+        <triangles count="120" material="FBXASC0487FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid_ncl1_7-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid_ncl1_7-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid_ncl1_7-UV0"/>
@@ -7612,7 +7806,7 @@
         <vertices id="FBXASC051dSolid_ncl1_8-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid_ncl1_8-POSITION"/>
         </vertices>
-        <triangles count="202">
+        <triangles count="202" material="FBXASC0481FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid_ncl1_8-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid_ncl1_8-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid_ncl1_8-UV0"/>
@@ -8307,7 +8501,7 @@
         <vertices id="FBXASC051dSolid_ncl1_9-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid_ncl1_9-POSITION"/>
         </vertices>
-        <triangles count="152">
+        <triangles count="152" material="FBXASC0481FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid_ncl1_9-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid_ncl1_9-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid_ncl1_9-UV0"/>
@@ -8666,7 +8860,7 @@
         <vertices id="FBXASC051dSolid_ncl1_10-VERTEX">
           <input semantic="POSITION" source="#FBXASC051dSolid_ncl1_10-POSITION"/>
         </vertices>
-        <triangles count="62">
+        <triangles count="62" material="FBXASC0483FBXASC032-FBXASC032Default">
           <input semantic="VERTEX" offset="0" source="#FBXASC051dSolid_ncl1_10-VERTEX"/>
           <input semantic="NORMAL" offset="1" source="#FBXASC051dSolid_ncl1_10-Normal0"/>
           <input semantic="TEXCOORD" offset="2" set="0" source="#FBXASC051dSolid_ncl1_10-UV0"/>
@@ -8847,7 +9041,13 @@
       </node>
       <node name="FBXASC051dSolid" id="FBXASC051dSolid" sid="FBXASC051dSolid">
         <matrix sid="matrix">1.000000 0.000000 0.000000 75.000000 0.000000 0.000000 1.000000 12.500000 0.000000 -1.000000 0.000000 125.000000 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid-lib"/>
+        <instance_geometry url="#FBXASC051dSolid-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0481FBXASC032-FBXASC032Default" target="#FBXASC0481FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
@@ -8856,7 +9056,13 @@
       </node>
       <node name="FBXASC051dSolid_ncl1_1" id="FBXASC051dSolid_ncl1_1" sid="FBXASC051dSolid_ncl1_1">
         <matrix sid="matrix">1.000000 0.000000 0.000000 125.000000 0.000000 0.000000 1.000000 12.500000 0.000000 -1.000000 0.000000 -75.000000 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid_ncl1_1-lib"/>
+        <instance_geometry url="#FBXASC051dSolid_ncl1_1-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0481FBXASC032-FBXASC032Default" target="#FBXASC0481FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
@@ -8865,7 +9071,13 @@
       </node>
       <node name="FBXASC051dSolid_ncl1_2" id="FBXASC051dSolid_ncl1_2" sid="FBXASC051dSolid_ncl1_2">
         <matrix sid="matrix">1.000000 0.000000 0.000000 -75.000000 0.000000 0.000000 1.000000 12.500000 0.000000 -1.000000 0.000000 -125.000000 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid_ncl1_2-lib"/>
+        <instance_geometry url="#FBXASC051dSolid_ncl1_2-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0481FBXASC032-FBXASC032Default" target="#FBXASC0481FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
@@ -8874,7 +9086,13 @@
       </node>
       <node name="FBXASC051dSolid_ncl1_3" id="FBXASC051dSolid_ncl1_3" sid="FBXASC051dSolid_ncl1_3">
         <matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 12.500000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid_ncl1_3-lib"/>
+        <instance_geometry url="#FBXASC051dSolid_ncl1_3-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0482FBXASC032-FBXASC032Default" target="#FBXASC0482FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
@@ -8883,7 +9101,13 @@
       </node>
       <node name="FBXASC051dSolid_ncl1_4" id="FBXASC051dSolid_ncl1_4" sid="FBXASC051dSolid_ncl1_4">
         <matrix sid="matrix">1.000000 0.000000 0.000000 -125.000000 0.000000 0.000000 1.000000 12.500000 0.000000 -1.000000 0.000000 75.000000 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid_ncl1_4-lib"/>
+        <instance_geometry url="#FBXASC051dSolid_ncl1_4-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0481FBXASC032-FBXASC032Default" target="#FBXASC0481FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
@@ -8892,7 +9116,13 @@
       </node>
       <node name="FBXASC051dSolid_ncl1_5" id="FBXASC051dSolid_ncl1_5" sid="FBXASC051dSolid_ncl1_5">
         <matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 36.909615 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid_ncl1_5-lib"/>
+        <instance_geometry url="#FBXASC051dSolid_ncl1_5-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0481FBXASC032-FBXASC032Default" target="#FBXASC0481FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
@@ -8933,7 +9163,13 @@
       </node>
       <node name="FBXASC051dSolid_ncl1_6" id="FBXASC051dSolid_ncl1_6" sid="FBXASC051dSolid_ncl1_6">
         <matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 -75.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid_ncl1_6-lib"/>
+        <instance_geometry url="#FBXASC051dSolid_ncl1_6-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0488FBXASC032-FBXASC032Default" target="#FBXASC0488FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
@@ -8942,7 +9178,13 @@
       </node>
       <node name="FBXASC051dSolid_ncl1_7" id="FBXASC051dSolid_ncl1_7" sid="FBXASC051dSolid_ncl1_7">
         <matrix sid="matrix">1.000000 0.000000 0.000000 0.199402 0.000000 0.000000 1.000000 5.000000 0.000000 -1.000000 0.000000 0.287903 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid_ncl1_7-lib"/>
+        <instance_geometry url="#FBXASC051dSolid_ncl1_7-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0487FBXASC032-FBXASC032Default" target="#FBXASC0487FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
@@ -8951,7 +9193,13 @@
       </node>
       <node name="FBXASC051dSolid_ncl1_8" id="FBXASC051dSolid_ncl1_8" sid="FBXASC051dSolid_ncl1_8">
         <matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 -45.063717 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid_ncl1_8-lib"/>
+        <instance_geometry url="#FBXASC051dSolid_ncl1_8-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0481FBXASC032-FBXASC032Default" target="#FBXASC0481FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
@@ -8960,7 +9208,13 @@
       </node>
       <node name="FBXASC051dSolid_ncl1_9" id="FBXASC051dSolid_ncl1_9" sid="FBXASC051dSolid_ncl1_9">
         <matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 -95.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid_ncl1_9-lib"/>
+        <instance_geometry url="#FBXASC051dSolid_ncl1_9-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0481FBXASC032-FBXASC032Default" target="#FBXASC0481FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
@@ -8969,7 +9223,13 @@
       </node>
       <node name="FBXASC051dSolid_ncl1_10" id="FBXASC051dSolid_ncl1_10" sid="FBXASC051dSolid_ncl1_10">
         <matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 -25.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix>
-        <instance_geometry url="#FBXASC051dSolid_ncl1_10-lib"/>
+        <instance_geometry url="#FBXASC051dSolid_ncl1_10-lib">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="FBXASC0483FBXASC032-FBXASC032Default" target="#FBXASC0483FBXASC032-FBXASC032Default"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
         <extra>
           <technique profile="FCOLLADA">
             <visibility>1.000000</visibility>
