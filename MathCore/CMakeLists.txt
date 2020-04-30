@@ -1,6 +1,7 @@
-set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops -Wshadow")
+set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops")
 
 find_package(Threads REQUIRED)
+#find_package(OpenGL REQUIRED)
 
 find_package(Qt5 COMPONENTS Gui REQUIRED)
 add_subdirectory(Tests)

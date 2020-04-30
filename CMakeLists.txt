@@ -4,7 +4,7 @@ project(ToupieMain LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops -Wshadow -Wall")
+set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops -Wall")
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -14,15 +14,13 @@ set(CMAKE_AUTORCC ON)
 
 # Set Qt directory here
 
-set(customQtRoot "C:\\Qt\\5.14.1\\mingw73_32")
+set(customQtRoot "C:\\Qt\\5.14.2\\mingw73_32")
 IF(WIN32)
     message(STATUS "Will link Qt for Windows.")
     list(APPEND CMAKE_PREFIX_PATH ${customQtRoot})
 ENDIF()
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
-
-
 
 #test
 add_subdirectory(MathCore)
@@ -40,6 +38,7 @@ set(projectIncludes ${CMAKE_SOURCE_DIR}
         )
 include_directories(${projectIncludes})
 
+
 add_executable(ToupieMain
           main.cpp
           mainwindow.cpp
@@ -50,7 +49,7 @@ add_executable(ToupieMain
   )
 
 target_include_directories(ToupieMain PRIVATE ${projectIncludes})
-target_link_libraries(ToupieMain PRIVATE MathCore)
+#target_link_libraries(ToupieMain PRIVATE MathCore)
 target_link_libraries(ToupieMain PRIVATE Qt5::Widgets)
 
 if(WIN32)

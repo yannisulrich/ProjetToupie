@@ -3,13 +3,13 @@
 //
 #pragma once
 
-#include "Vecteur.h"
-#include "VecteurArray.h"
-#include "Matrice.h"
+#include "LinAlg/Vecteur.h"
+#include "LinAlg/VecteurArray.h"
+#include "LinAlg/Matrice.h"
 #include "Toupies/Toupie.h"
 #include "Toupies/ConeSimple.h"
 #include "Toupies/ConeSymFixe.h"
 #include "Toupies/TippeTopRolls.h"
 #include "Toupies/TippeTopFriction.h"
 #include "Integrateurs/All_Integrateurs.h"
-#include "constantes.h"
+#include "LinAlg/constantes.h"

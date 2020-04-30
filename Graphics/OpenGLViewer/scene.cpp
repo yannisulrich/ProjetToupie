@@ -85,7 +85,7 @@ void Scene::update()
     m_shaderProgram.setUniformValue( "lightIntensity", m_lightInfo.Intensity );
 
     dessine(system);
-
+    /*
     system.addToTraces();
 
     m_shaderProgram.setUniformValue( "MV", m_view );
@@ -127,6 +127,7 @@ void Scene::update()
 // Draw the triangle !
     glDrawArrays(GL_LINES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
     glDisableVertexAttribArray(0);
+     */
 }
 void Scene::cleanup()
 {

@@ -13,12 +13,14 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt5 COMPONENTS Core Gui Widgets OpenGL REQUIRED)
 find_package(OpenGL REQUIRED)
 
+
 set(projectIncludes ${CMAKE_SOURCE_DIR}
         ${CMAKE_SOURCE_DIR}/MathCore
         ${CMAKE_SOURCE_DIR}/MathCore/Integrateurs
         ${CMAKE_SOURCE_DIR}/Tests
         ${CMAKE_SOURCE_DIR}/Interface
         ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer
+        ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles
         ${Qt5Widgets_INCLUDE_DIRS}
         )
 include_directories(${projectIncludes})
@@ -29,16 +31,13 @@ add_library(OpenGLViewer
         scene.cpp
         GLWindow.cc shaders.qrc models.qrc)
 
-message(${CMAKE_SOURCE_DIR})
 
 target_include_directories(OpenGLViewer PUBLIC ${projectIncludes})
 IF(APPLE)
     target_link_libraries(OpenGLViewer PUBLIC System MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimp/libassimp.5.0.1.dylib "-framework OpenGL")
-
 ENDIF()
 
-IF(WIN32) #TODO assimp from folder
-    add_library(assimpWin ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimp/assimp-vc140-mt.dll)
-    set_target_properties(assimpWin PROPERTIES LINKER_LANGUAGE C)
-    target_link_libraries(OpenGLViewer PUBLIC MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL assimpWin opengl32)
+IF(WIN32)
+    target_link_libraries(OpenGLViewer PUBLIC MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL opengl32 ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libassimp.a
+            ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libIrrXML.a ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libzlibstatic.a)
 ENDIF()

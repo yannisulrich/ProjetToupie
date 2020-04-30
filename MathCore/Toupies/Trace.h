@@ -4,7 +4,7 @@
  */
 #pragma once
 #include <queue>
-#include <gltypes.h>
+#include <GL/gl.h>
 #include <QVector3D>
 
 template <size_t length>
@@ -14,7 +14,7 @@ private:
 public:
 
     void push_front(const QVector3D&);
-    GLuint* pointsBegin() const;
+    const GLuint* pointsBegin() const;
     const auto pointsEnd() const;
     size_t size() const {return _points.size();}
 };
@@ -33,7 +33,7 @@ void Trace<length>::push_front(const QVector3D& point) {
 
 }
 template<size_t length>
-GLuint* Trace<length>::pointsBegin() const {
+const GLuint* Trace<length>::pointsBegin() const {
     return &_points.front();
     //return _points.begin();
 }

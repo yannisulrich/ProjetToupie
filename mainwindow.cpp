@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <iostream>
-#include "MathCore/MathCore.h"
+//#include "MathCore/MathCore.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,6 +22,7 @@ void MainWindow::on_pushButtonT_clicked()
     double theta_i = ui->doubleSpinBox_t->value();
     double mu_i = ui->doubleSpinBox_u->value();
     int integrator = ui->Integrator->currentIndex();
+    /*
     switch(integrator) {
         case 0: {
             IntegrateurEulerCromer integ;
@@ -36,6 +37,6 @@ void MainWindow::on_pushButtonT_clicked()
             break;
         }
     }
-
+    */
     std::cout << "PushButtonT pressed with values" << std::endl;
 }
