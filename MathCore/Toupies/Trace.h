@@ -4,23 +4,19 @@
  */
 #pragma once
 #include <queue>
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-    #include <GL/gl.h>
-#elif __APPLE__
-#include <gltypes.h>
-#endif
 #include <QVector3D>
-
+#include <iostream>
 template <size_t length>
 class Trace  {
 private:
-    std::deque<GLuint> _points;
-public:
 
+public:
+    std::deque<float> _points;
     void push_front(const QVector3D&);
-    const GLuint* pointsBegin() const;
-    const auto pointsEnd() const;
-    size_t size() const {return _points.size();}
+    void push_front(const float&);
+    [[nodiscard]] const float* pointsBegin() const;
+    [[nodiscard]] const float* pointsEnd() const;
+    [[nodiscard]] size_t size() const {return _points.size();}
 };
 
 template <size_t length>
@@ -34,16 +30,22 @@ void Trace<length>::push_front(const QVector3D& point) {
     _points.push_front(point[1]);
     _points.push_front(point[0]);
 
-
 }
 template<size_t length>
-const GLuint* Trace<length>::pointsBegin() const {
+const float* Trace<length>::pointsBegin() const {
     return &_points.front();
-    //return _points.begin();
 }
 template<size_t length>
-const auto Trace<length>::pointsEnd() const {
-    return _points.end();
+const float* Trace<length>::pointsEnd() const {
+    return &_points.back();
+}
+
+template<size_t length>
+void Trace<length>::push_front(const float & value) {
+    if(_points.size() == 3*length) {
+        _points.pop_back();
+    }
+    _points.push_front(value);
 }
 
 

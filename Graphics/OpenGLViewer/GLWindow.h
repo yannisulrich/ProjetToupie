@@ -16,6 +16,7 @@
 #include <QTime>
 #include <QTimer> // Classe pour gérer le temps
 #include "scene.h"
+#include "Trace.h"
 class GLWindow : public QOpenGLWidget
 
 {
@@ -52,6 +53,7 @@ private:
     // pour faire évoluer les objets avec le bon "dt"
     QElapsedTimer * chronometre;
     double time = 0; //utilisé pour les autres supports
+    double prevTime = 0; //utilisé pour la mesure des FPS
     // objets à dessiner, faire évoluer
 
     std::vector<SupportADessin*> supports; //supports supplémentaires (fichiers, texte..., autre chose?)
@@ -67,12 +69,17 @@ private:
 
     bool MouseEntry = true; //to avoid jumping of view on mouse entry, either at start or from escaping
 
-    float sensitivity = 0.001;
+    float sensitivity = 0.002;
 
 
     bool CursorSet = false;
 
     QMargins MouseMargins = QMargins(50,50,50,50); //sert à garder la souris en place, cf .cc
+
+    Trace<20> DeltaTs;
+    float measuredFPS;
+
+    unsigned int everySixtyTimes = 0;
 
 
 };

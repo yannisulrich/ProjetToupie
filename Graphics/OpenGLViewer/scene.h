@@ -29,6 +29,7 @@ class Toupie;
 class Integrateur;
 class Scene : public SupportADessin
 {
+    friend class Systeme;
     friend class Simulator;
 public:
 
@@ -51,7 +52,7 @@ private:
 
     explicit Scene(Integrateur* integrateur): system(this, integrateur) {}
     //chargement des shaders
-    void createShaderProgram( QString vShader, QString fShader);
+    static void createShaderProgram(QOpenGLShaderProgram& shaderProgram, const QString& vShader, const QString& fShader);
 
     //mise en place de l'éclairage et des matrices de vue et de projection.
     void setupLightingAndMatrices();
@@ -69,8 +70,8 @@ private:
 
 
     //mutable car de cette manière la méthode dessine(cont Toupie&) peut être const.
-    mutable QOpenGLShaderProgram m_shaderProgram;
-
+    mutable QOpenGLShaderProgram m_shaderProgram; //pour les modèles
+    mutable QOpenGLShaderProgram t_shaderProgram; //pour les tracés de points
     QMatrix4x4 m_projection, m_view;
 
     LightInfo m_lightInfo;
@@ -79,7 +80,19 @@ private:
     QVector3D direction;
     QVector3D directionXZPlane;
 
+    Model table = Model(QString("Graphics/OpenGLViewer/Models/table.3DS"),ModelLoader::RelativePath);
+
     float pitch = 0, yaw = 0;
+    unsigned int traceLength = 200;
+    std::vector<unsigned int> TraceGVAOs;
+    std::vector<unsigned int> TraceGVBOs;
+    std::vector<unsigned int> TraceAVAOs;
+    std::vector<unsigned int> TraceAVBOs;
+
+    unsigned int VBO, VAO;
+
+    unsigned int TraceWriteCounter = 0;
+
 
 };
 

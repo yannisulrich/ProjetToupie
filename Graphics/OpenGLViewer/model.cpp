@@ -175,7 +175,6 @@ void Model::cleanup()
 //This function implements a guard from loading a new model when the old one is already initialized in the scene.
 void Model::loadNew(QString filepath, ModelLoader::PathType pathType, QString texturePath) {
     if(initialized) throw std::logic_error("cannot load new model when already initialized");
-    cout << "loadNew" << endl;
     m_filepath = std::move(filepath);
     m_pathType = pathType;
     m_texturePath = std::move(texturePath);

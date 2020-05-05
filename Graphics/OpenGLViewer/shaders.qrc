@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>ads_fragment.frag</file>
-        <file>ads_fragment.vert</file>
+        <file>model_fragment.frag</file>
+        <file>model_fragment.vert</file>
+        <file>trace_fragment_shader.glsl</file>
+        <file>trace_vertex_shader.glsl</file>
     </qresource>
 </RCC>

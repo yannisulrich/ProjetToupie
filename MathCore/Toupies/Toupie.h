@@ -42,7 +42,7 @@ protected:
 
     mutable Model model;
 
-    Trace<10> TraceG;
+    Trace<100> TraceG;
     Trace<10> TraceA;
 public:
 
@@ -75,7 +75,11 @@ public:
 
     virtual QVector3D translationModel() const = 0; //vecteur de translation pour la représentation en 3D, propre au type de toupie
 
-    virtual void addToTraces() = 0;
+    virtual void addToTraces() = 0; //ajouter les points A et G aux traces
+
+
+
+
 };
 
 

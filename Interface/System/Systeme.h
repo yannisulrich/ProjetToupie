@@ -17,13 +17,14 @@
 #include <QResource>
 
 class Systeme: public Dessinable {
+
 private:
-std::vector<Toupie* > toupies;
+
 Integrateur* integrator;
 
 
 public:
-
+    std::vector<Toupie* > toupies;
     //ces deux constructeurs sont effacés car nous les utilisons pas et leur définition par défaut cause des problèmes d'accès
     //multiples sur les pointeurs dans toupies.
     Systeme() = delete;

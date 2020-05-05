@@ -52,6 +52,7 @@ void GLWindow::paintGL()
 {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     scene->update();
 
 }
@@ -63,7 +64,7 @@ void GLWindow::timerTimeout()
     double dt = chronometre->nsecsElapsed() / 1000000000.0;
     chronometre->start();
     time +=  dt;
-
+    DeltaTs.push_front(dt);
     //On déplace d'abord la caméra
     scene->deplacer(dt,up, down, forw, back, left, right);
 
@@ -76,6 +77,18 @@ void GLWindow::timerTimeout()
     //puis les autres supports
     for (auto support : supports) {
         support->dessine(time, scene->system);
+    }
+
+    everySixtyTimes += 1;
+    if(everySixtyTimes == 60) {
+        everySixtyTimes = 0;
+        measuredFPS = 0;
+        for(int i(0); i < 60; ++i) {
+            measuredFPS += DeltaTs._points[i];
+        }
+        measuredFPS /= 60;
+        measuredFPS = 1/measuredFPS;
+        qDebug() << "fps: " << measuredFPS;
     }
 }
 
