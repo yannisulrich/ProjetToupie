@@ -24,6 +24,7 @@
 #include "Graphics/SupportADessin.h"
 #include "model.h"
 #include "Interface/System/Systeme.h"
+#include <memory>
 
 class Toupie;
 class Integrateur;
@@ -93,7 +94,10 @@ private:
 
     unsigned int TraceWriteCounter = 0;
 
-
+    std::vector<std::unique_ptr<QOpenGLVertexArrayObject> > QtVAOs;
+    std::vector<std::unique_ptr<QOpenGLBuffer> > QtVBOs;
+    QOpenGLVertexArrayObject m_vao; // Our Vertex Array Object
+    QOpenGLBuffer m_vvbo;  // Our vertice Vertex Buffer Object
 };
 
 

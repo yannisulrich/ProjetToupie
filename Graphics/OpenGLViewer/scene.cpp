@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <QOpenGLBuffer>
 #include <chrono>
+#include <memory>
 using namespace std;
 using namespace std::chrono;
 void Scene::initialize()
@@ -60,7 +61,31 @@ void Scene::initialize()
 
     glEnableVertexAttribArray(vPosition);
     */
+    /*
+    m_vao.create();
+    m_vao.bind();
+    QOpenGLBuffer m_vvbo(QOpenGLBuffer::VertexBuffer);
+    m_vvbo.create();
+    m_vvbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+    m_vvbo.bind();
+    m_vvbo.allocate(vertices, 21 * sizeof(float));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    */
+    for(size_t i(0); i < system.getToupies().size(); ++i) {
+        QtVAOs.push_back(make_unique<QOpenGLVertexArrayObject>());
+        QtVAOs[i]->create();
+        QtVAOs[i]->bind();
+        QtVBOs.push_back(make_unique<QOpenGLBuffer>());
+        QtVBOs[i]->create();
+        QtVBOs[i]->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+        QtVBOs[i]->bind();
+        m_vvbo.allocate(zeros, 1200);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+    }
 
+    /*
     for(size_t i(0); i < system.getToupies().size(); ++i) {
         TraceGVAOs.push_back(0);
         TraceGVBOs.push_back(0);
@@ -77,7 +102,7 @@ void Scene::initialize()
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
-
+    */
     /*
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -196,32 +221,46 @@ void Scene::update()
     float bufferCopy[300] {};
     */
     auto stop = high_resolution_clock::now();
-
     for(size_t i(0); i < system.getToupies().size(); ++i) {
         float trace[300] = {};
-        for (int j(0); j < system.getToupies()[i]->TraceG._points.size(); ++j) trace[j] = system.getToupies()[i]->TraceG._points[j];
-
-        glBindVertexArray(TraceGVAOs[i]);
-        glBindBuffer(GL_ARRAY_BUFFER, TraceGVBOs[i]);
-        //glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, 4*system.getToupies()[i]->TraceG._points.size(), trace);
-
-        //glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float)*system.getToupies()[i]->TraceG._points.size(), &system.getToupies()[i]->TraceG._points.front());
-        //void *ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        //memcpy(ptr, vertices, sizeof(vertices));
-        //memcpy(ptr, &system.getToupies()[i]->TraceG._points.front(), sizeof(float)*system.getToupies()[i]->TraceG._points.size());
-        //glUnmapBuffer(GL_ARRAY_BUFFER);
-        //glGetBufferSubData(GL_ARRAY_BUFFER, 0,1200, bufferCopy);
-        //glDrawArrays(GL_LINE_STRIP, 0, 6);
-
+        for (int j(0); j < system.getToupies()[i]->TraceG._points.size(); ++j)
+            trace[j] = system.getToupies()[i]->TraceG._points[j];
+        QtVAOs[i]->bind();
+        QtVBOs[i]->bind();
+        QtVBOs[i]->allocate(1200);
+        void *ptr = QtVBOs[i]->map(QOpenGLBuffer::WriteOnly);
+        memcpy(ptr, trace,
+                4*system.getToupies()[i]->TraceG._points.size());
+        QtVBOs[i]->unmap();
         glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceG._points.size()/3);
-        glBindVertexArray(0);
-
     }
-    glFinish();
+        /*
+         *
+        for(size_t i(0); i < system.getToupies().size(); ++i) {
+            float trace[300] = {};
+            for (int j(0); j < system.getToupies()[i]->TraceG._points.size(); ++j) trace[j] = system.getToupies()[i]->TraceG._points[j];
+
+            glBindVertexArray(TraceGVAOs[i]);
+            glBindBuffer(GL_ARRAY_BUFFER, TraceGVBOs[i]);
+            //glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, 4*system.getToupies()[i]->TraceG._points.size(), trace);
+
+            //glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float)*system.getToupies()[i]->TraceG._points.size(), &system.getToupies()[i]->TraceG._points.front());
+            //void *ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+            //memcpy(ptr, vertices, sizeof(vertices));
+            //memcpy(ptr, &system.getToupies()[i]->TraceG._points.front(), sizeof(float)*system.getToupies()[i]->TraceG._points.size());
+            //glUnmapBuffer(GL_ARRAY_BUFFER);
+            //glGetBufferSubData(GL_ARRAY_BUFFER, 0,1200, bufferCopy);
+            //glDrawArrays(GL_LINE_STRIP, 0, 6);
+
+            glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceG._points.size()/3);
+            glBindVertexArray(0);
+
+        }
+        */
     stop = high_resolution_clock::now();
     auto duration = duration_cast<nanoseconds>(stop - start);
-    //cout << "Time taken by function on average: " << duration.count() << " nanoseconds" << endl;
+    cout << "Time taken by function on average: " << duration.count() << " nanoseconds" << endl;
     /*
     if(TraceWriteCounter == 0) {
         cout << endl << "bufferCopy";
@@ -229,6 +268,11 @@ void Scene::update()
             cout << i << " ";
         cout << endl;
     }
+    */
+    /*
+    m_vao.bind(); //sets
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    m_vao.release();
     */
     t_shaderProgram.release();
 }

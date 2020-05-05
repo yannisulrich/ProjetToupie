@@ -54,6 +54,6 @@ QVector3D ConeSimple::translationModel() const {
 
 void ConeSimple::addToTraces() {
     TraceA.push_front({float(P[3]),0,float(P[4])});
-    TraceG.push_front({float(0.75*L*sin(P[1])*sin(P[0])),float(0.75*L*cos(P[0])),float(0.75*L*cos(P[1])*sin(P[0]))});
+    TraceG.push_front({float(0.75*L*sin(P[1])*sin(P[0])+P[3]),float(0.75*L*cos(P[0])),float(0.75*L*cos(P[1])*sin(P[0])+P[4])});
 
 }
