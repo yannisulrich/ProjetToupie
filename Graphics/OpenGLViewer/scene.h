@@ -17,7 +17,7 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
-#include <QOpenGLFunctions_3_3_Core>
+#include <QOpenGLFunctions_4_3_Core>
 #include <QOpenGLFunctions>
 #include <vector>
 #include "modelloader.h"
@@ -28,7 +28,7 @@
 
 class Toupie;
 class Integrateur;
-class Scene : public SupportADessin
+class Scene : public SupportADessin, QOpenGLFunctions
 {
     friend class Systeme;
     friend class Simulator;

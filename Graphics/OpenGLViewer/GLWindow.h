@@ -63,7 +63,7 @@ private:
     QPoint lastMousePosition;
 
     bool CapturedMouse = true;
-
+    bool paused = false;
 
     bool up = false, down = false, forw = false, back = false, left = false, right = false; //handles movement, when one is true there is movement in that direction
 
@@ -80,7 +80,7 @@ private:
     float measuredFPS;
 
     unsigned int everySixtyTimes = 0;
-
+    unsigned int TraceWriteCounter = 0;
 
 };
 

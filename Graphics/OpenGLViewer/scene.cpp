@@ -25,6 +25,7 @@ void Scene::initialize()
 
     for(auto i : system.getToupies()) i->model.initialize(m_shaderProgram);
 
+    initializeOpenGLFunctions();
     glEnable(GL_DEPTH_TEST);
     glClearColor(.9f, .9f, .93f ,1.0f);
 
@@ -80,7 +81,7 @@ void Scene::initialize()
         QtVBOs[i]->create();
         QtVBOs[i]->setUsagePattern(QOpenGLBuffer::DynamicDraw);
         QtVBOs[i]->bind();
-        m_vvbo.allocate(zeros, 1200);
+        QtVBOs[i]->allocate(zeros, 1200);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
     }
@@ -186,11 +187,11 @@ void Scene::update()
     m_shaderProgram.setUniformValue( "lightIntensity", m_lightInfo.Intensity );
     QMatrix4x4 tableMat;
     tableMat.scale(0.1);
-    table.draw(m_shaderProgram, tableMat, m_view, m_projection);
+    //table.draw(m_shaderProgram, tableMat, m_view, m_projection);
     dessine(system);
 
     m_shaderProgram.release();
-
+    /*
     if(TraceWriteCounter == 0) {
         system.addToTraces();
         TraceWriteCounter = 4;
@@ -201,9 +202,10 @@ void Scene::update()
                  << ", " << system.getToupies()[0]->TraceG._points[i+2] << "},";
         }
 
+
     }
     else --TraceWriteCounter;
-
+    */
     t_shaderProgram.bind();
 
     t_shaderProgram.setUniformValue("projection", m_projection);
@@ -220,14 +222,14 @@ void Scene::update()
     };
     float bufferCopy[300] {};
     */
-    auto stop = high_resolution_clock::now();
+    start = high_resolution_clock::now();
     for(size_t i(0); i < system.getToupies().size(); ++i) {
         float trace[300] = {};
         for (int j(0); j < system.getToupies()[i]->TraceG._points.size(); ++j)
             trace[j] = system.getToupies()[i]->TraceG._points[j];
         QtVAOs[i]->bind();
         QtVBOs[i]->bind();
-        QtVBOs[i]->allocate(1200);
+        //QtVBOs[i]->allocate(1200);
         void *ptr = QtVBOs[i]->map(QOpenGLBuffer::WriteOnly);
         memcpy(ptr, trace,
                 4*system.getToupies()[i]->TraceG._points.size());
@@ -258,7 +260,7 @@ void Scene::update()
 
         }
         */
-    stop = high_resolution_clock::now();
+    auto stop = high_resolution_clock::now();
     auto duration = duration_cast<nanoseconds>(stop - start);
     cout << "Time taken by function on average: " << duration.count() << " nanoseconds" << endl;
     /*
@@ -321,7 +323,7 @@ void Scene::deplacer(const double &dt, bool up, bool down, bool forw, bool back,
     v = v.normalized() * std::min(10.0f, v.length());
 
     r += dt * v;
-    r[1] = std::max(0.5f, r[1]);
+    r[1] = std::max(0.25f, r[1]);
     m_view.setToIdentity();
     m_view.lookAt(r, r + direction, {0,1,0});
 

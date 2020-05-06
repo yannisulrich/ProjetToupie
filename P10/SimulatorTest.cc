@@ -18,10 +18,10 @@ int main() {
     auto outFile = new FileViewer(file);
     auto outText = new TextViewer(cout);
 
-    vector<SupportADessin*> v{outText, outFile};
+    vector<SupportADessin*> v{outFile};
     Simulator simulator(true, &integR, 200, 20, v);
     simulator.system->addSymCone(Vecteur5(0.1, 0, 0, 0, 0), Vecteur5(0, 0, 60, 0, 0), 3, 1, 3000.05);
-    simulator.system->addSymCone(Vecteur5(0.2, 0, 0, 4, 4), Vecteur5(0, 0, 90, 0, 0), 4.0, 1.0, 10.27);
+    //simulator.system->addSymCone(Vecteur5(0.2, 0, 0, 4, 4), Vecteur5(0, 0, 90, 0, 0), 4.0, 1.0, 10.27);
     //simulator.system->addSymModel(Vecteur5(0.5, 0, 0, 4, 4), Vecteur5(0, 0, 90, 0, 0), 0.6, 1.2, 4, "BakuMeaGan.DAE");
     simulator.run();
 }

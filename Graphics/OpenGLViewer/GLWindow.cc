@@ -63,14 +63,21 @@ void GLWindow::timerTimeout()
 
     double dt = chronometre->nsecsElapsed() / 1000000000.0;
     chronometre->start();
-    time +=  dt;
+
     DeltaTs.push_front(dt);
     //On déplace d'abord la caméra
     scene->deplacer(dt,up, down, forw, back, left, right);
 
     //puis on intègre le système
-    scene->integrateSystem(dt, integSubDiv);
-
+    if(!paused) {
+        time +=  dt;
+        scene->integrateSystem(dt, integSubDiv);
+        if(TraceWriteCounter == 0) {
+            scene->system.addToTraces();
+            TraceWriteCounter = 4;
+        }
+        else --TraceWriteCounter;
+    }
     //puis on met à jour le graphisme
     update();
 
@@ -95,16 +102,18 @@ void GLWindow::timerTimeout()
 // ======================================================================
 void GLWindow::pause()
 {
-
-    if (CapturedMouse) {
-        // dans ce cas le timer ne tourne pas alors on le lance
+    /*
+    if (!paused) {
+        // dans ce cas le timer ne tourne alors on l'arrête
         timerTimeout(); //on actualise encore une fois la scène pour éviter la perte en précision du au temps restant sur le timer
         timer->stop();
     } else {
-        // le timer tourne alors on l'arrête
+        // le timer tourne pas alors on le lance
         timer->start();
         chronometre->restart();
     }
+     */
+    paused = 1 - paused;
 
 }
 
@@ -138,7 +147,7 @@ void GLWindow::keyPressEvent(QKeyEvent* event)
             down = true;
             break;
         case Qt::Key_Escape:
-            pause();
+            //pause();
             if(CapturedMouse) {
                 CapturedMouse = false;
                 QCursor c;
@@ -153,6 +162,10 @@ void GLWindow::keyPressEvent(QKeyEvent* event)
                 setCursor(c);
             }
             break;
+        case Qt::Key_P:
+            pause();
+            break;
+
     };
 
     paintGL(); // redessine
