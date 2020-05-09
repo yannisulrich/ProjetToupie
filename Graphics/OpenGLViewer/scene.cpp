@@ -1,8 +1,8 @@
 #include "scene.h"
 #include "Toupies/Toupie.h"
-#include "Integrateur.h"
 #include <iostream>
 #include <QtCore>
+#include <QtCharts>
 #include <algorithm>
 #include <QOpenGLBuffer>
 #include <chrono>
@@ -38,95 +38,38 @@ void Scene::initialize()
     float zeros[300] = {};
 
 
-
-
-    GLfloat vertices[] =
-            {-0.90f, 0.90f , 0.3f, // Triangle 1
-            +0.85f, 0.90f, 0.3,
-             +0.85f, 0.90f, 0.3,
-             +0.0f, 0.90f, -0.3,
-             -0.85f, 0.40f, 0.6,
-             +1.85f, 0.90f, 0.3,
-                    0.90f, +0.85f,0.3
-            };
-    /*
-    test = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
-    test.setUsagePattern(QOpenGLBuffer::StaticDraw);
-    Q_ASSERT(test.create());
-    Q_ASSERT(test.bind());
-    test.allocate(sizeof(vertices));
-    test.write(0, vertices, sizeof(vertices));
-
-    const int vPosition = 0;
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-    glEnableVertexAttribArray(vPosition);
-    */
-    /*
-    m_vao.create();
-    m_vao.bind();
-    QOpenGLBuffer m_vvbo(QOpenGLBuffer::VertexBuffer);
-    m_vvbo.create();
-    m_vvbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-    m_vvbo.bind();
-    m_vvbo.allocate(vertices, 21 * sizeof(float));
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    */
     for(size_t i(0); i < system.getToupies().size(); ++i) {
-        QtVAOs.push_back(make_unique<QOpenGLVertexArrayObject>());
-        QtVAOs[i]->create();
-        QtVAOs[i]->bind();
-        QtVBOs.push_back(make_unique<QOpenGLBuffer>());
-        QtVBOs[i]->create();
-        QtVBOs[i]->setUsagePattern(QOpenGLBuffer::DynamicDraw);
-        QtVBOs[i]->bind();
-        QtVBOs[i]->allocate(zeros, 1200);
+
+        //trace G
+        QtGVAOs.push_back(make_unique<QOpenGLVertexArrayObject>()); //OpenGL >3 standard pour dessiner
+        QtGVAOs[i]->create();
+        QtGVAOs[i]->bind();
+        QtGVBOs.push_back(make_unique<QOpenGLBuffer>());
+        QtGVBOs[i]->create();
+        QtGVBOs[i]->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+        QtGVBOs[i]->bind();
+        QtGVBOs[i]->allocate(zeros, 2400); //4 Bytes par float, 3 floats par point, 200 points
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
-    }
 
-    /*
-    for(size_t i(0); i < system.getToupies().size(); ++i) {
-        TraceGVAOs.push_back(0);
-        TraceGVBOs.push_back(0);
-        glGenVertexArrays(1, &TraceGVAOs[i]);
-        glGenBuffers(1, &TraceGVBOs[i]);
+        //trace A
 
-
-        glBindVertexArray(TraceGVAOs[i]);
-        glBindBuffer(GL_ARRAY_BUFFER, TraceGVBOs[i]);
-        glBufferData(GL_ARRAY_BUFFER, 1200, zeros, GL_DYNAMIC_DRAW);
-
+        QtAVAOs.push_back(make_unique<QOpenGLVertexArrayObject>());
+        QtAVAOs[i]->create();
+        QtAVAOs[i]->bind();
+        QtAVBOs.push_back(make_unique<QOpenGLBuffer>());
+        QtAVBOs[i]->create();
+        QtAVBOs[i]->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+        QtAVBOs[i]->bind();
+        QtAVBOs[i]->allocate(zeros, 2400);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-
         glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
     }
-    */
-    /*
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    //glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's
-     //bound vertex buffer object so afterwards we can safely unbind
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-     */
 
     table.initialize(m_shaderProgram);
+
+
 }
 
 void Scene::createShaderProgram(QOpenGLShaderProgram& shaderProgram, const QString& vShader, const QString& fShader)
@@ -157,11 +100,10 @@ void Scene::setupLightingAndMatrices()
     m_projection.perspective(
                 60.0f,          // field of vision
                 aspect,         // aspect ratio
-                0.3f,           // near clipping plane
+                0.1f,           // near clipping plane
                 1000.0f);       // far clipping plane
 
     m_lightInfo.Position = QVector4D( -1.0f, 1.0f, 3.0f, 1.0f );
-    //m_lightInfo.Intensity = QVector3D( .5f, .5f, .f5);
     m_lightInfo.Intensity = QVector3D( 1.0f, 1.0f, 1.0f);
 }
 
@@ -170,7 +112,7 @@ void Scene::resize(int w, int h)
     glViewport( 0, 0, w, h );
 
     m_projection.setToIdentity();
-    m_projection.perspective(60.0f, (float)w/h, .3f, 1000);
+    m_projection.perspective(atan(tan(50.0 * 3.14159 / 360.0) / zoomFactor) * 360.0 / 3.14159, (float)w/h, .1f, 1000);
 }
 
 void Scene::update()
@@ -187,95 +129,49 @@ void Scene::update()
     m_shaderProgram.setUniformValue( "lightIntensity", m_lightInfo.Intensity );
     QMatrix4x4 tableMat;
     tableMat.scale(0.1);
-    //table.draw(m_shaderProgram, tableMat, m_view, m_projection);
+    table.draw(m_shaderProgram, tableMat, m_view, m_projection);
     dessine(system);
 
     m_shaderProgram.release();
-    /*
-    if(TraceWriteCounter == 0) {
-        system.addToTraces();
-        TraceWriteCounter = 4;
 
-        cout << "1: " << system.getToupies()[0]->TraceG._points.size() << endl;
-        for(size_t i(0); i < system.getToupies()[0]->TraceG.size()-2; i += 3) {
-            cout << "{" << system.getToupies()[0]->TraceG._points[i] << ", " << system.getToupies()[0]->TraceG._points[i+1]
-                 << ", " << system.getToupies()[0]->TraceG._points[i+2] << "},";
-        }
-
-
-    }
-    else --TraceWriteCounter;
-    */
     t_shaderProgram.bind();
 
     t_shaderProgram.setUniformValue("projection", m_projection);
     t_shaderProgram.setUniformValue("vue_modele", m_view);
 
-    /*
-    float vertices[] = { // top right
-            0.0f, 1.0f, 0.0f,  // bottom right
-            0.0f, 1.0f, 1.0f,  // bottom left
-            1.0f,  1.0f, 1.0f,   // top left
-            1.0f,  1.0f, 0.0f,
-            1.0f,  2.0f, 0.0f,
-            1.0f,  2.0f, 1.0f
-    };
-    float bufferCopy[300] {};
-    */
     start = high_resolution_clock::now();
+    t_shaderProgram.setUniformValue("traceColor", 1.0f, 0.5f, 0.2f, 1.0f);
     for(size_t i(0); i < system.getToupies().size(); ++i) {
-        float trace[300] = {};
-        for (int j(0); j < system.getToupies()[i]->TraceG._points.size(); ++j)
-            trace[j] = system.getToupies()[i]->TraceG._points[j];
-        QtVAOs[i]->bind();
-        QtVBOs[i]->bind();
-        //QtVBOs[i]->allocate(1200);
-        void *ptr = QtVBOs[i]->map(QOpenGLBuffer::WriteOnly);
-        memcpy(ptr, trace,
-                4*system.getToupies()[i]->TraceG._points.size());
-        QtVBOs[i]->unmap();
-        glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceG._points.size()/3);
+        //Trace G
+
+        for (int j(0); j < system.getToupies()[i]->TraceG.size(); ++j)
+            traceBuffer[j] = scaleFactor * system.getToupies()[i]->TraceG._points[j];
+        QtGVAOs[i]->bind();
+        QtGVBOs[i]->bind();
+        void *ptr = QtGVBOs[i]->map(QOpenGLBuffer::WriteOnly);
+        memcpy(ptr, traceBuffer,
+               4 * system.getToupies()[i]->TraceG._points.size());
+        QtGVBOs[i]->unmap();
+        glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceG._points.size() / 3);
     }
-        /*
-         *
-        for(size_t i(0); i < system.getToupies().size(); ++i) {
-            float trace[300] = {};
-            for (int j(0); j < system.getToupies()[i]->TraceG._points.size(); ++j) trace[j] = system.getToupies()[i]->TraceG._points[j];
+    t_shaderProgram.setUniformValue("traceColor", 0.0f, 1.0f, 0.6f, 1.0f);
+    for(size_t i(0); i < system.getToupies().size(); ++i) {
+        //Trace A
+        for (int j(0); j < system.getToupies()[i]->TraceA.size(); ++j)
+            traceBuffer[j] = scaleFactor * system.getToupies()[i]->TraceA._points[j];
+        QtAVAOs[i]->bind();
+        QtAVBOs[i]->bind();
+        void * ptr = QtAVBOs[i]->map(QOpenGLBuffer::WriteOnly);
+        memcpy(ptr, traceBuffer,
+               4*system.getToupies()[i]->TraceA._points.size());
+        QtAVBOs[i]->unmap();
+        glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceA._points.size()/3);
+    }
 
-            glBindVertexArray(TraceGVAOs[i]);
-            glBindBuffer(GL_ARRAY_BUFFER, TraceGVBOs[i]);
-            //glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-            glBufferSubData(GL_ARRAY_BUFFER, 0, 4*system.getToupies()[i]->TraceG._points.size(), trace);
-
-            //glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float)*system.getToupies()[i]->TraceG._points.size(), &system.getToupies()[i]->TraceG._points.front());
-            //void *ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-            //memcpy(ptr, vertices, sizeof(vertices));
-            //memcpy(ptr, &system.getToupies()[i]->TraceG._points.front(), sizeof(float)*system.getToupies()[i]->TraceG._points.size());
-            //glUnmapBuffer(GL_ARRAY_BUFFER);
-            //glGetBufferSubData(GL_ARRAY_BUFFER, 0,1200, bufferCopy);
-            //glDrawArrays(GL_LINE_STRIP, 0, 6);
-
-            glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceG._points.size()/3);
-            glBindVertexArray(0);
-
-        }
-        */
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<nanoseconds>(stop - start);
-    cout << "Time taken by function on average: " << duration.count() << " nanoseconds" << endl;
-    /*
-    if(TraceWriteCounter == 0) {
-        cout << endl << "bufferCopy";
-        for (auto i : bufferCopy)
-            cout << i << " ";
-        cout << endl;
-    }
-    */
-    /*
-    m_vao.bind(); //sets
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    m_vao.release();
-    */
+    //cout << "Time taken by function: " << duration.count() << " nanoseconds" << endl;
+
     t_shaderProgram.release();
 }
 void Scene::cleanup()
@@ -285,12 +181,15 @@ void Scene::cleanup()
 void Scene::dessine(const Toupie & toupie) const {
     //transformation nécessaires pour les angles d'euler.
     QMatrix4x4 modelMatrix;
-    modelMatrix.translate(toupie.translationModel());
+    modelMatrix.translate(scaleFactor*toupie.translationModel());
+    //Euler
     modelMatrix.rotate(fmod(toupie.P.getCoord(1)*57.2958, 360.0), 0.0, 1.0, 0.0f);
     modelMatrix.rotate(toupie.P.getCoord(0)*57.2958, 1.0f, 0.0, 0.0);
     modelMatrix.rotate(fmod(toupie.P.getCoord(2)*57.2958, 360.0), 0.0, 1.0, 0.0f);
-    modelMatrix.scale(toupie.modelScale());
-    if (toupie.type() == "Conique Simple") modelMatrix.translate(0,- toupie.model.bottomPoint(),0);
+    //Scaling suivant les dimensions, pour que la toupie ai l'air d'avoir les bonnes dimensions
+    modelMatrix.scale(scaleFactor*toupie.modelScale());
+    //translation verticale. Ceci est fait ici et pas dans les classes pour permettre à l'utilisateur de ne pas devoir centrer son modèle 3D en un point en particulier.
+    if (toupie.type() == "Conique Simple" || toupie.type() == "Cone Glissant") modelMatrix.translate(0,- toupie.model.bottomPoint(),0);
 
     toupie.model.draw(m_shaderProgram, modelMatrix, m_view, m_projection);
 }
@@ -323,11 +222,13 @@ void Scene::deplacer(const double &dt, bool up, bool down, bool forw, bool back,
     v = v.normalized() * std::min(10.0f, v.length());
 
     r += dt * v;
-    r[1] = std::max(0.25f, r[1]);
+    r[1] = std::max(0.4f, r[1]);
     m_view.setToIdentity();
     m_view.lookAt(r, r + direction, {0,1,0});
 
     a *= 0.5;
+
+
 }
 void Scene::DeltaPitchYaw(const float &p, const float &y)
 {
@@ -340,5 +241,11 @@ void Scene::DeltaPitchYaw(const float &p, const float &y)
     direction = {cos(pitch)*cos(yaw),sin(pitch), cos(pitch)*sin(yaw)};
     m_view.setToIdentity();
     m_view.lookAt(r, r + direction, {0,1,0});
+
+}
+
+void Scene::setZoomPerspectiveMatrix(const int& width, const int& height) {
+    m_projection.setToIdentity();
+    m_projection.perspective(atan(tan(50.0 * 3.14159 / 360.0) / zoomFactor) * 360.0 / 3.14159, (float)width/height, .1f, 1000);
 }
 

@@ -17,11 +17,10 @@ int main() {
     //file.open("/Users/yannis/Desktop/EPFL/ICC2/Exercices/ProjetToupie/P9/SystemeOutput.txt", ios::app);
 
     FILE* gnuplotPipe = popen("gnuplot -persist","w");
-    double dt = 0.01;
+    double dt = 0.0001;
     double T = 10;
     double e = 0.0001;
     unsigned int n = 0.01/dt;
-
     IntegrateurEulerCromer integEC;
     IntegrateurNewmark5 integN(e);
     IntegrateurRungeKutta5 integR;
@@ -32,12 +31,11 @@ int main() {
 
     TippeTopRolls test(outText, Vecteur5(0.5, 0, 0, 0, 0), Vecteur5(0.05, 0.01, 60, 0, 0), 2.0, 1.0, 0.127);
 
-
     Systeme systeme(outFile, &integN);
 
     systeme.addSymCone(Vecteur5(0.5, 0, 0, 0, 0), Vecteur5(0.05, 0, 60, 0, 0), 1.0, 1.0, 0.127);
-    systeme.addTippeTopFriction(Vecteur5(0.1,0,0,0,0),Vecteur5(0,0,60,0,0), 0.02, 0.0036186, 0.5, 0.13387373);
-
+    //systeme.addTippeTopFriction(Vecteur5(0.03,0,0,0,0),Vecteur5(0,0,60,0,0), 0.02, 0.0052, 0.5, 0.313387373);
+    systeme.addSymConeGlisse(Vecteur5(0.05, 0, 0.00001, 0, 0), Vecteur5(0, 0, 150, 0, 0.09), 0.03, 0.02, 0.008, 0.01);
     //cout << systeme.getToupies()[0]->getIg() << endl;
 
     cout << systeme;
@@ -48,7 +46,7 @@ int main() {
     for(int t(0); t < T/(n*dt); ++t) {
         systeme.integrateMultiple(n, dt);
         systeme.dessine();
-        //systeme.dessine(outText);
+        systeme.dessine(outText);
     }
     auto stop = high_resolution_clock::now();
 

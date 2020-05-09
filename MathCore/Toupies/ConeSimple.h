@@ -25,7 +25,7 @@ public:
     [[nodiscard]] double getR() const;
     [[nodiscard]] double getM() const;
 
-    Vecteur4 returnIndicators() const override;
+
 
     QVector3D translationModel() const override;
 

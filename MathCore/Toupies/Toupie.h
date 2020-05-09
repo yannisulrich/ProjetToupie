@@ -38,12 +38,12 @@ protected:
     QVector3D _modelScale {0,0,0}; //comment "Scale" le modèle en fonction des paramètres
 
 
-    const std::string _type;
+    std::string _type;
 
     mutable Model model;
 
-    Trace<100> TraceG;
-    Trace<10> TraceA;
+    Trace<200> TraceG;
+    Trace<200> TraceA;
 public:
 
 

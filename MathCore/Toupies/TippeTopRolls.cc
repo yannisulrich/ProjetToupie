@@ -113,6 +113,6 @@ QVector3D TippeTopRolls::translationModel() const {
 }
 
 void TippeTopRolls::addToTraces() {
-    TraceA.push_front({float(P_dot[3]),0,float(P_dot[4])});
+    TraceA.push_front({float(P_dot[3]),0.0001,float(P_dot[4])}); //le 0.0001 sert uniquement pour le rendering, pour ne pas être dans le sol. Il doit être ignoré physiquement.
     TraceG.push_front({float(P_dot[3]-R*alpha*cos(P[1])*sin(P[0])),float(R-R*alpha*cos(P[0])),float(P_dot[4]-R*alpha*sin(P[1])*sin(P[0]))});
 }

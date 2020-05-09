@@ -134,6 +134,7 @@ double & VecteurArray<T>::operator[](const size_t& coord) { //read-write access
 
 template class VecteurArray<array<double, 2>>;
 template class VecteurArray<array<double, 3>>;
+template class VecteurArray<array<double, 4>>;
 template class VecteurArray<array<double, 5>>;
 
 

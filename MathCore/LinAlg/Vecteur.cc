@@ -144,8 +144,8 @@ double & VecteurN::operator[](const size_t& coord) { //read-write access
 }
 
 std::ostream& operator<<(std::ostream& out, const VecteurN & vect) {
-    for(double i : vect.v_) out  << i << std::setw(15);
-    out << std::setw(-15);
+    for(double i : vect.v_) out  << i << std::setw(13);
+    out << std::setw(-13);
     return out;
 }
 

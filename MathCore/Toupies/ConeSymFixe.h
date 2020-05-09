@@ -39,6 +39,8 @@ public:
     [[nodiscard]] Vecteur5 f(const double & t) const override;
     [[nodiscard]] Vecteur5 f(const double & t, const Vecteur5& P, const Vecteur5& P_dot) const override;
 
+    Vecteur4 returnIndicators() const override;
+
     void dessine() const override {
         support->dessine(*this); }
 

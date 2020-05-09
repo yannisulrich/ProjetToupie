@@ -11,7 +11,7 @@ add_library(MathCore LinAlg/Matrice.cc LinAlg/VecteurArray.cc Toupies/Toupie.cc 
         Integrateurs/IntegrateurRungeKutta.cc Toupies/ConeSymFixe.cc Toupies/ConeSymFixe.h
         Toupies/TippeTopRolls.cc Toupies/TippeTopRolls.h Toupies/TippeTopFriction.cc Toupies/TippeTopFriction.h
         Integrateurs/LSODA/LSODA.cpp
-        ../Graphics/OpenGLViewer/models.qrc)
+        ../Graphics/OpenGLViewer/models.qrc Toupies/ConeSymGlisse.cc Toupies/ConeSymGlisse.h)
 
 target_link_libraries(MathCore PUBLIC GraphicsCore OpenGLViewer)
 

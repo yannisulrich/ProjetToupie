@@ -1,6 +1,3 @@
-//
-// Created by Yannis on 28.03.20.
-//
 
 #include "Systeme.h"
 
@@ -39,12 +36,15 @@ void Systeme::addSymModel(const Vecteur5 &P, const Vecteur5 &P_dot, const double
     toupies.push_back(new ConeSymFixe(support, P, P_dot, I1, I3, m, path, true));
 }
 void Systeme::addTippeTopRolls(const Vecteur5 &P, const Vecteur5 &P_dot, const double &R, const double &h, const double &m) {
-    toupies.push_back(new TippeTopRolls(support, P, P_dot, R, h, m));
+    toupies.push_back(new TippeTopRolls(support, P, P_dot, R, h, m, "TippeTop1.dae"));
 }
-void Systeme::addTippeTopFriction(const Vecteur5 &P, const Vecteur5 &P_dot, const double &R, const double &h, const double & mu, const double &m) {
-    toupies.push_back(new TippeTopFriction(support, P, P_dot, R, h, mu, m));
+void Systeme::addTippeTopFriction(const Vecteur5 &P, const Vecteur5 &P_dot, const double &R, const double &epsilon, const double & mu, const double &m) {
+    toupies.push_back(new TippeTopFriction(support, P, P_dot, R, epsilon, mu, m, "TippeTop1.dae"));
 }
+void Systeme::addSymConeGlisse(const Vecteur5 &P, const Vecteur5 &P_dot, const double &r, const double &L3, const double &m, const double & muk) {
+    toupies.push_back(new ConeSymGlisse(support, P, P_dot,r, L3, m, muk, "cone.dae"));
 
+}
 void Systeme::integrate(const double& dt, const double& t) {
     for(auto i : toupies) {
         if(i->type() == "Tippe Top Inverseur") {
@@ -56,7 +56,17 @@ void Systeme::integrate(const double& dt, const double& t) {
                 std::cerr << "Est-ce que vous avez essayé de manuellement donner le type 'Tippe Top Inverseur' à une toupie?" << endl;
             }
         }
-        integrator->integrate(*i, dt, t);
+        else if(i->type() == "Cone Glissant") {
+            cout << "yappadoodle" << endl;
+            try {
+                dynamic_cast<ConeSymGlisse &>(*i).update(dt);
+            }
+            catch(std::bad_cast& bc) {
+                std::cerr << "bad_cast caught: " << bc.what() << '\n';
+                std::cerr << "Est-ce que vous avez essayé de manuellement donner le type 'Cone Glissant' à une toupie?" << endl;
+            }
+        }
+        else integrator->integrate(*i, dt, t);
     }
 }
 
@@ -71,9 +81,20 @@ void Systeme::integrateMultiple(const size_t & n, const double & dt, const doubl
                 std::cerr << "Est-ce que vous avez essayé de manuellement donner le type 'Tippe Top Inverseur' à une toupie?" << endl;
             }
         }
-        integrator->integrateMultiple(n, *i, dt, t);
+        else if(i->type() == "Cone Glissant") {
+            try {
+                dynamic_cast<ConeSymGlisse &>(*i).update(n*dt);
+            }
+            catch(std::bad_cast& bc) {
+                std::cerr << "bad_cast caught: " << bc.what() << '\n';
+                std::cerr << "Est-ce que vous avez essayé de manuellement donner le type 'Cone Glissant' à une toupie?" << endl;
+            }
+        }
+        else integrator->integrateMultiple(n, *i, dt, t);
     }
 }
+
+
 
 
 

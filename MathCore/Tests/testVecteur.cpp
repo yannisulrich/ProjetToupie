@@ -78,7 +78,7 @@ int main() {
     //cout << 2*vect3 << endl;
     //vect1 += 2*vect3;
     //cout << vect1 + vect2 << endl;
-    Vecteur3 vect10(vect6+vect7);
+    //Vecteur3 vect10(vect6+vect7); // erreur, à laquelle on s'attend7777777
     //vect1[1] = 3;
     //cout << vect1 << endl;
     //cout << - vect1 << endl;

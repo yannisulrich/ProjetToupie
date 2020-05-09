@@ -65,7 +65,7 @@ public:
     friend std::ostream& operator<<(std::ostream&, const Matrice &);
 };
 
-[[nodiscard]] inline const Matrice operator+(Matrice mat1, const Matrice& mat2) { //TODO: find way to put these functions in source file
+[[nodiscard]] inline const Matrice operator+(Matrice mat1, const Matrice& mat2) {
     mat1 += mat2;
     return mat1;
 };

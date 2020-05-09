@@ -6,4 +6,3 @@ add_subdirectory(OpenGLViewer)
 
 add_library(GraphicsCore Dessinable.h SupportADessin.h)
 target_include_directories(GraphicsCore PUBLIC ..)
-#file(COPY OpenGLViewer/Models DESTINATION OpenGLViewer) #TODO solve with qrc file

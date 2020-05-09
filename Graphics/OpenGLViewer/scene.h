@@ -25,12 +25,13 @@
 #include "model.h"
 #include "Interface/System/Systeme.h"
 #include <memory>
+#include <QtCharts>
 
 class Toupie;
 class Integrateur;
 class Scene : public SupportADessin, QOpenGLFunctions
 {
-    friend class Systeme;
+    friend class GLWindow;
     friend class Simulator;
 public:
 
@@ -42,11 +43,7 @@ public:
 
 
     Systeme system;
-    //le déplacement du système
-    void deplacer(const double& dt, bool up,bool down,bool forw,bool back,bool left,bool right);
 
-    //Modification des angles
-    void DeltaPitchYaw(const float& p, const float& y);
 
 private:
     //le constructeur est privé pour être uniquement accessible depuis GLWidget
@@ -80,24 +77,28 @@ private:
     QVector3D r, v, a;
     QVector3D direction;
     QVector3D directionXZPlane;
+    //le déplacement du système
+    void deplacer(const double& dt, bool up,bool down,bool forw,bool back,bool left,bool right);
+
+    //Modification des angles
+    void DeltaPitchYaw(const float& p, const float& y);
 
     Model table = Model(QString("Graphics/OpenGLViewer/Models/table.3DS"),ModelLoader::RelativePath);
 
     float pitch = 0, yaw = 0;
-    unsigned int traceLength = 200;
-    std::vector<unsigned int> TraceGVAOs;
-    std::vector<unsigned int> TraceGVBOs;
-    std::vector<unsigned int> TraceAVAOs;
-    std::vector<unsigned int> TraceAVBOs;
 
-    unsigned int VBO, VAO;
+    float zoomFactor = 1;
+    void setZoomPerspectiveMatrix(const int& width, const int& height);
+    float scaleFactor = 1;
+    void setScaleFactor(const float& scale) {scaleFactor = scale;}
 
-    unsigned int TraceWriteCounter = 0;
+    float traceBuffer[600] = {};
+    std::vector<std::unique_ptr<QOpenGLVertexArrayObject> > QtGVAOs;
+    std::vector<std::unique_ptr<QOpenGLBuffer> > QtGVBOs;
+    std::vector<std::unique_ptr<QOpenGLVertexArrayObject> > QtAVAOs;
+    std::vector<std::unique_ptr<QOpenGLBuffer> > QtAVBOs;
 
-    std::vector<std::unique_ptr<QOpenGLVertexArrayObject> > QtVAOs;
-    std::vector<std::unique_ptr<QOpenGLBuffer> > QtVBOs;
-    QOpenGLVertexArrayObject m_vao; // Our Vertex Array Object
-    QOpenGLBuffer m_vvbo;  // Our vertice Vertex Buffer Object
+
 };
 
 

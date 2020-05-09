@@ -3,10 +3,11 @@
 #include <iostream>
 #include <utility>
 #include <QCursor>
+#include <algorithm>
 #include "GLWindow.h"
 
 using namespace std;
-GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*>  supports, QWidget* parent):
+GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*>  supports, const float& scaleFactor, QWidget* parent):
         QOpenGLWidget(parent), integSubDiv(integSubdiv), fps(fps), supports(std::move(supports))
 {
     if (fps == 0) throw std::logic_error("fps cannot be set to 0");
@@ -24,17 +25,23 @@ GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::v
     setMinimumSize(1200, 800); //taille minimale de la fenêtre
     chronometre = new QElapsedTimer(); //pour avoir les dt en nanosecondes
 
+    scene->setScaleFactor(scaleFactor);
+
+    plot1.setTitle("Toupie 1: Energie");
+
 }
 // ======================================================================
 GLWindow::~GLWindow() = default;
 // ======================================================================
 void GLWindow::initializeGL()
 {
-    chronometre->start();
+
     scene->initialize();
     for (auto support : supports) { //pour que dans les supports le premier point soit en t = 0;
         support->dessine(time, scene->system);
     }
+    chronometre->start();
+    plot1.show();
 }
 //les deux méthodes suivantes sont relativement triviales
 // ======================================================================
@@ -69,23 +76,6 @@ void GLWindow::timerTimeout()
     scene->deplacer(dt,up, down, forw, back, left, right);
 
     //puis on intègre le système
-    if(!paused) {
-        time +=  dt;
-        scene->integrateSystem(dt, integSubDiv);
-        if(TraceWriteCounter == 0) {
-            scene->system.addToTraces();
-            TraceWriteCounter = 4;
-        }
-        else --TraceWriteCounter;
-    }
-    //puis on met à jour le graphisme
-    update();
-
-    //puis les autres supports
-    for (auto support : supports) {
-        support->dessine(time, scene->system);
-    }
-
     everySixtyTimes += 1;
     if(everySixtyTimes == 60) {
         everySixtyTimes = 0;
@@ -95,8 +85,35 @@ void GLWindow::timerTimeout()
         }
         measuredFPS /= 60;
         measuredFPS = 1/measuredFPS;
-        qDebug() << "fps: " << measuredFPS;
+
     }
+    if(!paused) {
+        time +=  dt;
+        cout << "dt: " << dt << endl;
+        scene->integrateSystem(dt, integSubDiv);
+        if(TraceWriteCounter == 0) {
+            scene->system.addToTraces();
+            TraceWriteCounter = 4;
+        }
+        else --TraceWriteCounter;
+        //autres supports
+        for (auto support : supports) {
+            support->dessine(time, scene->system);
+        }
+        qDebug() << "fps: " << measuredFPS;
+
+        qDebug() << "E: " << scene->system.getToupies()[0]->returnIndicators()[0];
+        plot1.append(time, scene->system.getToupies()[0]->returnIndicators()[0]);
+        plot1.repaint();
+    }
+    //puis on met à jour le graphisme
+
+
+    update();
+
+
+
+
 }
 
 // ======================================================================
@@ -113,6 +130,7 @@ void GLWindow::pause()
         chronometre->restart();
     }
      */
+    if(paused) chronometre->start();
     paused = 1 - paused;
 
 }
@@ -165,7 +183,14 @@ void GLWindow::keyPressEvent(QKeyEvent* event)
         case Qt::Key_P:
             pause();
             break;
-
+        case Qt::Key_O:
+            scene->zoomFactor += 0.5;
+            scene->setZoomPerspectiveMatrix(width(), height());
+            break;
+        case Qt::Key_L:
+            scene->zoomFactor = std::max(0.5, scene->zoomFactor - 0.5);
+            scene->setZoomPerspectiveMatrix(width(), height());
+            break;
     };
 
     paintGL(); // redessine
@@ -225,7 +250,7 @@ void GLWindow::mouseMoveEvent(QMouseEvent* event)
 
             // Récupère le mouvement relatif par rapport à la dernière position de la souris
             QPointF d = event->pos() - lastMousePosition;
-            scene->DeltaPitchYaw(- sensitivity*float(d.y()), sensitivity*float(d.x()));
+            scene->DeltaPitchYaw(- sensitivity/scene->zoomFactor*float(d.y()), sensitivity/scene->zoomFactor*float(d.x()));
 
             lastMousePosition = event->pos();
             CursorSet = true;

@@ -418,7 +418,7 @@ void TippeTopFriction::accels( double t, double* p, double* pdot, void* data)
 
 int TippeTopFriction::update(const double& dt)
 {
-    lsoda.lsoda_update(accels, 10, all_params_i, all_params_live, &t, t + dt, &istate, data);
+    lsoda.lsoda_update(accels, 10, all_params_i, all_params_live, &t, t + dt, &istate, data,1e-4, 1e-6);
 
     P.setVect({all_params_live[1],all_params_live[2],all_params_live[3],all_params_live[4],all_params_live[5]});
     P_dot.setVect({all_params_live[6],all_params_live[7],all_params_live[8],all_params_live[9],all_params_live[10]});
@@ -458,10 +458,10 @@ Vecteur4 TippeTopFriction::returnIndicators() const {
 }
 
 QVector3D TippeTopFriction::translationModel() const {
-    return QVector3D(P_dot[3],R,P_dot[4]);
+    return QVector3D(P[3],R,P[4]);
 }
 
 void TippeTopFriction::addToTraces() {
-    TraceA.push_front({float(P[3]),0,float(P[4])});
+    TraceA.push_front({float(P[3]),0.0001,float(P[4])}); //le 0.0001 sert uniquement pour le rendering, pour ne pas être dans le sol. Il peut être ignoré.
     TraceG.push_front({float(P[3]-epsilon*cos(P[1])*sin(P[0])),float(R-epsilon*cos(P[0])),float(P[4]-epsilon*sin(P[1])*sin(P[0]))});
 }

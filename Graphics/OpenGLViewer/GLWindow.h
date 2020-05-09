@@ -17,12 +17,13 @@
 #include <QTimer> // Classe pour gérer le temps
 #include "scene.h"
 #include "Trace.h"
+#include "PlotWidget.h"
 class GLWindow : public QOpenGLWidget
-
 {
 Q_OBJECT
+
 public:
-    GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*> supports, QWidget* parent = nullptr);
+    GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*> supports, const float& scaleFactor, QWidget* parent = nullptr);
 
     ~GLWindow() override;
 
@@ -56,20 +57,20 @@ private:
     double prevTime = 0; //utilisé pour la mesure des FPS
     // objets à dessiner, faire évoluer
 
-    std::vector<SupportADessin*> supports; //supports supplémentaires (fichiers, texte..., autre chose?)
+    std::vector<SupportADessin*> supports; //supports supplémentaires (fichiers, texte, ...autre chose?)
 
 
     //deplacement:
     QPoint lastMousePosition;
 
     bool CapturedMouse = true;
-    bool paused = false;
+    bool paused = true; //start paused to have time to set up camera
 
     bool up = false, down = false, forw = false, back = false, left = false, right = false; //handles movement, when one is true there is movement in that direction
 
     bool MouseEntry = true; //to avoid jumping of view on mouse entry, either at start or from escaping
 
-    float sensitivity = 0.002;
+    float sensitivity = 0.0024;
 
 
     bool CursorSet = false;
@@ -81,6 +82,8 @@ private:
 
     unsigned int everySixtyTimes = 0;
     unsigned int TraceWriteCounter = 0;
+
+    PlotWidget plot1;
 
 };
 

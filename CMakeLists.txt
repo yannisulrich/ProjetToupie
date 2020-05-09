@@ -20,7 +20,7 @@ IF(WIN32)
     list(APPEND CMAKE_PREFIX_PATH ${customQtRoot})
 ENDIF()
 
-find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Gui LinguistTools REQUIRED)
 
 #test
 add_subdirectory(MathCore)

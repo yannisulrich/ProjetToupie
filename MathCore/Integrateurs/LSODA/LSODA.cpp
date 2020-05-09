@@ -288,7 +288,7 @@ void LSODA::lsoda(LSODA_ODE_SYSTEM_TYPE f, const size_t neq, vector<double> &y,
 {
     assert(tout > *t);
 
-    int mxstp0 = 500, mxhnl0 = 10;
+    int mxstp0 = 1000, mxhnl0 = 10;
 
     int iflag = 0, lenyh = 0, ihit = 0;
 

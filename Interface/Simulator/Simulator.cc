@@ -3,8 +3,8 @@
 #include <utility>
 #include "Simulator.h"
 
-Simulator::Simulator(const bool& graphics, Integrateur* integrateur, const int& fps, const int& integSubDiv, std::vector<SupportADessin*> supports):
-fps(fps), integSubDiv(integSubDiv), graphics(graphics), supports(std::move(supports)) {
+Simulator::Simulator(const bool& graphics, Integrateur* integrateur, const int& fps, const int& integSubDiv, std::vector<SupportADessin*> supports, const float& scaleFactor):
+fps(fps), integSubDiv(integSubDiv), graphics(graphics), supports(std::move(supports)), scaleFactor(scaleFactor) {
 
     if(graphics) {
         scene = new Scene(integrateur);
@@ -28,7 +28,7 @@ int Simulator::run() {
 
 
     QApplication a(argc, &argv[0]);
-    glwindow = new GLWindow(scene, fps, integSubDiv, supports);
+    glwindow = new GLWindow(scene, fps, integSubDiv, supports, scaleFactor);
     glwindow->show();
 
     return a.exec();

@@ -9,6 +9,7 @@
 #include "Toupies/ConeSymFixe.h"
 #include "Toupies/TippeTopFriction.h"
 #include "Toupies/TippeTopRolls.h"
+#include "Toupies/ConeSymGlisse.h"
 #include "LinAlg/VecteurArray.h"
 #include "Graphics/Dessinable.h"
 #include <memory>
@@ -42,6 +43,8 @@ public:
 
     void addSymModel(const Vecteur5 & P, const Vecteur5 & P_dot,
                         const double &I1, const double &I3, const double &m, const QString& path);
+
+    void addSymConeGlisse(const Vecteur5 &P, const Vecteur5 &P_dot, const double &r, const double &L3, const double &m, const double & muk);
 
     void addTippeTopRolls(const Vecteur5 & P, const Vecteur5 & P_dot,
                         const double &R, const double &h, const double &m);

@@ -1,32 +1,33 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindowL20898.ui'
+** Form generated from reading UI file 'mainwindowL17262.ui'
 **
 ** Created by: Qt User Interface Compiler version 4.8.7
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOWL20898_H
-#define MAINWINDOWL20898_H
+#ifndef MAINWINDOWL17262_H
+#define MAINWINDOWL17262_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QDoubleSpinBox>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenu>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTextBrowser>
-#include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QWidget>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QComboBox>
+#include <QDoubleSpinBox>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMainWindow>
+#include <QMenu>
+#include <QMenuBar>
+#include <QPushButton>
+#include <QSpacerItem>
+#include <QTableWidget>
+#include <QTextBrowser>
+#include <QVBoxLayout>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -76,9 +77,10 @@ public:
 
         verticalLayout->addWidget(Description);
 
+
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Maximum);
 
         horizontalLayout->addItem(horizontalSpacer_3);
 
@@ -210,7 +212,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Simulateur de Toupie", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Simulateur de Toupie", 0, 0));
         Description->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -227,22 +229,22 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Ensuite, lancez une simulation avec ces coefficients en appuyant sur un des buttons ci-dessous"
                         ":</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\342\200\242 La simulation graphique ouvre une fen\303\252tre externe avec une repr\303\251sentation en temps r\303\251el, 3D, de la toupie. </p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\342\200\242 La simulation sur fichier \303\251crit les valeurs dans un fichier.</p></body></html>", 0));
-        label->setText(QApplication::translate("MainWindow", "\316\270", 0));
-        label_2->setText(QApplication::translate("MainWindow", "\317\211", 0));
-        label_3->setText(QApplication::translate("MainWindow", "\316\274", 0));
-        label_4->setText(QApplication::translate("MainWindow", "Int\303\251grateur:", 0));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\342\200\242 La simulation sur fichier \303\251crit les valeurs dans un fichier.</p></body></html>", 0, 0));
+        label->setText(QApplication::translate("MainWindow", "\316\270", 0, 0));
+        label_2->setText(QApplication::translate("MainWindow", "\317\211", 0, 0));
+        label_3->setText(QApplication::translate("MainWindow", "\316\274", 0, 0));
+        label_4->setText(QApplication::translate("MainWindow", "Int\303\251grateur:", 0, 0));
         Integrator->clear();
         Integrator->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "Euler-Cromer", 0)
-         << QApplication::translate("MainWindow", "Newmark", 0)
-         << QApplication::translate("MainWindow", "Runge-Kutta d'ordre 4", 0)
+         << QApplication::translate("MainWindow", "Euler-Cromer", 0, 0)
+         << QApplication::translate("MainWindow", "Newmark", 0, 0)
+         << QApplication::translate("MainWindow", "Runge-Kutta d'ordre 4", 0, 0)
         );
-        pushButtonG->setText(QApplication::translate("MainWindow", "Lancer la simulation graphique!", 0));
-        pushButtonT->setText(QApplication::translate("MainWindow", "Lancer la simulation sur fichier", 0));
+        pushButtonG->setText(QApplication::translate("MainWindow", "Lancer la simulation graphique!", 0, 0));
+        pushButtonT->setText(QApplication::translate("MainWindow", "Lancer la simulation sur fichier", 0, 0));
         pathToFile->setText(QString());
-        pathToFile->setPlaceholderText(QApplication::translate("MainWindow", " chemin d'acc\303\250s au fichier, absolu ou relatif", 0));
-        menutest->setTitle(QApplication::translate("MainWindow", "test", 0));
+        pathToFile->setPlaceholderText(QApplication::translate("MainWindow", " chemin d'acc\303\250s au fichier, absolu ou relatif", 0, 0));
+        menutest->setTitle(QApplication::translate("MainWindow", "test", 0, 0));
     } // retranslateUi
 
 };
@@ -253,4 +255,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOWL20898_H
+#endif // MAINWINDOWL17262_H

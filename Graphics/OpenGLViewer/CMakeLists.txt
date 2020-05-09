@@ -10,7 +10,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Core Gui Widgets OpenGL REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Widgets OpenGL Charts REQUIRED)
 find_package(OpenGL REQUIRED)
 
 
@@ -29,12 +29,12 @@ add_library(OpenGLViewer
         model.cpp
         modelloader.cpp
         scene.cpp
-        GLWindow.cc shaders.qrc models.qrc)
+        GLWindow.cc shaders.qrc models.qrc PlotWidget.cc PlotWidget.h)
 
 
 target_include_directories(OpenGLViewer PUBLIC ${projectIncludes})
 IF(APPLE)
-    target_link_libraries(OpenGLViewer PUBLIC System MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimp/libassimp.5.0.1.dylib "-framework OpenGL")
+    target_link_libraries(OpenGLViewer PUBLIC System MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL Qt5::Charts ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimp/libassimp.5.0.1.dylib "-framework OpenGL")
 ENDIF()
 
 IF(WIN32)
