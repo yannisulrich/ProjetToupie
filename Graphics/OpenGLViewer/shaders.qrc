@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>model_fragment.frag</file>
         <file>model_fragment.vert</file>
+        <file>shadow.frag</file>
+        <file>shadow.vert</file>
         <file>trace_fragment_shader.glsl</file>
         <file>trace_vertex_shader.glsl</file>
     </qresource>

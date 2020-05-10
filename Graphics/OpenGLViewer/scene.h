@@ -39,7 +39,6 @@ public:
     void resize(int w, int h);
     void update();
     void integrateSystem(const double& dt, const int& integSubDiv);
-    void cleanup();
 
 
     Systeme system;
@@ -48,7 +47,7 @@ public:
 private:
     //le constructeur est privé pour être uniquement accessible depuis GLWidget
 
-    explicit Scene(Integrateur* integrateur): system(this, integrateur) {}
+    explicit Scene(Integrateur* integrateur, int screenw, int screenh): system(this, integrateur), SCR_WIDTH(screenw), SCR_HEIGHT(screenh) {}
     //chargement des shaders
     static void createShaderProgram(QOpenGLShaderProgram& shaderProgram, const QString& vShader, const QString& fShader);
 
@@ -57,9 +56,12 @@ private:
 
     //dessin des modèles de toupie
     void dessine(const Toupie&) const override;
+    void dessine(const Toupie & toupie, QOpenGLShaderProgram&) const;
 
     //dessin du système entier
     void dessine(const Systeme&) const override;
+    void dessine(const Systeme&, QOpenGLShaderProgram&) const;
+
     //dessin des modèles de toupie
     void dessine(const double &, const Toupie& toupie) const override {dessine(toupie);}
 
@@ -70,6 +72,7 @@ private:
     //mutable car de cette manière la méthode dessine(cont Toupie&) peut être const.
     mutable QOpenGLShaderProgram m_shaderProgram; //pour les modèles
     mutable QOpenGLShaderProgram t_shaderProgram; //pour les tracés de points
+    mutable QOpenGLShaderProgram shadow_shaderProgram; //pour les tracés de points
     QMatrix4x4 m_projection, m_view;
 
     LightInfo m_lightInfo;
@@ -83,22 +86,36 @@ private:
     //Modification des angles
     void DeltaPitchYaw(const float& p, const float& y);
 
-    Model table = Model(QString("Graphics/OpenGLViewer/Models/table.3DS"),ModelLoader::RelativePath);
+    Model table = Model(QString("Graphics/OpenGLViewer/Models/table.3DS"),ModelLoader::RelativePath); //le modèle de table
 
-    float pitch = 0, yaw = 0;
+    float pitch = 0, yaw = 0; //l'orientation dans l'espace, modifiable par la souris (via GLWindow, le parent)
 
-    float zoomFactor = 1;
-    void setZoomPerspectiveMatrix(const int& width, const int& height);
-    float scaleFactor = 1;
-    void setScaleFactor(const float& scale) {scaleFactor = scale;}
+    float zoomFactor = 1; //facteur de zoom
+    void setZoomPerspectiveMatrix(const int& width, const int& height); //nécessaire pour implémenter le zoom
+    float scaleFactor = 1; //facteur de "scale" des modèles, on agrandit les grandeurs dans les trois dimensions de l'espace
+    void setScaleFactor(const float& scale) {scaleFactor = scale;} //logique
 
-    float traceBuffer[600] = {};
-    std::vector<std::unique_ptr<QOpenGLVertexArrayObject> > QtGVAOs;
+
+
+    float traceBuffer[600] = {}; //nécessaire comme intermédiaire entre les deques utilisées pour les traces et le buffer
+    std::vector<std::unique_ptr<QOpenGLVertexArrayObject> > QtGVAOs; //Ces 4 objets sont des objets opengl qui contiennent l'information pour dessiner les points des traces
     std::vector<std::unique_ptr<QOpenGLBuffer> > QtGVBOs;
     std::vector<std::unique_ptr<QOpenGLVertexArrayObject> > QtAVAOs;
     std::vector<std::unique_ptr<QOpenGLBuffer> > QtAVBOs;
 
 
+    const unsigned int SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
+    unsigned int depthMapFBO;
+    unsigned int depthMap;
+
+    float borderColor[4] = { 1.0, 1.0, 1.0, 1.0 };
+
+    QVector3D lightPos;
+    QMatrix4x4 lightProjection, lightView;
+    QMatrix4x4 lightSpaceMatrix;
+    float near_plane = 1.0f, far_plane = 15.5f;
+
+    int SCR_WIDTH, SCR_HEIGHT;
 };
 
 

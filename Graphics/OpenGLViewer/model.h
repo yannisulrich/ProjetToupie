@@ -21,8 +21,6 @@ public:
 
     void loadNew(QString filepath, ModelLoader::PathType pathType, QString texturePath=""); //change loaded model. Only works if model is not initialized.
     void initialize(QOpenGLShaderProgram& m_shaderProgram);
-    void resize(int w, int h);
-    void update();
     void cleanup();
     void draw(QOpenGLShaderProgram& m_shaderProgram, QMatrix4x4 objectMatrix, QMatrix4x4 view, QMatrix4x4 projection);
 

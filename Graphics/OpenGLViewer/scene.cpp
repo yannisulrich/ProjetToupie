@@ -69,6 +69,36 @@ void Scene::initialize()
 
     table.initialize(m_shaderProgram);
 
+    QResource fragShaderShadow("://shadow.frag");
+    QResource vertShaderShadow("://shadow.vert");
+    createShaderProgram(shadow_shaderProgram, vertShaderShadow.absoluteFilePath(), fragShaderShadow.absoluteFilePath());
+    shadow_shaderProgram.setUniformValue("diffuseTexture", 0);
+    shadow_shaderProgram.setUniformValue("shadowMap", 1);
+
+    glGenFramebuffers(1, &depthMapFBO);
+    // create depth texture
+    glGenTextures(1, &depthMap);
+    glBindTexture(GL_TEXTURE_2D, depthMap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+    // attach depth texture as FBO's depth buffer
+    glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    lightPos = {-2.0f, 4.0f, -1.0f};
+    //lightProjection.perspective(0.78, (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane);
+    lightProjection.ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+    lightView.lookAt(lightPos, QVector3D(0.0f,0.0f,0.0f), QVector3D(0.0, 1.0, 0.0));
+    lightSpaceMatrix = lightProjection * lightView;
+
+    qDebug() << lightSpaceMatrix;
 
 }
 
@@ -110,6 +140,8 @@ void Scene::setupLightingAndMatrices()
 void Scene::resize(int w, int h)
 {
     glViewport( 0, 0, w, h );
+    SCR_WIDTH = w;
+    SCR_HEIGHT = h;
 
     m_projection.setToIdentity();
     m_projection.perspective(atan(tan(50.0 * 3.14159 / 360.0) / zoomFactor) * 360.0 / 3.14159, (float)w/h, .1f, 1000);
@@ -122,16 +154,45 @@ void Scene::update()
     // Clear buffers
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    shadow_shaderProgram.bind();
 
+    shadow_shaderProgram.setUniformValue("lightSpaceMatrix", lightSpaceMatrix);
+    shadow_shaderProgram.setUniformValue("shadowMap", 1);
+
+    glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    glActiveTexture(GL_TEXTURE0);
+    QMatrix4x4 tableMat;
+    tableMat.scale(0.003);
+    //table.draw(shadow_shaderProgram, tableMat, m_view, m_projection);
+    dessine(system, shadow_shaderProgram);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+    glViewport(0, 0, 2*SCR_WIDTH, 2*SCR_HEIGHT);
+    //glViewport(0, 0, 2*SCR_WIDTH, 2*SCR_HEIGHT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    shadow_shaderProgram.release();
 
     m_shaderProgram.bind();
-    m_shaderProgram.setUniformValue( "lightPosition", m_lightInfo.Position );
+    m_shaderProgram.setUniformValue("lightPos", lightPos);
+    //m_shaderProgram.setUniformValue( "lightPosition", m_lightInfo.Position );
     m_shaderProgram.setUniformValue( "lightIntensity", m_lightInfo.Intensity );
-    QMatrix4x4 tableMat;
-    tableMat.scale(0.1);
-    table.draw(m_shaderProgram, tableMat, m_view, m_projection);
+    m_shaderProgram.setUniformValue("lightSpaceMatrix", lightSpaceMatrix);
+
+
+    m_shaderProgram.setUniformValue("drawShadows", false);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, depthMap);
     dessine(system);
 
+    m_shaderProgram.setUniformValue("drawShadows", true);
+    table.draw(m_shaderProgram, tableMat, m_view, m_projection);
+
+
+    //glActiveTexture(GL_TEXTURE0);
     m_shaderProgram.release();
 
     t_shaderProgram.bind();
@@ -173,9 +234,7 @@ void Scene::update()
     //cout << "Time taken by function: " << duration.count() << " nanoseconds" << endl;
 
     t_shaderProgram.release();
-}
-void Scene::cleanup()
-{
+
 }
 //Angles d'euler. 28.647889... est le facteur de conversion entre radians et degrés.
 void Scene::dessine(const Toupie & toupie) const {
@@ -193,13 +252,31 @@ void Scene::dessine(const Toupie & toupie) const {
 
     toupie.model.draw(m_shaderProgram, modelMatrix, m_view, m_projection);
 }
+void Scene::dessine(const Toupie & toupie, QOpenGLShaderProgram& shader) const {
+    //transformation nécessaires pour les angles d'euler.
+    QMatrix4x4 modelMatrix;
+    modelMatrix.translate(scaleFactor*toupie.translationModel());
+    //Euler
+    modelMatrix.rotate(fmod(toupie.P.getCoord(1)*57.2958, 360.0), 0.0, 1.0, 0.0f);
+    modelMatrix.rotate(toupie.P.getCoord(0)*57.2958, 1.0f, 0.0, 0.0);
+    modelMatrix.rotate(fmod(toupie.P.getCoord(2)*57.2958, 360.0), 0.0, 1.0, 0.0f);
+    //Scaling suivant les dimensions, pour que la toupie ai l'air d'avoir les bonnes dimensions
+    modelMatrix.scale(scaleFactor*toupie.modelScale());
+    //translation verticale. Ceci est fait ici et pas dans les classes pour permettre à l'utilisateur de ne pas devoir centrer son modèle 3D en un point en particulier.
+    if (toupie.type() == "Conique Simple" || toupie.type() == "Cone Glissant") modelMatrix.translate(0,- toupie.model.bottomPoint(),0);
 
+    toupie.model.draw(shader, modelMatrix, m_view, m_projection);
+}
 void Scene::dessine(const Systeme & sys) const {
     for(auto i: sys.getToupies()) {
         if(i->hasModel()) dessine(*i);
     }
 }
-
+void Scene::dessine(const Systeme & sys, QOpenGLShaderProgram & shaderProgram) const {
+    for(auto i: sys.getToupies()) {
+        if(i->hasModel()) dessine(*i, shaderProgram);
+    }
+}
 void Scene::integrateSystem(const double &dt, const int& integSubDiv) {
     system.integrateMultiple(integSubDiv, dt/double(integSubDiv));
 }
@@ -227,8 +304,6 @@ void Scene::deplacer(const double &dt, bool up, bool down, bool forw, bool back,
     m_view.lookAt(r, r + direction, {0,1,0});
 
     a *= 0.5;
-
-
 }
 void Scene::DeltaPitchYaw(const float &p, const float &y)
 {

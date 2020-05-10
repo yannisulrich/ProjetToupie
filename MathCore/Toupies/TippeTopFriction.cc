@@ -437,8 +437,8 @@ Vecteur4 TippeTopFriction::returnIndicators() const {
     cosTheta = cos(P[0]);
     cosPsi = cos(P[1]);
     cosPhi = cos(P[2]);
-    sinTheta = cos(P[0]);
-    sinPsi = cos(P[1]);
+    sinTheta = sin(P[0]);
+    sinPsi = sin(P[1]);
     sinPhi = sin(P[2]);
     thetadot = P_dot[0];
     psidot = P_dot[1];

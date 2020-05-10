@@ -54,7 +54,7 @@ void Model::createBuffers()
 
     // Create a buffer and copy the vertex data to it
     m_normalBuffer.create();
-    m_normalBuffer.setUsagePattern( QOpenGLBuffer::StaticDraw );
+    m_normalBuffer.setUsagePattern( QOpenGLBuffer::DynamicDraw );
     m_normalBuffer.bind();
     m_normalBuffer.allocate( &(*normals)[0], normals->size() * sizeof( float ) );
 
@@ -62,7 +62,7 @@ void Model::createBuffers()
     {
         // Create a buffer and copy the vertex data to it
         m_textureUVBuffer.create();
-        m_textureUVBuffer.setUsagePattern( QOpenGLBuffer::StaticDraw );
+        m_textureUVBuffer.setUsagePattern( QOpenGLBuffer::DynamicDraw );
         m_textureUVBuffer.bind();
         int texSize = 0;
         for(int ii=0; ii<textureUV->size(); ++ii)
@@ -73,7 +73,7 @@ void Model::createBuffers()
 
     // Create a buffer and copy the index data to it
     m_indexBuffer.create();
-    m_indexBuffer.setUsagePattern( QOpenGLBuffer::StaticDraw );
+    m_indexBuffer.setUsagePattern( QOpenGLBuffer::DynamicDraw );
     m_indexBuffer.bind();
     m_indexBuffer.allocate( &(*indices)[0], indices->size() * sizeof( unsigned int ) );
 
@@ -125,7 +125,9 @@ void Model::setupMaterials()
 }
 void Model::draw(QOpenGLShaderProgram& m_shaderProgram, QMatrix4x4 objectMatrix, QMatrix4x4 view, QMatrix4x4 projection) {
     m_vao.bind();
+
     drawNode(m_shaderProgram, m_rootNode.data(), objectMatrix, view, projection);
+
     m_vao.release();
 }
 
@@ -138,8 +140,11 @@ void Model::drawNode(QOpenGLShaderProgram& m_shaderProgram, const Node *node, QM
     QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
     QMatrix4x4 mvp = projection * modelViewMatrix;
 
+    m_shaderProgram.setUniformValue("model", modelMatrix);
+
     m_shaderProgram.setUniformValue( "MV", modelViewMatrix );// Transforming to eye space
     m_shaderProgram.setUniformValue( "N", normalMatrix );    // Transform normal to Eye space
+
     m_shaderProgram.setUniformValue( "MVP", mvp );           // Matrix for transforming to Clip space
 
     // Draw each mesh in this node

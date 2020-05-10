@@ -28,21 +28,23 @@ protected:
 
     mutable double cosTheta = 0, sinTheta = 0, sinPsi = 0, cosPsi = 0,sinPhi = 0, cosPhi = 0, thetadot = 0, psidot = 0, phidot = 0, xdot = 0, ydot = 0; //utilisé pour le calcul des indicateurs
     //Ils sont mutable car modifiés pendant le calcul des indicateurs.
-    Vecteur5 P;
-    Vecteur5 P_dot;
+    Vecteur5 P; //paramètres
+    Vecteur5 P_dot; //dérivée des paramètres
 
-    Matrice Ig;
-    double m;
+    Matrice Ig; //matrice d'intertie en G
+    double m; //masse
 
     bool _hasModel = false; //la toupie a-t-elle un modèle 3D?
     QVector3D _modelScale {0,0,0}; //comment "Scale" le modèle en fonction des paramètres
 
 
-    std::string _type;
+    std::string _type; //le type de toupie
 
-    mutable Model model;
+    mutable Model model; //le modèle
 
-    Trace<200> TraceG;
+
+
+    Trace<200> TraceG; //les traces du centre de gravité et du point de contact.
     Trace<200> TraceA;
 public:
 

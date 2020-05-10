@@ -8,7 +8,7 @@
 
 using namespace std;
 GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*>  supports, const float& scaleFactor, QWidget* parent):
-        QOpenGLWidget(parent), integSubDiv(integSubdiv), fps(fps), supports(std::move(supports))
+        QOpenGLWidget(parent), integSubDiv(integSubdiv), fps(fps), supports(std::move(supports)), measuredFPS(60)
 {
     if (fps == 0) throw std::logic_error("fps cannot be set to 0");
 
@@ -22,13 +22,13 @@ GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::v
     QCursor c;
     c.setShape(Qt::BlankCursor); //cacher le cursor
     setCursor(c);
-    setMinimumSize(1200, 800); //taille minimale de la fenêtre
-    chronometre = new QElapsedTimer(); //pour avoir les dt en nanosecondes
+    setMinimumSize(1200, 800); //min. size
+    chronometre = new QElapsedTimer(); //For precise delta t measurements
 
     scene->setScaleFactor(scaleFactor);
 
     plot1.setTitle("Toupie 1: Energie");
-
+    qDebug() << "def buf: " << defaultFramebufferObject();
 }
 // ======================================================================
 GLWindow::~GLWindow() = default;
@@ -37,20 +37,20 @@ void GLWindow::initializeGL()
 {
 
     scene->initialize();
-    for (auto support : supports) { //pour que dans les supports le premier point soit en t = 0;
+    for (auto support : supports) { //so that the first point in text and file output is at time 0, to recover initial conditions
         support->dessine(time, scene->system);
     }
     chronometre->start();
     plot1.show();
 }
-//les deux méthodes suivantes sont relativement triviales
+//standard Qt OpenGL
 // ======================================================================
 void GLWindow::resizeGL(int width, int height)
 {
 
     scene->resize( width, height );
     glViewport( 0, 0, width, height);
-    paintGL();
+    timerTimeout();
 }
 
 
@@ -72,10 +72,9 @@ void GLWindow::timerTimeout()
     chronometre->start();
 
     DeltaTs.push_front(dt);
-    //On déplace d'abord la caméra
+    //Camera movement
     scene->deplacer(dt,up, down, forw, back, left, right);
 
-    //puis on intègre le système
     everySixtyTimes += 1;
     if(everySixtyTimes == 60) {
         everySixtyTimes = 0;
@@ -90,13 +89,15 @@ void GLWindow::timerTimeout()
     if(!paused) {
         time +=  dt;
         cout << "dt: " << dt << endl;
+        //system integration
         scene->integrateSystem(dt, integSubDiv);
+        //add points to traces every 5 frames
         if(TraceWriteCounter == 0) {
             scene->system.addToTraces();
-            TraceWriteCounter = 4;
+            TraceWriteCounter = 5;
         }
         else --TraceWriteCounter;
-        //autres supports
+        //other places to print data to
         for (auto support : supports) {
             support->dessine(time, scene->system);
         }
@@ -106,7 +107,7 @@ void GLWindow::timerTimeout()
         plot1.append(time, scene->system.getToupies()[0]->returnIndicators()[0]);
         plot1.repaint();
     }
-    //puis on met à jour le graphisme
+    //graphics update
 
 
     update();
@@ -119,22 +120,12 @@ void GLWindow::timerTimeout()
 // ======================================================================
 void GLWindow::pause()
 {
-    /*
-    if (!paused) {
-        // dans ce cas le timer ne tourne alors on l'arrête
-        timerTimeout(); //on actualise encore une fois la scène pour éviter la perte en précision du au temps restant sur le timer
-        timer->stop();
-    } else {
-        // le timer tourne pas alors on le lance
-        timer->start();
-        chronometre->restart();
-    }
-     */
-    if(paused) chronometre->start();
-    paused = 1 - paused;
+    if(!paused) timerTimeout(); //update one last time to be as close to correct with timings as possible.
+    if(paused) chronometre->start(); //restart timer if we were paused.
+    paused = 1 - paused; //switch state
 
 }
-
+//keyPressEvents and keyReleaseEvents are handled separately for AWSD Shift Space to allow smooth camera movement.
 void GLWindow::keyPressEvent(QKeyEvent* event)
 {
     switch (event->key()) {
@@ -230,8 +221,7 @@ void GLWindow::keyReleaseEvent(QKeyEvent *event)
     paintGL();
 }
 
-//La méthode suivante sert à tourner la vue. Pour que la souris ne quitte pas la fenêtre, on la recentre lorsqu'elle quitte
-//le rectangle rect()-MouseMargins
+//This method handles mouse movement. For the mouse not to leave the window, we have to keep it in the rectangle rect()- MouseMargins (cf GLWindow.h)
 // ======================================================================
 void GLWindow::mouseMoveEvent(QMouseEvent* event)
 {
@@ -239,7 +229,7 @@ void GLWindow::mouseMoveEvent(QMouseEvent* event)
     if((rect()-MouseMargins).contains(mapFromGlobal(QCursor::pos()))) {
         if(!CursorSet) {
 
-            //cette boucle if évite le saut de la vue lors de l'entrée de la souris
+            //avoid jumping on mouse entry
             if(MouseEntry)
             {
                 lastMousePosition = event->pos();
@@ -248,7 +238,7 @@ void GLWindow::mouseMoveEvent(QMouseEvent* event)
                 return;
             }
 
-            // Récupère le mouvement relatif par rapport à la dernière position de la souris
+            // Relative movement compared to last position
             QPointF d = event->pos() - lastMousePosition;
             scene->DeltaPitchYaw(- sensitivity/scene->zoomFactor*float(d.y()), sensitivity/scene->zoomFactor*float(d.x()));
 
@@ -262,7 +252,7 @@ void GLWindow::mouseMoveEvent(QMouseEvent* event)
     }
     else {
         CursorSet = true;
-        QCursor::setPos(mapToGlobal(QPoint(width() / 2, height() / 2))); //centrage du cursor
+        QCursor::setPos(mapToGlobal(QPoint(width() / 2, height() / 2))); //center cursor
 
         lastMousePosition = QPoint(width() / 2, height() / 2);
     }
