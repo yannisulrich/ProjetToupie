@@ -1,0 +1,10 @@
+#find_package(Qt5Core PATHS /usr/local/Qt-5.14.2/lib NO_DEFAULT_PATH)
+#find_package(Qt5 COMPONENTS OpenGL REQUIRED)
+message("1")
+message(${Qt5Core_INCLUDE_DIRS})
+message("2")
+find_package(OpenGL REQUIRED)
+
+add_library(QCustomPlot qcustomplot.cpp)
+target_include_directories(QCustomPlot PUBLIC ..)
+target_link_libraries(QCustomPlot Qt5::Core Qt5::OpenGL "-framework OpenGL")

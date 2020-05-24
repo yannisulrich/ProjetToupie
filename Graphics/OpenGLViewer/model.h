@@ -29,7 +29,8 @@ private:
     void createBuffers();
     void createAttributes(QOpenGLShaderProgram & m_shaderProgram);
     void setupMaterials();
-
+    unsigned int loadTexture(char const * path);
+    unsigned int textureID;
 
     void drawNode(QOpenGLShaderProgram& m_shaderProgram, const Node *node, QMatrix4x4 objectMatrix, const QMatrix4x4& view, const QMatrix4x4& projection);
     void setMaterialUniforms(QOpenGLShaderProgram& m_shaderProgram, MaterialInfo &mater);

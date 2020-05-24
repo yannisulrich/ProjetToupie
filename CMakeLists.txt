@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.15)
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.14" CACHE STRING "Minimum OS X deployment version" FORCE)
 project(ToupieMain LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops -Wall")
+set(CMAKE_CXX_FLAGS "-O2 -mavx2 -funroll-loops -Wall")
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -20,7 +21,9 @@ IF(WIN32)
     list(APPEND CMAKE_PREFIX_PATH ${customQtRoot})
 ENDIF()
 
-find_package(Qt5 COMPONENTS Widgets Gui LinguistTools REQUIRED)
+list(APPEND CMAKE_MODULE_PATH /usr/local/Qt-5.14.2/lib/cmake/)
+find_package(Qt5Widgets PATHS /usr/local/Qt-5.14.2/lib/cmake/Qt5Widgets/ NO_DEFAULT_PATHS REQUIRED)
+find_package(Qt5OpenGL PATHS /usr/local/Qt-5.14.2/lib/cmake/Qt5OpenGL/ NO_DEFAULT_PATHS REQUIRED)
 
 #test
 add_subdirectory(MathCore)
@@ -42,15 +45,11 @@ include_directories(${projectIncludes})
 add_executable(ToupieMain
           main.cpp
           mainwindow.cpp
-          mainwindow.h
-          mainwindow.ui
-        ui_mainwindow.h
-    ${TS_FILES}
+        helpimage.qrc
   )
 
 target_include_directories(ToupieMain PRIVATE ${projectIncludes})
-#target_link_libraries(ToupieMain PRIVATE MathCore)
-target_link_libraries(ToupieMain PRIVATE Qt5::Widgets)
+target_link_libraries(ToupieMain PRIVATE Qt5::Widgets MathCore OpenGLViewer Simulator)
 
 if(WIN32)
     # Finally, need to deploy Qt

@@ -21,20 +21,22 @@ private:
     vector<double> all_params_live;
 public:
     ConeSymGlisse(SupportADessin* support, const Vecteur5& P, const Vecteur5& P_dot,
-    const double &r, const double &L3, const double &m, const double &muk, const QString& modelpath = "", const bool& Custom = false):
+    const double &r, const double &L3, const double &m, const double &muk, const QString& modelpath = "", const bool& external = false):
     ConeSimple(support, P, P_dot, L3, r, m), m(m),  muk(muk), L3(L3), r(r), lambdaa(0.5*m*r*r), lambdat(0.25*m*r*r), data{m, muk, L3, lambdaa, lambdat}
     {
         all_params_i = {P.getCoord(0),P.getCoord(1),P.getCoord(2),P.getCoord(3),P.getCoord(4) , P_dot.getCoord(0),P_dot.getCoord(1),P_dot.getCoord(2),P_dot.getCoord(3),P_dot.getCoord(4)};
         _type = "Cone Glissant";
+
         if (!modelpath.isEmpty()) {
             _modelScale = {float(r), float(L3), float(r)};
-            model.loadNew("Graphics/OpenGLViewer/Models/" + modelpath, ModelLoader::RelativePath);
+            if (external) model.loadNew(modelpath, ModelLoader::AbsolutePath);
+            else model.loadNew("Graphics/OpenGLViewer/Models/" + modelpath, ModelLoader::RelativePath);
             _hasModel = true;
         }
-
         Ig(0,0) = lambdat;
         Ig(1,1) = lambdat;
         Ig(2,2) = lambdaa;
+
     }
 
     static void accels( double t, double* p, double* pdot, void* data);

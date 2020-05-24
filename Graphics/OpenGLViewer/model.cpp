@@ -1,7 +1,6 @@
 #include "model.h"
 #include <iostream>
 #include <stdexcept>
-
 using namespace std;
 Model::Model(QString filepath, ModelLoader::PathType pathType, QString texturePath) :
     m_indexBuffer(QOpenGLBuffer::IndexBuffer)
@@ -184,4 +183,3 @@ void Model::loadNew(QString filepath, ModelLoader::PathType pathType, QString te
     m_pathType = pathType;
     m_texturePath = std::move(texturePath);
 }
-

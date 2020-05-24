@@ -18,7 +18,7 @@ private:
 
 public:
 
-    TippeTopRolls(SupportADessin* support, const Vecteur5& P, const Vecteur5& P_dot, const double& R, const double& h, const double& m, const QString& modelpath = ""):
+    TippeTopRolls(SupportADessin* support, const Vecteur5& P, const Vecteur5& P_dot, const double& R, const double& h, const double& m, const QString& modelpath = "", const bool& external = false):
 
 
     Toupie(support, P, P_dot, Matrice(m/5*(2 - 5*(3*h*h/(4*R*(R + h)))*(3*h*h/(4*R*(R + h))))*R*R + 0.45*m*h*h*(h - R)/(h + R),
@@ -29,7 +29,8 @@ public:
         if(h >= 2*R) std::__throw_invalid_argument("Attempted to initialize Tippe Top  with h > R");
                 if (!modelpath.isEmpty()) {
                     _modelScale = {float(R), float(R), float(R)};
-                    model.loadNew("Graphics/OpenGLViewer/Models/" + modelpath, ModelLoader::RelativePath);
+                    if (external) model.loadNew(modelpath, ModelLoader::AbsolutePath);
+                    else model.loadNew("Graphics/OpenGLViewer/Models/" + modelpath, ModelLoader::RelativePath);
                     _hasModel = true;
                 }
     }

@@ -1,8 +1,8 @@
 set(CMAKE_EXE_LINKER_FLAGS "--verbose")
 add_executable(SimTest SimulatorTest.cc)
-target_link_libraries(SimTest PRIVATE Simulator System OpenGLViewer FileViewer TextViewer MathCore
-        ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libassimp.a
-        ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libIrrXML.a ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libzlibstatic.a)
+target_link_libraries(SimTest PRIVATE Simulator System OpenGLViewer FileViewer TextViewer MathCore)
+        #${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libassimp.a
+        #${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libIrrXML.a ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libzlibstatic.a)
 
 if(WIN32)
     # Finally, need to deploy Qt

@@ -1,9 +1,9 @@
-set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops")
+set(CMAKE_CXX_FLAGS "-O2 -mavx2 -funroll-loops")
 
 find_package(Threads REQUIRED)
 #find_package(OpenGL REQUIRED)
 
-find_package(Qt5 COMPONENTS Gui REQUIRED)
+#find_package(Qt5 COMPONENTS Gui REQUIRED)
 add_subdirectory(Tests)
 
 add_library(MathCore LinAlg/Matrice.cc LinAlg/VecteurArray.cc Toupies/Toupie.cc Toupies/ConeSimple.cc LinAlg/Vecteur.cc
@@ -15,8 +15,6 @@ add_library(MathCore LinAlg/Matrice.cc LinAlg/VecteurArray.cc Toupies/Toupie.cc 
 
 target_link_libraries(MathCore PUBLIC GraphicsCore OpenGLViewer)
 
-target_include_directories(MathCore PUBLIC LinAlg Toupies Integrateurs ${Qt5Gui_INCLUDE_DIRS})
+target_include_directories(MathCore PUBLIC LinAlg Toupies Integrateurs)# ${Qt5Gui_INCLUDE_DIRS})
 #include_directories(.. ../Interface Toupies P9)
-set_target_properties(MathCore PROPERTIES COMPILE_FLAGS "-O2" LINK_FLAGS "-pthread")
-
-
+set_target_properties(MathCore PROPERTIES COMPILE_FLAGS "-O2" LINK_FLAGS "-pthread") #pour la bibliothèque LSODA

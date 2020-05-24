@@ -25,7 +25,6 @@
 #include "model.h"
 #include "Interface/System/Systeme.h"
 #include <memory>
-#include <QtCharts>
 
 class Toupie;
 class Integrateur;
@@ -39,7 +38,7 @@ public:
     void resize(int w, int h);
     void update();
     void integrateSystem(const double& dt, const int& integSubDiv);
-
+    void setDevicePixelRatio(int pr) {devicePixelRatio = pr;}
 
     Systeme system;
 
@@ -47,7 +46,7 @@ public:
 private:
     //le constructeur est privé pour être uniquement accessible depuis GLWidget
 
-    explicit Scene(Integrateur* integrateur, int screenw, int screenh): system(this, integrateur), SCR_WIDTH(screenw), SCR_HEIGHT(screenh) {}
+    explicit Scene(Integrateur* integrateur, int screenw, int screenh, const QString& tableModelpath = "");
     //chargement des shaders
     static void createShaderProgram(QOpenGLShaderProgram& shaderProgram, const QString& vShader, const QString& fShader);
 
@@ -86,7 +85,7 @@ private:
     //Modification des angles
     void DeltaPitchYaw(const float& p, const float& y);
 
-    Model table = Model(QString("Graphics/OpenGLViewer/Models/table.3DS"),ModelLoader::RelativePath); //le modèle de table
+    Model* table; //le modèle de table
 
     float pitch = 0, yaw = 0; //l'orientation dans l'espace, modifiable par la souris (via GLWindow, le parent)
 
@@ -116,6 +115,8 @@ private:
     float near_plane = 1.0f, far_plane = 15.5f;
 
     int SCR_WIDTH, SCR_HEIGHT;
+    int devicePixelRatio = 1;
+
 };
 
 

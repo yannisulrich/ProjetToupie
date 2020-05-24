@@ -23,8 +23,8 @@ private:
 
 public:
 
-    TippeTopFriction(SupportADessin* support, const Vecteur5& P, const Vecteur5& P_dot, const double& R, const double& epsilon, const double& mu, const double& m, const QString& modelpath = ""):
-    /*
+    TippeTopFriction(SupportADessin* support, const Vecteur5& P, const Vecteur5& P_dot, const double& R, const double& epsilon, const double& mu, const double& m, const QString& modelpath = "", const bool& external = false):
+    /* //TODO: cleanup
      * Toupie(support, P, P_dot,
             Matrice(m/5*(2 - 5*(3*epsilon*epsilon/(4*R*(R + epsilon)))*(3*epsilon*epsilon/(4*R*(R + epsilon))))*R*R + 0.45*m*epsilon*epsilon*(epsilon - R)/(epsilon + R),
     m/5*(2 - 5*(3*epsilon*epsilon/(4*R*(R + epsilon)))*(3*epsilon*epsilon/(4*R*(R + epsilon))))*R*R + 0.45*m*epsilon*epsilon*(epsilon - R)/(epsilon + R),
@@ -52,10 +52,11 @@ public:
             data{R, epsilon, mu, m, Ig(0,0), Ig(2,2)}
     {
         all_params_i = {P.getCoord(0),P.getCoord(1),P.getCoord(2),P.getCoord(3),P.getCoord(4) , P_dot.getCoord(0),P_dot.getCoord(1),P_dot.getCoord(2),P_dot.getCoord(3),P_dot.getCoord(4)};
-        if(epsilon >= R) std::__throw_invalid_argument("Attempted to initialize Tippe Top  with epsilon > R");
+        if(epsilon >= R) std::__throw_invalid_argument("Attempted to initialize Tippe Top  with epsilon >= R");
         if (!modelpath.isEmpty()) {
             _modelScale = {float(R), float(R), float(R)};
-            model.loadNew("Graphics/OpenGLViewer/Models/" + modelpath, ModelLoader::RelativePath);
+            if (external) model.loadNew(modelpath, ModelLoader::AbsolutePath);
+            else model.loadNew("Graphics/OpenGLViewer/Models/" + modelpath, ModelLoader::RelativePath);
             _hasModel = true;
         }
     }
