@@ -1,5 +1,5 @@
 
-### Projet de simulation d'une Toupie
+# Projet de simulation d'une Toupie
 
 Authors: Tanish Patil and Yannis Ulrich.
 
@@ -7,7 +7,7 @@ Authors: Tanish Patil and Yannis Ulrich.
 
 A general step-by-step instruction list is available inside the app. Here is some additonal information about the tops, the integrators, the parameters, and the plotable values. 
 
-# Parameters
+### Parameters
 The three angles are Euler angles, and are to be given in radians. The other physical parameters have units indicated. The euler angles follow the convention on figure 1. Psi and phi may be switched from what you are used to. Apostrophes indicate time derivatives. This means that for a primitive test all parameters you really need to set are θ, i.e. how straight your top is, and φ', how fast you let it spin.
 
 <p align="center">
