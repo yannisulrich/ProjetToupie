@@ -8,7 +8,9 @@ Authors: Tanish Patil and Yannis Ulrich.
 A general step-by-step instruction list is available inside the app. Here is some additonal information about the parameters, and the plotable values. 
 
 # Parameters
-The three angles are Euler angles, and are to be given in radians. The other physical parameters have units indicated. The euler angles follow the convention on figure 1.
-![Euler angle convention](https://b7.pngbarn.com/png/682/676/euler-angles-yaw-aircraft-principal-axes-orientation-cartesian-coordinate-system-travel-roll-up-png-clip-art.png)
+The three angles are Euler angles, and are to be given in radians. The other physical parameters have units indicated. The euler angles follow the convention on figure 1. Psi and phi may be switched from what you are used to. 
 
 <img src="https://b7.pngbarn.com/png/682/676/euler-angles-yaw-aircraft-principal-axes-orientation-cartesian-coordinate-system-travel-roll-up-png-clip-art.png" width="48">
+<p align="center">
+  **Figure 1: Euler angle convention**
+  </p>
