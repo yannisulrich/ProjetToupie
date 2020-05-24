@@ -9,5 +9,5 @@ A general step-by-step instruction list is available inside the app. Here is som
 
 # Parameters
 The three angles are Euler angles, and are to be given in radians. The other physical parameters have units indicated. The euler angles follow the convention on figure 1.
-![Euler angle convention](https://b7.pngbarn.com/png/682/676/euler-angles-yaw-aircraft-principal-axes-orientation-cartesian-coordinate-system-travel-roll-up-png-clip-art.png = 300x)
+![Euler angle convention](https://b7.pngbarn.com/png/682/676/euler-angles-yaw-aircraft-principal-axes-orientation-cartesian-coordinate-system-travel-roll-up-png-clip-art.png = 300x300)
 *Figure 1: Euler angle convention*
