@@ -1,4 +1,4 @@
-
+set(CMAKE_CXX_FLAGS "-O2 -mavx2 -funroll-loops")
 cmake_minimum_required(VERSION 3.16)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -10,9 +10,15 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Core Gui Widgets OpenGL Charts REQUIRED)
-find_package(OpenGL REQUIRED)
+add_subdirectory(QCustomPlot)
 
+
+
+find_package(Qt5Widgets PATHS /usr/local/Qt-5.14.2/lib/cmake/Qt5Widgets NO_DEFAULT_PATH REQUIRED)
+find_package(Qt5Core PATHS /usr/local/Qt-5.14.2/lib/cmake/Qt5Core NO_DEFAULT_PATH REQUIRED)
+find_package(Qt5OpenGL PATHS /usr/local/Qt-5.14.2/lib/cmake/Qt5OpenGL NO_DEFAULT_PATH REQUIRED)
+find_package(Qt5Gui PATHS /usr/local/Qt-5.14.2/lib/cmake/Qt5Gui NO_DEFAULT_PATH REQUIRED)
+find_package(OpenGL REQUIRED)
 
 set(projectIncludes ${CMAKE_SOURCE_DIR}
         ${CMAKE_SOURCE_DIR}/MathCore
@@ -20,6 +26,7 @@ set(projectIncludes ${CMAKE_SOURCE_DIR}
         ${CMAKE_SOURCE_DIR}/Tests
         ${CMAKE_SOURCE_DIR}/Interface
         ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer
+        ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/QCustomPlot
         ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles
         ${Qt5Widgets_INCLUDE_DIRS}
         )
@@ -29,12 +36,14 @@ add_library(OpenGLViewer
         model.cpp
         modelloader.cpp
         scene.cpp
-        GLWindow.cc shaders.qrc models.qrc PlotWidget.cc PlotWidget.h)
+        GLWindow.cc shaders.qrc models.qrc QCustomPlot/PlotWindow.cc)
 
 
 target_include_directories(OpenGLViewer PUBLIC ${projectIncludes})
 IF(APPLE)
-    target_link_libraries(OpenGLViewer PUBLIC System MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL Qt5::Charts ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimp/libassimp.5.0.1.dylib "-framework OpenGL")
+    target_link_libraries(OpenGLViewer PUBLIC System MathCore System QCustomPlot Qt5::Widgets Qt5::OpenGL Qt5::Gui ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libassimpmac.a
+    ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libIrrXMLmac.a ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libzlibstaticmac.a)
+    #target_link_libraries(OpenGLViewer PUBLIC System MathCore System QCustomPlot ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimp/libassimp.5.0.1.dylib)
 ENDIF()
 
 IF(WIN32)

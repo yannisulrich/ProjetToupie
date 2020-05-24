@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <OpenGLViewer/GLWindow.h>
+#include <Graphics/OpenGLViewer/GLWindow.h>
 
 class Integrateur;
 class Simulator {
@@ -15,11 +15,14 @@ private:
 
     bool graphics;
     std::vector<SupportADessin*> supports;
+    bool running = false;
 
     float scaleFactor;
 public:
     Systeme* system; //pointer to scene->system, so that system can be publicly modified but scene can't.
-    Simulator(const bool& graphics, Integrateur* integrateur, const int& fps, const int& integSubDiv, std::vector<SupportADessin*> supports, const float& scaleFactor = 1,
+    Simulator(const bool& graphics, Integrateur* integrateur, const int& fps, const int& integSubDiv, std::vector<SupportADessin*> supports, const float& scaleFactor = 1, const QString& tablepath = "",
               const int & screenw = 1200, const int& screenh = 800);
-    int run();
+
+    int runNewApp();
+    void runInApp();
 };

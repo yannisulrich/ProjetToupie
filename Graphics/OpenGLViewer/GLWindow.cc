@@ -4,34 +4,75 @@
 #include <utility>
 #include <QCursor>
 #include <algorithm>
+#include <QCloseEvent>
 #include "GLWindow.h"
+#include <QPaintDevice>
+
 
 using namespace std;
-GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*>  supports, const float& scaleFactor, QWidget* parent):
+GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*>  supports, const float& scaleFactor, const int& dpr, QWidget* parent):
         QOpenGLWidget(parent), integSubDiv(integSubdiv), fps(fps), supports(std::move(supports)), measuredFPS(60)
 {
     if (fps == 0) throw std::logic_error("fps cannot be set to 0");
 
-
     scene = scene_;
+
+    scene->setDevicePixelRatio(dpr);
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, QOverload<>::of(&GLWindow::timerTimeout));
-    timer->start(1000.0/fps);
+    timer->start(int(1000.0/fps));
     setMouseTracking(true);
+    /*
     QCursor c;
     c.setShape(Qt::BlankCursor); //cacher le cursor
     setCursor(c);
+     */
     setMinimumSize(1200, 800); //min. size
     chronometre = new QElapsedTimer(); //For precise delta t measurements
 
     scene->setScaleFactor(scaleFactor);
 
-    plot1.setTitle("Toupie 1: Energie");
-    qDebug() << "def buf: " << defaultFramebufferObject();
+    setAttribute( Qt::WA_DeleteOnClose );
+
+    for(int i(0); i < scene->system.getToupies().size(); ++i) {
+        const Toupie* toupie = scene->system.getToupies()[i];
+        for(int j(0); j< 4; ++j) {
+            if (toupie->getPlots()[j]) {
+                plots.push_back(make_unique<PlotWindow>(this));
+                plotIndexes.emplace_back(i,j);
+                switch (j) {
+                    case 0: {
+                        plots.back()->setWindowTitle(QString::fromStdString("Top " + to_string(i+1) + ": Energy"));
+                        break;
+                    }
+                    case 1: {
+                        plots.back()->setWindowTitle(QString::fromStdString("Top " + to_string(i+1) + ": LAz"));
+                        break;
+                    }
+                    case 2: {
+                        plots.back()->setWindowTitle(QString::fromStdString("Top " + to_string(i+1) + ": LA3"));
+                        break;
+                    }
+                    case 3: {
+                        plots.back()->setWindowTitle(QString::fromStdString("Top " + to_string(i+1) + ": a · (ω x L)"));
+                        break;
+                    }
+                }
+
+
+
+
+
+            }
+        }
+    }
 }
 // ======================================================================
-GLWindow::~GLWindow() = default;
+GLWindow::~GLWindow() {
+    delete timer;
+    delete chronometre;
+}
 // ======================================================================
 void GLWindow::initializeGL()
 {
@@ -41,15 +82,20 @@ void GLWindow::initializeGL()
         support->dessine(time, scene->system);
     }
     chronometre->start();
-    plot1.show();
+
+    for(std::unique_ptr<PlotWindow>& plot : plots) {
+        plot->showNormal();
+        plot->raise();
+        plot->activateWindow();
+    }
 }
 //standard Qt OpenGL
 // ======================================================================
 void GLWindow::resizeGL(int width, int height)
 {
+    scene->resize(width, height);
 
-    scene->resize( width, height );
-    glViewport( 0, 0, width, height);
+    glViewport( 0, 0, devicePixelRatio()*width, devicePixelRatio()*height);
     timerTimeout();
 }
 
@@ -77,35 +123,34 @@ void GLWindow::timerTimeout()
 
     everySixtyTimes += 1;
     if(everySixtyTimes == 60) {
+        //FPS calculations
         everySixtyTimes = 0;
-        measuredFPS = 0;
-        for(int i(0); i < 60; ++i) {
-            measuredFPS += DeltaTs._points[i];
-        }
-        measuredFPS /= 60;
-        measuredFPS = 1/measuredFPS;
-
+        measuredFPS = 60/DeltaTs.sum();
+        cout << "fps: " << measuredFPS << endl;
     }
     if(!paused) {
         time +=  dt;
-        cout << "dt: " << dt << endl;
         //system integration
         scene->integrateSystem(dt, integSubDiv);
         //add points to traces every 5 frames
-        if(TraceWriteCounter == 0) {
+        if(everyFiveTimes == 0) {
             scene->system.addToTraces();
-            TraceWriteCounter = 5;
+            everyFiveTimes = 5;
+            //plot1.replot();
+
+            for(std::unique_ptr<PlotWindow>& plot : plots) plot->replot();
         }
-        else --TraceWriteCounter;
+        else --everyFiveTimes;
         //other places to print data to
         for (auto support : supports) {
             support->dessine(time, scene->system);
         }
-        qDebug() << "fps: " << measuredFPS;
 
-        qDebug() << "E: " << scene->system.getToupies()[0]->returnIndicators()[0];
-        plot1.append(time, scene->system.getToupies()[0]->returnIndicators()[0]);
-        plot1.repaint();
+        for(size_t i(0); i < plots.size(); ++i) {
+            plots[i]->append(time, scene->system.getToupies()[plotIndexes[i].first]->returnIndicators()[plotIndexes[i].second]);
+        }
+        //plot1.append(time, scene->system.getToupies()[0]->returnIndicators()[0]);
+        //plot1.repaint();
     }
     //graphics update
 
@@ -257,5 +302,6 @@ void GLWindow::mouseMoveEvent(QMouseEvent* event)
         lastMousePosition = QPoint(width() / 2, height() / 2);
     }
 }
-
-
+void GLWindow::closeEvent(QCloseEvent *event) {
+    for(auto& plot : plots) plot->deleteLater();
+}

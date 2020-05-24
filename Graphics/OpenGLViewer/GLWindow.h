@@ -9,6 +9,8 @@
  */
 
 #pragma once
+
+#include <utility>
 #include <QWidget>
 #include <QOpenGLWidget>        // Classe pour faire une fenêtre OpenGL
 #include <QOpenGLContext>
@@ -16,14 +18,14 @@
 #include <QTime>
 #include <QTimer> // Classe pour gérer le temps
 #include "scene.h"
-#include "Trace.h"
-#include "PlotWidget.h"
+#include "Toupies/Trace.h"
+#include "Graphics/OpenGLViewer/QCustomPlot/PlotWindow.h"
 class GLWindow : public QOpenGLWidget
 {
 Q_OBJECT
 
 public:
-    GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*> supports, const float& scaleFactor, QWidget* parent = nullptr);
+    GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*> supports, const float& scaleFactor, const int& dpr, QWidget* parent = nullptr);
 
     ~GLWindow() override;
 
@@ -33,14 +35,15 @@ protected:
 private:
 
     // Qt specific functions for drawing and input
-    void resizeGL(int width, int height)     override; //TODO: handle resize while sim. running
-    void paintGL()                           override;
-    void keyPressEvent(QKeyEvent* event)     override;
-    void timerEvent(QTimerEvent* event)      override {};
-    void keyReleaseEvent(QKeyEvent* event)   override;
-    void mouseMoveEvent(QMouseEvent* event)  override;
+    void resizeGL(int width, int height) override;
+    void paintGL() override;
+    void keyPressEvent(QKeyEvent* event) override;
+    void timerEvent(QTimerEvent* event) override {};
+    void keyReleaseEvent(QKeyEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void closeEvent(QCloseEvent *event) override;
 
-    // Internal function that contains what happens upon triggering of timer. We do not use Qts default to easily call it manually.
+    // Internal function that contains what happens upon triggering of timer. We do not use Qts default to easily call the event manually.
     void timerTimeout();
 
     //pause or unpause drawing of tops
@@ -63,7 +66,7 @@ private:
     //pour le deplacement de la souris
     QPoint lastMousePosition;
     float sensitivity = 0.0024; //mouse sensitivity
-    bool CapturedMouse = true; //pour éviter un saut lors de l'entrée de la souris
+    bool CapturedMouse = false; //pour éviter un saut lors de l'entrée de la souris
     bool CursorSet = false; //wether the cursor is invisible or not
 
     bool paused = true; //start paused to have time to set up camera
@@ -85,9 +88,14 @@ private:
 
     unsigned int everySixtyTimes = 0; //used to trigger events every 60 frames
 
-    unsigned int TraceWriteCounter = 0; //counter used to write to traces regularly but not every frame
+    unsigned int everyFiveTimes = 0; //used to trigger events every 5 frames
 
-    PlotWidget plot1;
+    PlotWindow plot1;
+
+    std::vector<std::unique_ptr<PlotWindow> > plots;
+    std::vector<std::pair<int,int> > plotIndexes;
+
+
 
 };
 

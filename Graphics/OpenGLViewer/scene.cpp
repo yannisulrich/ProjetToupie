@@ -2,11 +2,12 @@
 #include "Toupies/Toupie.h"
 #include <iostream>
 #include <QtCore>
-#include <QtCharts>
 #include <algorithm>
 #include <QOpenGLBuffer>
 #include <chrono>
 #include <memory>
+
+//TODO: retina ifdef
 using namespace std;
 using namespace std::chrono;
 void Scene::initialize()
@@ -67,7 +68,7 @@ void Scene::initialize()
 
     }
 
-    table.initialize(m_shaderProgram);
+    table->initialize(m_shaderProgram);
 
     QResource fragShaderShadow("://shadow.frag");
     QResource vertShaderShadow("://shadow.vert");
@@ -98,7 +99,6 @@ void Scene::initialize()
     lightView.lookAt(lightPos, QVector3D(0.0f,0.0f,0.0f), QVector3D(0.0, 1.0, 0.0));
     lightSpaceMatrix = lightProjection * lightView;
 
-    qDebug() << lightSpaceMatrix;
 
 }
 
@@ -139,7 +139,7 @@ void Scene::setupLightingAndMatrices()
 
 void Scene::resize(int w, int h)
 {
-    glViewport( 0, 0, w, h );
+    glViewport( 0, 0,devicePixelRatio*w, devicePixelRatio*h );
     SCR_WIDTH = w;
     SCR_HEIGHT = h;
 
@@ -149,7 +149,7 @@ void Scene::resize(int w, int h)
 
 void Scene::update()
 {
-    auto start = high_resolution_clock::now();
+
 
     // Clear buffers
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -165,14 +165,13 @@ void Scene::update()
     glClear(GL_DEPTH_BUFFER_BIT);
     glActiveTexture(GL_TEXTURE0);
     QMatrix4x4 tableMat;
-    tableMat.scale(0.003);
+    tableMat.scale(30);
     //table.draw(shadow_shaderProgram, tableMat, m_view, m_projection);
     dessine(system, shadow_shaderProgram);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
-    glViewport(0, 0, 2*SCR_WIDTH, 2*SCR_HEIGHT);
-    //glViewport(0, 0, 2*SCR_WIDTH, 2*SCR_HEIGHT);
+    glViewport(0, 0, devicePixelRatio*SCR_WIDTH, devicePixelRatio*SCR_HEIGHT);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shadow_shaderProgram.release();
 
@@ -189,47 +188,48 @@ void Scene::update()
     dessine(system);
 
     m_shaderProgram.setUniformValue("drawShadows", true);
-    table.draw(m_shaderProgram, tableMat, m_view, m_projection);
+    table->draw(m_shaderProgram, tableMat, m_view, m_projection);
 
-
-    //glActiveTexture(GL_TEXTURE0);
     m_shaderProgram.release();
 
+    //Traces des toupies
     t_shaderProgram.bind();
 
     t_shaderProgram.setUniformValue("projection", m_projection);
     t_shaderProgram.setUniformValue("vue_modele", m_view);
 
-    start = high_resolution_clock::now();
     t_shaderProgram.setUniformValue("traceColor", 1.0f, 0.5f, 0.2f, 1.0f);
+    auto start = high_resolution_clock::now();
+    auto stop = high_resolution_clock::now();
     for(size_t i(0); i < system.getToupies().size(); ++i) {
         //Trace G
-
+        std::deque<float> points(system.getToupies()[i]->TraceG.points());
         for (int j(0); j < system.getToupies()[i]->TraceG.size(); ++j)
-            traceBuffer[j] = scaleFactor * system.getToupies()[i]->TraceG._points[j];
+            traceBuffer[j] = scaleFactor * points[j];
         QtGVAOs[i]->bind();
         QtGVBOs[i]->bind();
         void *ptr = QtGVBOs[i]->map(QOpenGLBuffer::WriteOnly);
         memcpy(ptr, traceBuffer,
-               4 * system.getToupies()[i]->TraceG._points.size());
+               4 * system.getToupies()[i]->TraceG.size());
         QtGVBOs[i]->unmap();
-        glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceG._points.size() / 3);
+        glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceG.size() / 3);
     }
     t_shaderProgram.setUniformValue("traceColor", 0.0f, 1.0f, 0.6f, 1.0f);
     for(size_t i(0); i < system.getToupies().size(); ++i) {
         //Trace A
+        std::deque<float> points(system.getToupies()[i]->TraceA.points());
         for (int j(0); j < system.getToupies()[i]->TraceA.size(); ++j)
-            traceBuffer[j] = scaleFactor * system.getToupies()[i]->TraceA._points[j];
+            traceBuffer[j] = scaleFactor * points[j];
         QtAVAOs[i]->bind();
         QtAVBOs[i]->bind();
         void * ptr = QtAVBOs[i]->map(QOpenGLBuffer::WriteOnly);
         memcpy(ptr, traceBuffer,
-               4*system.getToupies()[i]->TraceA._points.size());
+               4*system.getToupies()[i]->TraceA.size());
         QtAVBOs[i]->unmap();
-        glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceA._points.size()/3);
+        glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceA.size()/3);
     }
 
-    auto stop = high_resolution_clock::now();
+
     auto duration = duration_cast<nanoseconds>(stop - start);
     //cout << "Time taken by function: " << duration.count() << " nanoseconds" << endl;
 
@@ -322,5 +322,13 @@ void Scene::DeltaPitchYaw(const float &p, const float &y)
 void Scene::setZoomPerspectiveMatrix(const int& width, const int& height) {
     m_projection.setToIdentity();
     m_projection.perspective(atan(tan(50.0 * 3.14159 / 360.0) / zoomFactor) * 360.0 / 3.14159, (float)width/height, .1f, 1000);
+}
+
+Scene::Scene(Integrateur *integrateur, int screenw, int screenh, const QString &tableModelpath):
+        system(this, integrateur), SCR_WIDTH(screenw), SCR_HEIGHT(screenh) {
+
+    if(tableModelpath.isEmpty()) table = new Model(QString("Graphics/OpenGLViewer/Models/tablesmall.DAE"),ModelLoader::RelativePath);
+    else table = new Model(tableModelpath,ModelLoader::AbsolutePath);
+
 }
 

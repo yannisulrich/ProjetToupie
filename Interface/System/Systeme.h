@@ -39,18 +39,18 @@ public:
     //plutôt que de permettre d'ajouter un pointeur sur une toupie déjà existante pour éviter les accès multiples. Ce n'est pas le seul moyen de l'atteindre,
     //mais cette méthode a l'avantage de donner une interface agréable à un possible utilisateur.
     void addSymCone(const Vecteur5 & P, const Vecteur5 & P_dot,
-                    const double &L, const double &R, const double &m);
+                    const double &L, const double &R, const double &m, const QString& modelpath = "");
 
-    void addSymModel(const Vecteur5 & P, const Vecteur5 & P_dot,
-                        const double &I1, const double &I3, const double &m, const QString& path);
+    //void addSymModel(const Vecteur5 & P, const Vecteur5 & P_dot,
+     //                   const double &I1, const double &I3, const double &m, const QString& path);
 
-    void addSymConeGlisse(const Vecteur5 &P, const Vecteur5 &P_dot, const double &r, const double &L3, const double &m, const double & muk);
+    void addSymConeGlisse(const Vecteur5 &P, const Vecteur5 &P_dot, const double &r, const double &L3, const double &m, const double & muk, const QString& modelpath = "");
 
     void addTippeTopRolls(const Vecteur5 & P, const Vecteur5 & P_dot,
-                        const double &R, const double &h, const double &m);
+                        const double &R, const double &h, const double &m, const QString& modelpath = "");
 
     void addTippeTopFriction(const Vecteur5 & P, const Vecteur5 & P_dot,
-                          const double &R, const double &h, const double& mu, const double &m);
+                          const double &R, const double &h, const double& mu, const double &m, const QString& modelpath = "");
 
 
     //une méthode qui retourne des pointeurs const sur les éléments de toupies. De cette manière un utilisateur ne pourrait pas par
@@ -73,5 +73,7 @@ public:
     void integrateMultiple(const size_t & n, const double& dt, const double& t = 0);
 
     void addToTraces() {for(auto i:toupies) i->addToTraces();}
+
+    void setPlotsForTop(int index, const bool& p1, const bool& p2, const bool& p3, const bool& p4);
 };
 
