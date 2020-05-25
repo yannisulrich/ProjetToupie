@@ -46,7 +46,7 @@ Finally, let us discuss the plottable values, which you may choose by ticking ap
 
 Now that all is set, here are the controls you may use during the simulation:
 <p align="center">
- <img src="./HelpGraphic.png" width="500">
+ <img src="./HelpGraphic.png">
  
  <b>Figure 1: Controls during simulation.</b><br>
   </p>
