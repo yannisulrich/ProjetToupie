@@ -12,7 +12,7 @@ The three angles are Euler angles, and are to be given in radians. The other phy
 
 <p align="center">
  <img src="https://b7.pngbarn.com/png/682/676/euler-angles-yaw-aircraft-principal-axes-orientation-cartesian-coordinate-system-travel-roll-up-png-clip-art.png" width="300">
- <img src="./EulerAnglesHelpImage.png" width="300">
+ <img src="./EulerAnglesImage.png" width="300">
  <b>Figure 1: Euler angle convention</b><br>
   </p>
 
