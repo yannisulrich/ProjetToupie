@@ -43,3 +43,10 @@ Finally, let us discuss the plottable values, which you may choose by ticking ap
 * L<sub>A3</sub> is the projection of the angular moment onto the top's rotational symetry axis. It is not plottable for the tippe tops, as it is not physically conserved for them.
 * L<sub>Az</sub> is the projection of the angular moment onto the vertical axis. It is not plottable for the slipping tippe top, as it's not conserved for it.
 * a \* (w x L) is a bit weird, and implemented because the project rules ask for it for the fixed cone. Its value is 0 when the top's rotational symetry axis, the angular momentum, and the angular velocity are coplanar. The issue is that for the cone, this is always the case, regardless of the precision of the simulation, so this parameter is effectively always 0. It is not defined for the other tops.
+
+Now that all is set, here are the controls you may use during the simulation:
+<p align="center">
+ <img src="./HelpGraphic.png" width="500">
+ 
+ <b>Figure 1: Controls during simulation.</b><br>
+  </p>
