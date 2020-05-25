@@ -27,7 +27,8 @@ The three angles are Euler angles, and are to be given in radians. The other phy
 
 <p align="center">
  <img src="./EulerAnglesImage.png" width="300">
- 
+ </p>
+ <p align="center">
  <b>Figure 1: Euler angle convention. Credit https://hepweb.ucsd.edu/ph110b/110b_notes/node31.html, modified.</b><br>
   </p>
 
@@ -47,6 +48,7 @@ Finally, let us discuss the plottable values, which you may choose by ticking ap
 Now that all is set, here are the controls you may use during the simulation:
 <p align="center">
  <img src="./HelpGraphic.png">
- 
+ </p>
+ <p align="center">
  <b>Figure 1: Controls during simulation.</b><br>
   </p>
