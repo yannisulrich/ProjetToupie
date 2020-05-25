@@ -50,5 +50,5 @@ Now that all is set, here are the controls you may use during the simulation:
  <img src="./HelpGraphic.png">
  </p>
  <p align="center">
- <b>Figure 1: Controls during simulation.</b><br>
+ <b>Figure 2: Controls during simulation.</b><br>
   </p>
