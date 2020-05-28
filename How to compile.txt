@@ -1,0 +1,30 @@
+La structure de ce projet est pas toute simple, voici donc les aspects importants pour compiler. Tout d'abord, c'est
+un projet cmake. L'essentiel est que cmake trouve Qt, et que la bibliothèque assimp soit "linkable". Le projet a été testé sur
+Windows et MacOS.
+Sur MacOS, le path de Qt devrait être accessible à cmake par défaut.
+Sur Windows, nous utilisons une variable cmake nommée customQtRoot qui fixe le root de Qt, C:\\Qt\\5.14.2\\mingw73_32 chez nous.
+
+Ce fichier possède aussi un "switch" pour un build statique, c'est à dire une variable STATIC_BUILD qui peut être 1 ou 0, suivant
+l'installation de Qt présente.
+
+A partir de ce fichier, il y a quelques sousdossiers qui contiennent des programmes ou bibliothèques cmake, ainsi que le programme
+principal dans le même dossier.
+
+Le deuxième point "difficile", est la bibliothèque assimp, que nous utilisons pour importer des modèles 3D. Nous fournissons des versions
+statiques pour macos-clang et le compilateur mingw-730_32 installé par Qt (c'est possiblement important que ce ne soit pas celui de mingw directement,
+pas sûr). Cela devrait rendre possible la compilation sous macos et windows.
+
+===== Dans le cas de compilation sous linux =====
+
+Il y a quelques points à ajuster. Premièrement, les cmakelists
+Graphics/OpenGLViewer/CMakeLists.txt
+Graphics/OpenGLViewer/QCustomPlot/CMakeLists.txt
+
+contiennent des conditions if "mac" ou if "windows" et ne vont pas lier les bibliothèques qt sur une autre platforme. L'ajustement
+devrait être très simple (je pense qu'une copie de la ligne pour windows marche, mais je ne sais pas).
+
+Le deuxième problème est la bibliothèque assimp. Nous n'avons pas pu en précompiler une version statique pour linux, manque
+d'environnement de développement linux. Assimp est installable sous linux par apt-get ou des équivalents. A mon avis il suffit
+donc de remplacer les bibliothèques assimp, zlib, et IrrXML par une dépendence de assimp et une commande find_package. Nous espèrons
+que cela marchera pour vous, en effet nous sommes conscients que assimp ne constitue pas quelque chose de demandé par le projet.
+Mais, nos modèles sont vraiment très cools alors ça vaut la peine ;)
