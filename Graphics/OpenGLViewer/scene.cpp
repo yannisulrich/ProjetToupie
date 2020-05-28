@@ -7,9 +7,16 @@
 #include <chrono>
 #include <memory>
 
-//TODO: retina ifdef
 using namespace std;
 using namespace std::chrono;
+Scene::Scene(Integrateur *integrateur, int screenw, int screenh, const QString &tableModelpath):
+        system(this, integrateur), SCR_WIDTH(screenw), SCR_HEIGHT(screenh) {
+
+    if(tableModelpath.isEmpty()) table = new Model(QString("Graphics/OpenGLViewer/Models/tablesmall.DAE"),ModelLoader::RelativePath);
+    else table = new Model(tableModelpath,ModelLoader::RelativePath);
+
+}
+
 void Scene::initialize()
 {
 
@@ -154,6 +161,7 @@ void Scene::update()
     // Clear buffers
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    //Shadows
     shadow_shaderProgram.bind();
 
     shadow_shaderProgram.setUniformValue("lightSpaceMatrix", lightSpaceMatrix);
@@ -175,6 +183,7 @@ void Scene::update()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shadow_shaderProgram.release();
 
+    //Real drawing
     m_shaderProgram.bind();
     m_shaderProgram.setUniformValue("lightPos", lightPos);
     //m_shaderProgram.setUniformValue( "lightPosition", m_lightInfo.Position );
@@ -324,11 +333,5 @@ void Scene::setZoomPerspectiveMatrix(const int& width, const int& height) {
     m_projection.perspective(atan(tan(50.0 * 3.14159 / 360.0) / zoomFactor) * 360.0 / 3.14159, (float)width/height, .1f, 1000);
 }
 
-Scene::Scene(Integrateur *integrateur, int screenw, int screenh, const QString &tableModelpath):
-        system(this, integrateur), SCR_WIDTH(screenw), SCR_HEIGHT(screenh) {
 
-    if(tableModelpath.isEmpty()) table = new Model(QString("Graphics/OpenGLViewer/Models/tablesmall.DAE"),ModelLoader::RelativePath);
-    else table = new Model(tableModelpath,ModelLoader::AbsolutePath);
-
-}
 

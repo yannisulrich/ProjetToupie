@@ -7,7 +7,7 @@ find_package(Threads REQUIRED)
 add_subdirectory(Tests)
 
 add_library(MathCore LinAlg/Matrice.cc LinAlg/VecteurArray.cc Toupies/Toupie.cc Toupies/ConeSimple.cc LinAlg/Vecteur.cc
-        Integrateurs/IntegrateurEulerCromer.cc LinAlg/constantes.cc Integrateurs/IntegrateurNewmark.cc
+        Integrateurs/IntegrateurEulerCromer.cc Integrateurs/IntegrateurNewmark.cc
         Integrateurs/IntegrateurRungeKutta.cc Toupies/ConeSymFixe.cc Toupies/ConeSymFixe.h
         Toupies/TippeTopRolls.cc Toupies/TippeTopRolls.h Toupies/TippeTopFriction.cc Toupies/TippeTopFriction.h
         Integrateurs/LSODA/LSODA.cpp

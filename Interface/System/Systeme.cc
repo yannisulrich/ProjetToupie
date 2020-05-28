@@ -38,7 +38,7 @@ void Systeme::addSymModel(const Vecteur5 &P, const Vecteur5 &P_dot, const double
 }
  */
 void Systeme::addTippeTopRolls(const Vecteur5 &P, const Vecteur5 &P_dot, const double &R, const double &h, const double &m, const QString& modelpath) {
-    if(modelpath.isEmpty()) toupies.push_back(new TippeTopRolls(support, P, P_dot, R, h, m, "tippetopfull.DAE"));
+    if(modelpath.isEmpty()) toupies.push_back(new TippeTopRolls(support, P, P_dot, R, h, m, "tippetophollow.DAE"));
     else toupies.push_back(new TippeTopRolls(support, P, P_dot, R, h, m, modelpath, true));
 }
 void Systeme::addTippeTopFriction(const Vecteur5 &P, const Vecteur5 &P_dot, const double &R, const double &epsilon, const double & mu, const double &m, const QString& modelpath) {

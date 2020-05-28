@@ -1,5 +1,4 @@
-#ifndef MODELLOADER_H
-#define MODELLOADER_H
+#pragma once
 
 #include <string>
 #include <QMatrix4x4>
@@ -53,7 +52,7 @@ public:
         AbsolutePath
     };
 
-    ModelLoader(bool transformToUnitCoordinates = true);
+    explicit ModelLoader(bool transformToUnitCoordinates = true);
     bool Load(QString filePath, PathType pathType);
     void getBuffer(QVector<float> **vertices, QVector<float> **normals,
                    QVector<unsigned int> **indices);
@@ -93,4 +92,3 @@ private:
     bool m_transformToUnitCoordinates;
 };
 
-#endif // MODELLOADER_H
