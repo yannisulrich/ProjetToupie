@@ -42,4 +42,4 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ### QCustomPlot ###
 
-QCustomPlotis licensed under the Attribution-NonCommercial-ShareAlike 3.0 Unported [license](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+QCustomPlot is licensed under the Attribution-NonCommercial-ShareAlike 3.0 Unported [license](https://creativecommons.org/licenses/by-nc-sa/3.0/).
