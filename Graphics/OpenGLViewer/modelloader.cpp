@@ -4,7 +4,8 @@
 #include <assimp/Importer.hpp>
 #include <QDebug>
 #include <QResource>
-
+#include <utility>
+#include <mach-o/dyld.h>
 
 ModelLoader::ModelLoader(bool transformToUnitCoordinates) :
     m_transformToUnitCoordinates(transformToUnitCoordinates)
@@ -15,7 +16,7 @@ ModelLoader::ModelLoader(bool transformToUnitCoordinates) :
 // look for file using relative path
 QString findFile(QString relativeFilePath, int scanDepth)
 {
-    QString str = relativeFilePath;
+    QString str = std::move(relativeFilePath);
     for(int ii=-1; ii<scanDepth; ++ii)
     {
         if(QFile::exists(str))
@@ -29,11 +30,17 @@ QString findFile(QString relativeFilePath, int scanDepth)
 
 bool ModelLoader::Load(QString filePath, PathType pathType)
 {
+    char path[1024];
+    uint32_t size = sizeof(path);
+    if (_NSGetExecutablePath(path, &size) == 0)
+        printf("executable path is %s\n", path);
+    else
+        printf("buffer too small; need size %u\n", size);
 
     Q_INIT_RESOURCE(models);
     QResource modelResource(filePath);
 
-
+    qDebug() << "path: " << filePath;
     QString l_filePath;
     if (pathType == RelativePath)
         l_filePath = findFile(filePath, 5);
@@ -41,7 +48,7 @@ bool ModelLoader::Load(QString filePath, PathType pathType)
         l_filePath = filePath;
 
     Assimp::Importer importer;
-
+    qDebug() << "lpath: " << l_filePath;
     /*
     const aiScene* scene = importer.ReadFile( l_filePath.toStdString(),
             aiProcess_GenSmoothNormals      |

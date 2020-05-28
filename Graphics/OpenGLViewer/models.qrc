@@ -3,5 +3,6 @@
         <file>Models/cone.dae</file>
         <file>Models/blankmodel.dae</file>
         <file>Models/BakuMeaGan.dae</file>
+        <file>Models/tabledefault.DAE</file>
     </qresource>
 </RCC>

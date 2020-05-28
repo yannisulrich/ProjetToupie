@@ -24,6 +24,7 @@ ENDIF()
 list(APPEND CMAKE_MODULE_PATH /usr/local/Qt-5.14.2/lib/cmake/)
 find_package(Qt5Widgets PATHS /usr/local/Qt-5.14.2/lib/cmake/Qt5Widgets/ NO_DEFAULT_PATHS REQUIRED)
 find_package(Qt5OpenGL PATHS /usr/local/Qt-5.14.2/lib/cmake/Qt5OpenGL/ NO_DEFAULT_PATHS REQUIRED)
+find_package(Qt5Xml PATHS /usr/local/Qt-5.14.2/lib/cmake/Qt5Xml/ NO_DEFAULT_PATHS REQUIRED)
 
 #test
 add_subdirectory(MathCore)
@@ -45,11 +46,10 @@ include_directories(${projectIncludes})
 add_executable(ToupieMain
           main.cpp
           mainwindow.cpp
-        helpimage.qrc
-  )
+        XMLReader.cc XMLReader.h)
 
 target_include_directories(ToupieMain PRIVATE ${projectIncludes})
-target_link_libraries(ToupieMain PRIVATE Qt5::Widgets MathCore OpenGLViewer Simulator)
+target_link_libraries(ToupieMain PRIVATE Qt5::Widgets Qt5::Xml MathCore OpenGLViewer Simulator)
 
 if(WIN32)
     # Finally, need to deploy Qt

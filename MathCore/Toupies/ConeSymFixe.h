@@ -4,7 +4,6 @@
 
 #pragma once
 #include "ConeSimple.h"
-#include "LinAlg/constantes.h"
 #include <iostream>
 #include <QString>
 #include <QResource>
@@ -18,7 +17,7 @@ public:
 
         if (!modelpath.isEmpty()) {
             _modelScale = {float(R), float(L), float(R)};
-            if (external) model.loadNew(modelpath, ModelLoader::AbsolutePath);
+            if (external) model.loadNew(modelpath, ModelLoader::RelativePath);
             else model.loadNew("Graphics/OpenGLViewer/Models/" + modelpath, ModelLoader::RelativePath);
             _hasModel = true;
         }

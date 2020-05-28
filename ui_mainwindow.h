@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindowOImtYh.ui'
+** Form generated from reading UI file 'mainwindowphXpAk.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.14.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOWOIMTYH_H
-#define MAINWINDOWOIMTYH_H
+#ifndef MAINWINDOWPHXPAK_H
+#define MAINWINDOWPHXPAK_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -33,6 +33,11 @@ public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QTextBrowser *Information;
+    QHBoxLayout *horizontalLayout_2;
+    QSpacerItem *horizontalSpacer_31;
+    QPushButton *pushButton_saveconfig;
+    QPushButton *pushButton_loadconfig;
+    QSpacerItem *horizontalSpacer_34;
     QHBoxLayout *TopandIntegrator;
     QSpacerItem *horizontalSpacer_10;
     QLabel *label_5;
@@ -45,10 +50,12 @@ public:
     QSpacerItem *horizontalSpacer_11;
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_6;
+    QComboBox *comboBox_tablemodel;
     QLineEdit *pathToTableModel;
     QPushButton *TableModelBrowser;
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_15;
+    QComboBox *comboBox_topmodel;
     QLineEdit *pathToTopModel;
     QPushButton *TopModelBrowser;
     QLabel *label_initvalues;
@@ -148,7 +155,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1034, 833);
+        MainWindow->resize(1032, 836);
         MainWindow->setUnifiedTitleAndToolBarOnMac(true);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
@@ -164,6 +171,29 @@ public:
         Information->setMinimumSize(QSize(0, 300));
 
         verticalLayout->addWidget(Information);
+
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalSpacer_31 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer_31);
+
+        pushButton_saveconfig = new QPushButton(centralwidget);
+        pushButton_saveconfig->setObjectName(QString::fromUtf8("pushButton_saveconfig"));
+
+        horizontalLayout_2->addWidget(pushButton_saveconfig);
+
+        pushButton_loadconfig = new QPushButton(centralwidget);
+        pushButton_loadconfig->setObjectName(QString::fromUtf8("pushButton_loadconfig"));
+
+        horizontalLayout_2->addWidget(pushButton_loadconfig);
+
+        horizontalSpacer_34 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer_34);
+
+
+        verticalLayout->addLayout(horizontalLayout_2);
 
         TopandIntegrator = new QHBoxLayout();
         TopandIntegrator->setObjectName(QString::fromUtf8("TopandIntegrator"));
@@ -235,9 +265,23 @@ public:
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         label_6 = new QLabel(centralwidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy1);
+        label_6->setMinimumSize(QSize(80, 0));
         label_6->setAlignment(Qt::AlignCenter);
 
         horizontalLayout_3->addWidget(label_6);
+
+        comboBox_tablemodel = new QComboBox(centralwidget);
+        comboBox_tablemodel->addItem(QString());
+        comboBox_tablemodel->addItem(QString());
+        comboBox_tablemodel->setObjectName(QString::fromUtf8("comboBox_tablemodel"));
+        comboBox_tablemodel->setMinimumSize(QSize(120, 0));
+
+        horizontalLayout_3->addWidget(comboBox_tablemodel);
 
         pathToTableModel = new QLineEdit(centralwidget);
         pathToTableModel->setObjectName(QString::fromUtf8("pathToTableModel"));
@@ -259,9 +303,19 @@ public:
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         label_15 = new QLabel(centralwidget);
         label_15->setObjectName(QString::fromUtf8("label_15"));
+        label_15->setMinimumSize(QSize(80, 0));
         label_15->setAlignment(Qt::AlignCenter);
 
         horizontalLayout_4->addWidget(label_15);
+
+        comboBox_topmodel = new QComboBox(centralwidget);
+        comboBox_topmodel->addItem(QString());
+        comboBox_topmodel->addItem(QString());
+        comboBox_topmodel->addItem(QString());
+        comboBox_topmodel->setObjectName(QString::fromUtf8("comboBox_topmodel"));
+        comboBox_topmodel->setMinimumSize(QSize(120, 0));
+
+        horizontalLayout_4->addWidget(comboBox_topmodel);
 
         pathToTopModel = new QLineEdit(centralwidget);
         pathToTopModel->setObjectName(QString::fromUtf8("pathToTopModel"));
@@ -281,11 +335,11 @@ public:
 
         label_initvalues = new QLabel(centralwidget);
         label_initvalues->setObjectName(QString::fromUtf8("label_initvalues"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(label_initvalues->sizePolicy().hasHeightForWidth());
-        label_initvalues->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(label_initvalues->sizePolicy().hasHeightForWidth());
+        label_initvalues->setSizePolicy(sizePolicy2);
         label_initvalues->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label_initvalues);
@@ -537,8 +591,8 @@ public:
         label_physparam = new QLabel(centralwidget);
         label_physparam->setObjectName(QString::fromUtf8("label_physparam"));
         label_physparam->setEnabled(true);
-        sizePolicy1.setHeightForWidth(label_physparam->sizePolicy().hasHeightForWidth());
-        label_physparam->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(label_physparam->sizePolicy().hasHeightForWidth());
+        label_physparam->setSizePolicy(sizePolicy2);
         label_physparam->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label_physparam);
@@ -648,8 +702,8 @@ public:
 
         label_advopt = new QLabel(centralwidget);
         label_advopt->setObjectName(QString::fromUtf8("label_advopt"));
-        sizePolicy1.setHeightForWidth(label_advopt->sizePolicy().hasHeightForWidth());
-        label_advopt->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(label_advopt->sizePolicy().hasHeightForWidth());
+        label_advopt->setSizePolicy(sizePolicy2);
         label_advopt->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label_advopt);
@@ -843,32 +897,34 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Simulateur de Toupie", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Top simulator", nullptr));
         Information->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">Various top simulator - version 1.0</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt;\">Various tops simulator - version 1.0</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">Please begin by selecting the top you would like to simulate. The appropriate parameters will activate.</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; mar"
-                        "gin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; ma"
+                        "rgin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">Then, if you chose &quot;Simple fixed cone&quot; or &quot;Rolling tippe top&quot;, please choose an integrator from the list. For the other two tops, the only implemented integrator capable of solving the equations is the adaptive LSODA algorithm.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">You can then choose models to use for simulation. Example models are shipped with the app.</span></p>\n"
-"<p style=\"-qt-paragraph-type:empt"
-                        "y; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:emp"
+                        "ty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">Next, set physical and initial parameters for top. Angles are in radians. See documentation for exact meaning of parameters.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">Finally, you may modify the advanced options:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\342\200\242 Model scale sets a multiplier"
-                        " by which all model sizes are multiplied. It is recommended for best visibility that the product of either radius or length multiplied by model scale is between 0.1 and 1.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\342\200\242 Model scale sets a multiplie"
+                        "r by which all model sizes are multiplied. It is recommended for best visibility that the product of either radius or length multiplied by model scale is between 0.1 and 1.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\342\200\242 FPS target sets a </span><span style=\" font-size:14pt; font-style:italic;\">Frames Per Second </span><span style=\" font-size:14pt;\">target. Note that it will be limited by your monitors refresh rate. </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\342\200\242 Integrator precision is a parameter that only affects the &quot;Simple fixed cone&quot; and &quot;Rolling tippe top&quot; tops. If the time between two frames is \316\224t, the time step of the used integrator will be (\316\224t)/(Integrator precision). The recommended value rarely ne"
-                        "eds to be modified. </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\342\200\242 Integrator precision is a parameter that only affects the &quot;Simple fixed cone&quot; and &quot;Rolling tippe top&quot; tops. If the time between two frames is \316\224t, the time step of the used integrator will be (\316\224t)/(Integrator precision). The recommended value rarely n"
+                        "eeds to be modified. </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\342\200\242 Finally, you may choose to write the data created to a file. You must specify an absolute file path.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">For controls to use during simulation, press the help button.</span></p></body></html>", nullptr));
+        pushButton_saveconfig->setText(QCoreApplication::translate("MainWindow", "Save configuration", nullptr));
+        pushButton_loadconfig->setText(QCoreApplication::translate("MainWindow", "Load configuration", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "Type of top", nullptr));
         TopSelection->setItemText(0, QCoreApplication::translate("MainWindow", "Simple fixed cone", nullptr));
         TopSelection->setItemText(1, QCoreApplication::translate("MainWindow", "Rolling tippe top", nullptr));
@@ -881,11 +937,18 @@ public:
         Integrator->setItemText(2, QCoreApplication::translate("MainWindow", "Runge-Kutta order 4", nullptr));
 
         label_IntegratorE->setText(QCoreApplication::translate("MainWindow", "e", nullptr));
-        label_6->setText(QCoreApplication::translate("MainWindow", "Path to table model", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "Table model", nullptr));
+        comboBox_tablemodel->setItemText(0, QCoreApplication::translate("MainWindow", "Basic Table", nullptr));
+        comboBox_tablemodel->setItemText(1, QCoreApplication::translate("MainWindow", "Custom...", nullptr));
+
         pathToTableModel->setText(QString());
         pathToTableModel->setPlaceholderText(QCoreApplication::translate("MainWindow", "Table model path", nullptr));
         TableModelBrowser->setText(QCoreApplication::translate("MainWindow", "Browse...", nullptr));
-        label_15->setText(QCoreApplication::translate("MainWindow", "Path to top model  ", nullptr));
+        label_15->setText(QCoreApplication::translate("MainWindow", "Top model", nullptr));
+        comboBox_topmodel->setItemText(0, QCoreApplication::translate("MainWindow", "Cone", nullptr));
+        comboBox_topmodel->setItemText(1, QCoreApplication::translate("MainWindow", "Tippe Top", nullptr));
+        comboBox_topmodel->setItemText(2, QCoreApplication::translate("MainWindow", "Custom...", nullptr));
+
         pathToTopModel->setText(QString());
         pathToTopModel->setPlaceholderText(QCoreApplication::translate("MainWindow", "Top model path", nullptr));
         TopModelBrowser->setText(QCoreApplication::translate("MainWindow", "Browse...", nullptr));
@@ -905,7 +968,7 @@ public:
         label_13->setText(QCoreApplication::translate("MainWindow", "y'", nullptr));
         label_19->setText(QCoreApplication::translate("MainWindow", "m/s", nullptr));
         label_physparam->setText(QCoreApplication::translate("MainWindow", "Physical parameters", nullptr));
-        massLabel->setText(QCoreApplication::translate("MainWindow", "m", nullptr));
+        massLabel->setText(QCoreApplication::translate("MainWindow", "mass", nullptr));
         label_25->setText(QCoreApplication::translate("MainWindow", "Kg", nullptr));
         physParam2->setText(QCoreApplication::translate("MainWindow", "R", nullptr));
         label_23->setText(QCoreApplication::translate("MainWindow", "m", nullptr));
@@ -939,4 +1002,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOWOIMTYH_H
+#endif // MAINWINDOWPHXPAK_H
