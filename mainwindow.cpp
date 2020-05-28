@@ -6,7 +6,6 @@
 //#include "../../../../../../../usr/local/Qt-5.14.2/include/QtWidgets/QtWidgets"
 //#include "../../../../../../../usr/local/Qt-5.14.2/include/QtCore/qnamespace.h"
 #include <QDesktopServices>
-#include <mach-o/dyld.h>
 #include <QDir>
 
 

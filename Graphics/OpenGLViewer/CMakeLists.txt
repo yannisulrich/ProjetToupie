@@ -6,12 +6,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+add_subdirectory(QCustomPlot)
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-add_subdirectory(QCustomPlot)
 
+
+message("1")
+message(${Qt5Widgets_INCLUDE_DIRS})
 
 
 find_package(Qt5Widgets PATHS /usr/local/Qt-5.14.2/lib/cmake/Qt5Widgets NO_DEFAULT_PATH REQUIRED)
@@ -47,6 +51,6 @@ IF(APPLE)
 ENDIF()
 
 IF(WIN32)
-    target_link_libraries(OpenGLViewer PUBLIC MathCore System Qt5::Core Qt5::Gui Qt5::Widgets Qt5::OpenGL opengl32 ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libassimp.a
-            ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libIrrXML.a ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libzlibstatic.a)
+    target_link_libraries(OpenGLViewer PUBLIC MathCore System Qt5::Core QCustomPlot Qt5::Widgets Qt5::OpenGL opengl32 ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libassimpwin.a
+            ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libIrrXMLwin.a ${CMAKE_SOURCE_DIR}/Graphics/OpenGLViewer/assimpFiles/libzlibstaticwin.a)
 ENDIF()

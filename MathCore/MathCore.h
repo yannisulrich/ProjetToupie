@@ -12,4 +12,3 @@
 #include "Toupies/TippeTopRolls.h"
 #include "Toupies/TippeTopFriction.h"
 #include "Integrateurs/All_Integrateurs.h"
-#include "LinAlg/constantes.h"

@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_CXX_FLAGS "-O2 -mavx2 -funroll-loops -Wall")
 
+set(STATIC_BUILD 1)
+
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
@@ -14,8 +16,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # Set Qt directory here
+if(NOT STATIC_BUILD)
+    set(customQtRoot "C:\\Qt\\5.14.2\\mingw73_32")
+endif()
+if(STATIC_BUILD)
+    set(customQtRoot "C:\\Qt\\Qt-5.14.2")
+endif()
 
-set(customQtRoot "C:\\Qt\\5.14.2\\mingw73_32")
 IF(WIN32)
     message(STATUS "Will link Qt for Windows.")
     list(APPEND CMAKE_PREFIX_PATH ${customQtRoot})
@@ -51,17 +58,18 @@ add_executable(ToupieMain
 target_include_directories(ToupieMain PRIVATE ${projectIncludes})
 target_link_libraries(ToupieMain PRIVATE Qt5::Widgets Qt5::Xml MathCore OpenGLViewer Simulator)
 
-if(WIN32)
-    # Finally, need to deploy Qt
-    SET(customQtBin ${customQtRoot}\\bin)
-    SET(customQtDeploy ${customQtBin}\\windeployqt)
-    SET(customQtDeployLoc ${CMAKE_BINARY_DIR})
-    add_custom_command(TARGET ToupieMain POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E env PATH="${customQtBin}"
-            ${customQtDeploy} $<TARGET_FILE:ToupieMain>
-            COMMENT "Calling windeployqt...")
+if(NOT STATIC_BUILD)
+    if(WIN32)
+        # Finally, need to deploy Qt
+        SET(customQtBin ${customQtRoot}\\bin)
+        SET(customQtDeploy ${customQtBin}\\windeployqt)
+        SET(customQtDeployLoc ${CMAKE_BINARY_DIR})
+        add_custom_command(TARGET ToupieMain POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E env PATH="${customQtBin}"
+                ${customQtDeploy} $<TARGET_FILE:ToupieMain>
+                COMMENT "Calling windeployqt...")
+    endif()
 endif()
-
 
 
 

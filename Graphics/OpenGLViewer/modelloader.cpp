@@ -5,7 +5,6 @@
 #include <QDebug>
 #include <QResource>
 #include <utility>
-#include <mach-o/dyld.h>
 
 ModelLoader::ModelLoader(bool transformToUnitCoordinates) :
     m_transformToUnitCoordinates(transformToUnitCoordinates)
@@ -30,12 +29,6 @@ QString findFile(QString relativeFilePath, int scanDepth)
 
 bool ModelLoader::Load(QString filePath, PathType pathType)
 {
-    char path[1024];
-    uint32_t size = sizeof(path);
-    if (_NSGetExecutablePath(path, &size) == 0)
-        printf("executable path is %s\n", path);
-    else
-        printf("buffer too small; need size %u\n", size);
 
     Q_INIT_RESOURCE(models);
     QResource modelResource(filePath);
