@@ -1,4 +1,4 @@
-###LSODA ###
+### LSODA ###
 
 Our project uses this LSODA integrator library: https://github.com/dilawar/libsoda
 
