@@ -136,13 +136,14 @@ void GLWindow::timerTimeout()
         measuredFPS = 60/DeltaTs.sum();
         cout << "fps: " << measuredFPS << endl;
     }
+
+
     if(!paused) {
         time +=  dt;
         //system integration
         scene->integrateSystem(dt, integSubDiv);
         //add points to traces every 5 frames
         if(everyFiveTimes == 0) {
-            //scene->system.addToTraces();
             scene->addToTraces();
             everyFiveTimes = 5;
             //plot1.replot();

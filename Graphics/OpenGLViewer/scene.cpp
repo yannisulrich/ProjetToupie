@@ -12,7 +12,7 @@ using namespace std::chrono;
 Scene::Scene(Integrateur *integrateur, int screenw, int screenh, const QString &tableModelpath):
         system(this, integrateur), SCR_WIDTH(screenw), SCR_HEIGHT(screenh) {
 
-    if(tableModelpath.isEmpty()) table = new Model(QString("Graphics/OpenGLViewer/Models/tablesmall.DAE"),ModelLoader::RelativePath);
+    if(tableModelpath.isEmpty()) table = new Model(QString("Graphics/OpenGLViewer/Models/tabledefault.DAE"),ModelLoader::RelativePath);
     else table = new Model(tableModelpath,ModelLoader::RelativePath);
 
 
@@ -156,7 +156,7 @@ void Scene::update()
     glClear(GL_DEPTH_BUFFER_BIT);
     glActiveTexture(GL_TEXTURE0);
     QMatrix4x4 tableMat;
-    tableMat.scale(30);
+    tableMat.scale(100);
 
 
     //dessineSystem(shadow_shaderProgram);
@@ -199,6 +199,8 @@ void Scene::update()
     for(unique_ptr<GLTrace<traceLength>>& trace : GTraces) {
         trace->draw();
     }
+
+    t_shaderProgram.setUniformValue("traceColor", 0.0f, 1.0f, 0.6f, 1.0f);
     for(unique_ptr<GLTrace<traceLength>>& trace : ATraces) {
         trace->draw();
     }
@@ -298,9 +300,9 @@ void Scene::addToTraces() {
 
     for(size_t i(0); i < toupies.size(); ++i) {
         Vecteur3 G = toupies[i]->getGTrace();
-        GTraces[i]->put(G[0], G[1], G[2]);
+        GTraces[i]->put(scaleFactor*G[0], scaleFactor*G[1], scaleFactor*G[2]);
         Vecteur3 A = toupies[i]->getATrace();
-        ATraces[i]->put(A[0], A[1], A[2]);
+        ATraces[i]->put(scaleFactor*A[0], scaleFactor*A[1], scaleFactor*A[2]);
     }
 }
 
