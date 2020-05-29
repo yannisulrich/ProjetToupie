@@ -47,7 +47,8 @@ void Simulator::runInApp() {
 
     QSurfaceFormat::setDefaultFormat(format);
 
-
+    QWindow window;
+    QHBoxLayout *layout = new QHBoxLayout();
     glwindow = new GLWindow(scene, fps, integSubDiv, supports, scaleFactor, QApplication::desktop()->devicePixelRatio());
     glwindow->show();
     running = true;

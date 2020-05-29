@@ -3,7 +3,7 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
-#include <QOpenGLFunctions_4_3_Core>
+#include <QOpenGLFunctions_4_4_Core>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 
@@ -11,13 +11,13 @@
 template <size_t maxPointSize>
 class GLTrace {
 public:
-    GLTrace();
+    GLTrace(QOpenGLFunctions*);
     ~GLTrace();
 
     void put(float x, float y, float z);
     size_t buffersize() const;
 
-    void draw() const;
+    void draw();
 private:
     QOpenGLVertexArrayObject* VAO;
     QOpenGLBuffer* VBO;
@@ -31,7 +31,7 @@ private:
     float data[3] = {0,0,0};
 };
 template <size_t maxPointSize>
-GLTrace<maxPointSize>::GLTrace(): max_size_(3*maxPointSize)  {
+GLTrace<maxPointSize>::GLTrace(QOpenGLFunctions* scene): max_size_(3*maxPointSize)  {
     float zeros[3 * maxPointSize] = {};
 
     VAO = new QOpenGLVertexArrayObject();
@@ -44,8 +44,8 @@ GLTrace<maxPointSize>::GLTrace(): max_size_(3*maxPointSize)  {
     VBO->bind();
     VBO->allocate(zeros, sizeof(zeros));
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    scene->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    scene->glEnableVertexAttribArray(0);
 
 
 }
@@ -105,7 +105,7 @@ GLTrace<maxPointSize>::~GLTrace() {
 }
 
 template<size_t maxPointSize>
-void GLTrace<maxPointSize>::draw() const {
+void GLTrace<maxPointSize>::draw() {
     VAO->bind();
     VBO->bind();
 

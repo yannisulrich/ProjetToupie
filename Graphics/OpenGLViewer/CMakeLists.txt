@@ -42,6 +42,7 @@ add_library(OpenGLViewer
         scene.cpp
         GLWindow.cc shaders.qrc models.qrc QCustomPlot/PlotWindow.cc GLTrace.h)
 
+target_compile_options(OpenGLViewer PRIVATE -fpermissive)
 
 target_include_directories(OpenGLViewer PUBLIC ${projectIncludes})
 IF(APPLE)

@@ -33,7 +33,6 @@ bool ModelLoader::Load(QString filePath, PathType pathType)
     Q_INIT_RESOURCE(models);
     QResource modelResource(filePath);
 
-    //qDebug() << "path: " << filePath;
     QString l_filePath;
     if (pathType == RelativePath)
         l_filePath = findFile(filePath, 5);
@@ -41,7 +40,6 @@ bool ModelLoader::Load(QString filePath, PathType pathType)
         l_filePath = filePath;
 
     Assimp::Importer importer;
-    //qDebug() << "lpath: " << l_filePath;
     /*
     const aiScene* scene = importer.ReadFile( l_filePath.toStdString(),
             aiProcess_GenSmoothNormals      |

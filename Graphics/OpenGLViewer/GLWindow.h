@@ -90,8 +90,6 @@ private:
 
     unsigned int everyFiveTimes = 0; //used to trigger events every 5 frames
 
-    PlotWindow plot1;
-
     std::vector<std::unique_ptr<PlotWindow> > plots;
     std::vector<std::pair<int,int> > plotIndexes;
 

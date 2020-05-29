@@ -1,6 +1,5 @@
 #include "scene.h"
 #include "Toupies/Toupie.h"
-#include "../../../../../../../../../usr/local/Qt-5.14.2/include/QtGui/QVector3D"
 #include <iostream>
 #include <QtCore>
 #include <algorithm>
@@ -55,10 +54,10 @@ void Scene::initialize()
 
     //initialisation des traces
     for(size_t i(0); i < toupies.size(); ++i) {
-        GTraces.push_back(make_unique<GLTrace<traceLength> >());
-        ATraces.push_back(make_unique<GLTrace<traceLength> >());
+        GTraces.push_back(make_unique<GLTrace<traceLength> >(this));
+        ATraces.push_back(make_unique<GLTrace<traceLength> >(this));
     }
-
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     table->initialize(m_shaderProgram);
 
     //Shadow init
@@ -158,7 +157,11 @@ void Scene::update()
     glActiveTexture(GL_TEXTURE0);
     QMatrix4x4 tableMat;
     tableMat.scale(30);
-    dessineSystem(shadow_shaderProgram);
+
+
+    //dessineSystem(shadow_shaderProgram);
+
+
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
@@ -177,7 +180,10 @@ void Scene::update()
     m_shaderProgram.setUniformValue("drawShadows", false);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, depthMap);
+
+    cout << 1 << endl;
     dessineSystem(m_shaderProgram);
+    cout << 2 << endl;
 
     m_shaderProgram.setUniformValue("drawShadows", true);
     table->draw(m_shaderProgram, tableMat, m_view, m_projection);
@@ -193,7 +199,7 @@ void Scene::update()
     t_shaderProgram.setUniformValue("traceColor", 1.0f, 0.5f, 0.2f, 1.0f);
     //auto start = high_resolution_clock::now();
     //auto stop = high_resolution_clock::now();
-
+    cout << 3 << endl;
     for(unique_ptr<GLTrace<traceLength>>& trace : GTraces) {
         trace->draw();
     }

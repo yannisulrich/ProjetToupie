@@ -23,12 +23,13 @@ GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::v
     connect(timer, &QTimer::timeout, this, QOverload<>::of(&GLWindow::timerTimeout));
     timer->start(int(1000.0/fps));
     setMouseTracking(true);
+    setWindowTitle("Top Simulation");
     /*
     QCursor c;
     c.setShape(Qt::BlankCursor); //cacher le cursor
     setCursor(c);
      */
-    setMinimumSize(1200, 800); //min. size
+    setMinimumSize(800, 600); //min. size
     chronometre = new QElapsedTimer(); //For precise delta t measurements
 
     scene->setScaleFactor(scaleFactor);
@@ -90,6 +91,11 @@ void GLWindow::initializeGL()
         plot->raise();
         plot->activateWindow();
     }
+    QRect rec = QApplication::desktop()->screenGeometry();
+    int height = rec.height();
+    int width = rec.width();
+    resize(3*width/4, 3*height/4);
+    move(QApplication::desktop()->screen()->rect().center() - rect().center());
 }
 //standard Qt OpenGL
 // ======================================================================
@@ -232,7 +238,7 @@ void GLWindow::keyPressEvent(QKeyEvent* event)
             break;
     };
 
-    paintGL(); // redessine
+    //paintGL(); // redessine
 }
 
 void GLWindow::keyReleaseEvent(QKeyEvent *event)
@@ -266,7 +272,7 @@ void GLWindow::keyReleaseEvent(QKeyEvent *event)
             break;
 
     }
-    paintGL();
+    //paintGL();
 }
 
 //This method handles mouse movement. For the mouse not to leave the window, we have to keep it in the rectangle rect()- MouseMargins (cf GLWindow.h)

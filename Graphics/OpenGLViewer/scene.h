@@ -20,7 +20,7 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
-#include <QOpenGLFunctions_4_3_Core>
+#include <QOpenGLFunctions_4_4_Core>
 #include <QOpenGLFunctions>
 #include <vector>
 #include "modelloader.h"
@@ -32,7 +32,7 @@
 
 class Toupie;
 class Integrateur;
-class Scene : public SupportADessin, QOpenGLFunctions
+class Scene : public SupportADessin, public QOpenGLFunctions
 {
     friend class GLWindow;
     friend class Simulator;
