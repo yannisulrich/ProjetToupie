@@ -181,9 +181,7 @@ void Scene::update()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, depthMap);
 
-    cout << 1 << endl;
     dessineSystem(m_shaderProgram);
-    cout << 2 << endl;
 
     m_shaderProgram.setUniformValue("drawShadows", true);
     table->draw(m_shaderProgram, tableMat, m_view, m_projection);
@@ -197,18 +195,13 @@ void Scene::update()
     t_shaderProgram.setUniformValue("vue_modele", m_view);
 
     t_shaderProgram.setUniformValue("traceColor", 1.0f, 0.5f, 0.2f, 1.0f);
-    //auto start = high_resolution_clock::now();
-    //auto stop = high_resolution_clock::now();
-    cout << 3 << endl;
+
     for(unique_ptr<GLTrace<traceLength>>& trace : GTraces) {
         trace->draw();
     }
     for(unique_ptr<GLTrace<traceLength>>& trace : ATraces) {
         trace->draw();
     }
-
-    //auto duration = duration_cast<nanoseconds>(stop - start);
-    //cout << "Time taken by function: " << duration.count() << " nanoseconds" << endl;
 
     t_shaderProgram.release();
 
