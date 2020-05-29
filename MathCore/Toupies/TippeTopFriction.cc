@@ -461,7 +461,10 @@ QVector3D TippeTopFriction::translationModel() const {
     return QVector3D(P[3],R,P[4]);
 }
 
-void TippeTopFriction::addToTraces() {
-    TraceA.push_front({float(P[3]),0.0001,float(P[4])}); //le 0.0001 sert uniquement pour le rendering, pour ne pas être dans le sol. Il peut être ignoré.
-    TraceG.push_front({float(P[3]-epsilon*cos(P[1])*sin(P[0])),float(R-epsilon*cos(P[0])),float(P[4]-epsilon*sin(P[1])*sin(P[0]))});
+Vecteur3 TippeTopFriction::getGTrace() const {
+    return {(P[3]-epsilon*cos(P[1])*sin(P[0])),(R-epsilon*cos(P[0])),(P[4]-epsilon*sin(P[1])*sin(P[0]))};
+}
+
+Vecteur3 TippeTopFriction::getATrace() const {
+    return {(P[3]),0.0001,(P[4])};
 }

@@ -35,6 +35,8 @@ GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::v
 
     setAttribute( Qt::WA_DeleteOnClose );
 
+
+
     for(int i(0); i < scene->system.getToupies().size(); ++i) {
         const Toupie* toupie = scene->system.getToupies()[i];
         for(int j(0); j< 4; ++j) {
@@ -134,7 +136,8 @@ void GLWindow::timerTimeout()
         scene->integrateSystem(dt, integSubDiv);
         //add points to traces every 5 frames
         if(everyFiveTimes == 0) {
-            scene->system.addToTraces();
+            //scene->system.addToTraces();
+            scene->addToTraces();
             everyFiveTimes = 5;
             //plot1.replot();
 

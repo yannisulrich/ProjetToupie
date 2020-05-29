@@ -1,12 +1,13 @@
 #include "scene.h"
 #include "Toupies/Toupie.h"
+#include "../../../../../../../../../usr/local/Qt-5.14.2/include/QtGui/QVector3D"
 #include <iostream>
 #include <QtCore>
 #include <algorithm>
 #include <QOpenGLBuffer>
 #include <chrono>
 #include <memory>
-
+//TODO: optimize getToupies out
 using namespace std;
 using namespace std::chrono;
 Scene::Scene(Integrateur *integrateur, int screenw, int screenh, const QString &tableModelpath):
@@ -15,10 +16,13 @@ Scene::Scene(Integrateur *integrateur, int screenw, int screenh, const QString &
     if(tableModelpath.isEmpty()) table = new Model(QString("Graphics/OpenGLViewer/Models/tablesmall.DAE"),ModelLoader::RelativePath);
     else table = new Model(tableModelpath,ModelLoader::RelativePath);
 
+
 }
 
 void Scene::initialize()
 {
+
+    toupies = system.getToupies();
 
     Q_INIT_RESOURCE(shaders); //comme VueOpenGL est une library cmake, nous choisissons ce moyen de faire en sorte
     // que les shaders soient bien trouvés.
@@ -31,10 +35,13 @@ void Scene::initialize()
 
     setupLightingAndMatrices();
 
-    for(auto i : system.getToupies()) i->model.initialize(m_shaderProgram);
+    for(auto i : toupies) i->model.initialize(m_shaderProgram);
 
     initializeOpenGLFunctions();
+
+
     glEnable(GL_DEPTH_TEST);
+
     glClearColor(.9f, .9f, .93f ,1.0f);
 
     yaw = pitch = 0;
@@ -46,37 +53,15 @@ void Scene::initialize()
     float zeros[300] = {};
 
 
-    for(size_t i(0); i < system.getToupies().size(); ++i) {
-
-        //trace G
-        QtGVAOs.push_back(make_unique<QOpenGLVertexArrayObject>()); //OpenGL >3 standard pour dessiner
-        QtGVAOs[i]->create();
-        QtGVAOs[i]->bind();
-        QtGVBOs.push_back(make_unique<QOpenGLBuffer>());
-        QtGVBOs[i]->create();
-        QtGVBOs[i]->setUsagePattern(QOpenGLBuffer::DynamicDraw);
-        QtGVBOs[i]->bind();
-        QtGVBOs[i]->allocate(zeros, 2400); //4 Bytes par float, 3 floats par point, 200 points
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-
-        //trace A
-
-        QtAVAOs.push_back(make_unique<QOpenGLVertexArrayObject>());
-        QtAVAOs[i]->create();
-        QtAVAOs[i]->bind();
-        QtAVBOs.push_back(make_unique<QOpenGLBuffer>());
-        QtAVBOs[i]->create();
-        QtAVBOs[i]->setUsagePattern(QOpenGLBuffer::DynamicDraw);
-        QtAVBOs[i]->bind();
-        QtAVBOs[i]->allocate(zeros, 2400);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-
+    //initialisation des traces
+    for(size_t i(0); i < toupies.size(); ++i) {
+        GTraces.push_back(make_unique<GLTrace<traceLength> >());
+        ATraces.push_back(make_unique<GLTrace<traceLength> >());
     }
 
     table->initialize(m_shaderProgram);
 
+    //Shadow init
     QResource fragShaderShadow("://shadow.frag");
     QResource vertShaderShadow("://shadow.vert");
     createShaderProgram(shadow_shaderProgram, vertShaderShadow.absoluteFilePath(), fragShaderShadow.absoluteFilePath());
@@ -156,8 +141,7 @@ void Scene::resize(int w, int h)
 
 void Scene::update()
 {
-
-
+    ++runCount;
     // Clear buffers
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -174,8 +158,7 @@ void Scene::update()
     glActiveTexture(GL_TEXTURE0);
     QMatrix4x4 tableMat;
     tableMat.scale(30);
-    //table.draw(shadow_shaderProgram, tableMat, m_view, m_projection);
-    dessine(system, shadow_shaderProgram);
+    dessineSystem(shadow_shaderProgram);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
@@ -194,7 +177,7 @@ void Scene::update()
     m_shaderProgram.setUniformValue("drawShadows", false);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, depthMap);
-    dessine(system);
+    dessineSystem(m_shaderProgram);
 
     m_shaderProgram.setUniformValue("drawShadows", true);
     table->draw(m_shaderProgram, tableMat, m_view, m_projection);
@@ -208,38 +191,17 @@ void Scene::update()
     t_shaderProgram.setUniformValue("vue_modele", m_view);
 
     t_shaderProgram.setUniformValue("traceColor", 1.0f, 0.5f, 0.2f, 1.0f);
-    auto start = high_resolution_clock::now();
-    auto stop = high_resolution_clock::now();
-    for(size_t i(0); i < system.getToupies().size(); ++i) {
-        //Trace G
-        std::deque<float> points(system.getToupies()[i]->TraceG.points());
-        for (int j(0); j < system.getToupies()[i]->TraceG.size(); ++j)
-            traceBuffer[j] = scaleFactor * points[j];
-        QtGVAOs[i]->bind();
-        QtGVBOs[i]->bind();
-        void *ptr = QtGVBOs[i]->map(QOpenGLBuffer::WriteOnly);
-        memcpy(ptr, traceBuffer,
-               4 * system.getToupies()[i]->TraceG.size());
-        QtGVBOs[i]->unmap();
-        glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceG.size() / 3);
+    //auto start = high_resolution_clock::now();
+    //auto stop = high_resolution_clock::now();
+
+    for(unique_ptr<GLTrace<traceLength>>& trace : GTraces) {
+        trace->draw();
     }
-    t_shaderProgram.setUniformValue("traceColor", 0.0f, 1.0f, 0.6f, 1.0f);
-    for(size_t i(0); i < system.getToupies().size(); ++i) {
-        //Trace A
-        std::deque<float> points(system.getToupies()[i]->TraceA.points());
-        for (int j(0); j < system.getToupies()[i]->TraceA.size(); ++j)
-            traceBuffer[j] = scaleFactor * points[j];
-        QtAVAOs[i]->bind();
-        QtAVBOs[i]->bind();
-        void * ptr = QtAVBOs[i]->map(QOpenGLBuffer::WriteOnly);
-        memcpy(ptr, traceBuffer,
-               4*system.getToupies()[i]->TraceA.size());
-        QtAVBOs[i]->unmap();
-        glDrawArrays(GL_LINE_STRIP, 0, system.getToupies()[i]->TraceA.size()/3);
+    for(unique_ptr<GLTrace<traceLength>>& trace : ATraces) {
+        trace->draw();
     }
 
-
-    auto duration = duration_cast<nanoseconds>(stop - start);
+    //auto duration = duration_cast<nanoseconds>(stop - start);
     //cout << "Time taken by function: " << duration.count() << " nanoseconds" << endl;
 
     t_shaderProgram.release();
@@ -281,8 +243,8 @@ void Scene::dessine(const Systeme & sys) const {
         if(i->hasModel()) dessine(*i);
     }
 }
-void Scene::dessine(const Systeme & sys, QOpenGLShaderProgram & shaderProgram) const {
-    for(auto i: sys.getToupies()) {
+void Scene::dessineSystem(QOpenGLShaderProgram & shaderProgram) const {
+    for(auto i: toupies) {
         if(i->hasModel()) dessine(*i, shaderProgram);
     }
 }
@@ -333,5 +295,13 @@ void Scene::setZoomPerspectiveMatrix(const int& width, const int& height) {
     m_projection.perspective(atan(tan(50.0 * 3.14159 / 360.0) / zoomFactor) * 360.0 / 3.14159, (float)width/height, .1f, 1000);
 }
 
+void Scene::addToTraces() {
 
+    for(size_t i(0); i < toupies.size(); ++i) {
+        Vecteur3 G = toupies[i]->getGTrace();
+        GTraces[i]->put(G[0], G[1], G[2]);
+        Vecteur3 A = toupies[i]->getATrace();
+        ATraces[i]->put(A[0], A[1], A[2]);
+    }
+}
 

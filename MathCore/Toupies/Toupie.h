@@ -42,11 +42,6 @@ protected:
 
     mutable Model model; //le modèle
 
-
-
-    Trace<200> TraceG; //les traces du centre de gravité et du point de contact.
-    Trace<200> TraceA;
-
     std::vector<bool> plots = {false,false,false,false}; //indique quels graphiques des indicateurs constants doivent être affiché
 public:
 
@@ -79,7 +74,8 @@ public:
 
     virtual QVector3D translationModel() const = 0; //vecteur de translation pour la représentation en 3D, propre au type de toupie
 
-    virtual void addToTraces() = 0; //ajouter les points A et G aux traces
+    virtual Vecteur3 getGTrace() const = 0; //les traces de A et G
+    virtual Vecteur3 getATrace() const = 0;
 
     void setPlots(const bool& p1, const bool& p2, const bool& p3, const bool& p4) {plots = {p1, p2, p3, p4};}
     std::vector<bool> getPlots() const {return plots;}

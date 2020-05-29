@@ -23,7 +23,7 @@ int Simulator::runNewApp() {
     QSurfaceFormat format;
     format.setDepthBufferSize(24);
     format.setMajorVersion(4);
-    format.setMinorVersion(1);
+    format.setMinorVersion(4);
     format.setProfile(QSurfaceFormat::CoreProfile);
     QSurfaceFormat::setDefaultFormat(format);
 

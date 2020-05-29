@@ -40,7 +40,7 @@ add_library(OpenGLViewer
         model.cpp
         modelloader.cpp
         scene.cpp
-        GLWindow.cc shaders.qrc models.qrc QCustomPlot/PlotWindow.cc)
+        GLWindow.cc shaders.qrc models.qrc QCustomPlot/PlotWindow.cc GLTrace.h)
 
 
 target_include_directories(OpenGLViewer PUBLIC ${projectIncludes})

@@ -75,7 +75,8 @@ public:
     void dessine() const override {
         support->dessine(*this); }
 
-    void addToTraces() override ;
+    Vecteur3 getGTrace() const override;
+    Vecteur3 getATrace() const override;
 };
 
 

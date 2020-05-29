@@ -22,10 +22,10 @@ class Systeme: public Dessinable {
 private:
 
 Integrateur* integrator;
-
+std::vector<Toupie* > toupies;
 
 public:
-    std::vector<Toupie* > toupies;
+
     //ces deux constructeurs sont effacés car nous les utilisons pas et leur définition par défaut cause des problèmes d'accès
     //multiples sur les pointeurs dans toupies.
     Systeme() = delete;
@@ -72,7 +72,7 @@ public:
 
     void integrateMultiple(const size_t & n, const double& dt, const double& t = 0);
 
-    void addToTraces() {for(auto i:toupies) i->addToTraces();}
+    //void addToTraces() {for(auto i:toupies) i->addToTraces();}
 
     void setPlotsForTop(int index, const bool& p1, const bool& p2, const bool& p3, const bool& p4);
 };

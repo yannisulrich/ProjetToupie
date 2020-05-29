@@ -9,6 +9,9 @@
  * d'accélération dans une direction.
  *
  * Aussi: l'axe y est vertical ici.
+ *
+ * Cette classe est censée ne jamais être utilisée seule, elle fonctionne en conjonction avec GLWindow. C'est pourquoi son constructeur est privé
+ * et elle est amie avec GLWindow.
  */
 
 
@@ -24,6 +27,7 @@
 #include "Graphics/SupportADessin.h"
 #include "model.h"
 #include "Interface/System/Systeme.h"
+#include "GLTrace.h"
 #include <memory>
 
 class Toupie;
@@ -59,7 +63,7 @@ private:
 
     //dessin du système entier
     void dessine(const Systeme&) const override;
-    void dessine(const Systeme&, QOpenGLShaderProgram&) const;
+    void dessineSystem(QOpenGLShaderProgram &shaderProgram) const;
 
     //dessin des modèles de toupie
     void dessine(const double &, const Toupie& toupie) const override {dessine(toupie);}
@@ -68,6 +72,7 @@ private:
     void dessine(const double &, const Systeme& systeme) const override {dessine(systeme);}
 
 
+    std::vector<const Toupie *> toupies; //les toupies
     //mutable car de cette manière la méthode dessine(cont Toupie&) peut être const.
     mutable QOpenGLShaderProgram m_shaderProgram; //pour les modèles
     mutable QOpenGLShaderProgram t_shaderProgram; //pour les tracés de points
@@ -117,6 +122,16 @@ private:
     int SCR_WIDTH, SCR_HEIGHT;
     int devicePixelRatio = 1;
 
+    GLTrace<100>* testTrace;
+
+
+    static size_t const traceLength = 200;
+    std::vector<std::unique_ptr<GLTrace<traceLength> > > GTraces;
+    std::vector<std::unique_ptr<GLTrace<traceLength> > > ATraces;
+
+    void addToTraces();
+
+    size_t runCount = 0;
 };
 
 

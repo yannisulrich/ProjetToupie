@@ -106,13 +106,6 @@ void MainWindow::on_pushButtonLaunch_clicked()
 
     switch (ui->TopSelection->currentIndex()) {
         case 0: {
-            /*
-            if(ui->comboBox_topmodel->currentIndex() == 0) {
-                simulator->system->addSymCone(P, P_dot, ui->doubleSpinBox_C2->value(), ui->doubleSpinBox_C1->value(),
-                                              ui->doubleSpinBox_m->value(), "Models/cone.dae");
-            }
-            else simulator->system->addSymCone(P, P_dot, ui->doubleSpinBox_C2->value(), ui->doubleSpinBox_C1->value(), ui->doubleSpinBox_m->value(), topmodelpathinput);
-            */
             simulator->system->addSymCone(P, P_dot, ui->doubleSpinBox_C2->value(), ui->doubleSpinBox_C1->value(), ui->doubleSpinBox_m->value(), usedTopmodelPath);
              break;
         }
@@ -301,6 +294,8 @@ void MainWindow::on_pushButton_loadconfig_clicked() {
     ui->doubleSpinBox_modelScale->setValue(xmlaccess->readValue("modelScale"));
     ui->spinBox_FPS->setValue((int)xmlaccess->readValue("FPStarget"));
     ui->spinBox_IntegPrec->setValue((int)xmlaccess->readValue("IntegPrec"));
+
+    configfile->close();
 }
 void MainWindow::on_pushButton_saveconfig_clicked() {
     QString configname = QFileDialog::getSaveFileName(this,

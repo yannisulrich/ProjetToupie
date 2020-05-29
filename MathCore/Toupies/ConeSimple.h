@@ -29,7 +29,8 @@ public:
 
     QVector3D translationModel() const override;
 
-    void addToTraces() override;
+    Vecteur3 getGTrace() const override;
+    Vecteur3 getATrace() const override;
 };
 
 

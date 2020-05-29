@@ -35,6 +35,7 @@ void XMLReader::readFile() {
             }
         }
     }
+
 }
 
 double XMLReader::readValue(const QString & key) {
