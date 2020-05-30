@@ -3,11 +3,9 @@
 #include <iostream>
 #include <MathCore/Integrateurs/All_Integrateurs.h>
 #include "Simulator/Simulator.h"
-//#include "../../../../../../../usr/local/Qt-5.14.2/include/QtWidgets/QtWidgets"
-//#include "../../../../../../../usr/local/Qt-5.14.2/include/QtCore/qnamespace.h"
 #include <QDesktopServices>
 #include <QDir>
-
+#include <QFileInfo>
 
 using namespace std;
 
@@ -16,66 +14,49 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    /*
-    scene = new QGraphicsScene();
-
-    view = new QGraphicsView(scene);
-    view->setRenderHints(QPainter::Antialiasing
-                         | QPainter::SmoothPixmapTransform
-                         | QPainter::TextAntialiasing);
-    view->setWindowFlags(Qt::Popup);
-    view->setFixedSize(QSize(1200, 650));
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    int x = (screenGeometry.width()-view->width()) / 2;
-    int y = (screenGeometry.height()-view->height()) / 2;
-    view->move(x, y);
-    QResource helpimage("://HelpGraphic.png");
-    scene->addItem(new QGraphicsPixmapItem(QPixmap(helpimage.absoluteFilePath()).scaled(view->width(), view->height(), Qt::KeepAspectRatio)));
-     */
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+bool fileExists(const QString& path) {
+    QFileInfo check_file(path);
+    if (check_file.exists() && check_file.isFile()) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 void MainWindow::on_LogFileBrowser_clicked() {
 
     logpath = QFileDialog::getOpenFileName(this,
                                            tr("Choose File"), "",
-                                           tr("Text Files (*.txt *.log);;All Files (*)"));
+                                           tr("Text Files (*.csv *.log *.txt);;All Files (*)"));
 
     ui->pathToLog->setText(logpath);
     if(!logpath.isEmpty()) ui->Filecheckbox->setChecked(true);
 }
 void MainWindow::on_pushButtonLaunch_clicked()
 {
-    /*
-    if(tablemodelpathinput.isEmpty()) {
-        auto noTableModelInfo = new QMessageBox(QMessageBox::NoIcon, "No table model selected",
-                                                "Please select a model for the table. You can choose the standard one shipped with the application.");
-        noTableModelInfo->addButton("Ok", QMessageBox::AcceptRole);
-        noTableModelInfo->QDialog::setWindowTitle("No table model selected");
-        noTableModelInfo->setTextInteractionFlags(Qt::NoTextInteraction);
-        noTableModelInfo->exec();
-        return;
-    }
-    if(topmodelpathinput.isEmpty()) {
-        auto noTopModelInfo = new QMessageBox(QMessageBox::NoIcon, "No top model selected",
-                                              "Please select a model for the top. You can choose the appropriate standard one shipped with the application.");
-        noTopModelInfo->addButton("Ok", QMessageBox::AcceptRole);
-        noTopModelInfo->QDialog::setWindowTitle("No top model selected");
-        noTopModelInfo->setTextInteractionFlags(Qt::NoTextInteraction);
-        noTopModelInfo->exec();
-        return;
-    }
-    */
+
 
     QString usedTablemodelPath;
     if(ui->comboBox_tablemodel->currentIndex() == 0) usedTablemodelPath =
             QApplication::applicationDirPath().left(QApplication::applicationDirPath().lastIndexOf(QChar('/'))) + "/Resources/Models/tabledefault.dae";
-    else usedTablemodelPath = tablemodelpathinput;
+    else {
+        if(!fileExists(tablemodelpathinput)) {
+            auto tablemodelNotFound = new QMessageBox(QMessageBox::NoIcon, "File not found",
+                                                      "The table model path was not found on this machine.");
+            tablemodelNotFound->addButton("Ok", QMessageBox::AcceptRole);
+            tablemodelNotFound->QDialog::setWindowTitle("File not found");
+            tablemodelNotFound->setTextInteractionFlags(Qt::NoTextInteraction);
+            tablemodelNotFound->exec();
+            return;
+        }
+        usedTablemodelPath = tablemodelpathinput;
+    }
 
 
     QString usedTopmodelPath;
@@ -83,7 +64,18 @@ void MainWindow::on_pushButtonLaunch_clicked()
             QApplication::applicationDirPath().left(QApplication::applicationDirPath().lastIndexOf(QChar('/'))) + "/Resources/Models/cone.dae";
     else if(ui->comboBox_topmodel->currentIndex() == 1) usedTopmodelPath =
             QApplication::applicationDirPath().left(QApplication::applicationDirPath().lastIndexOf(QChar('/'))) +"/Resources/Models/tippetophollow.DAE";
-    else usedTopmodelPath = topmodelpathinput;
+    else {
+        if(!fileExists(topmodelpathinput)) {
+            auto tablemodelNotFound = new QMessageBox(QMessageBox::NoIcon, "File not found",
+                                                      "The top model path was not found on this machine.");
+            tablemodelNotFound->addButton("Ok", QMessageBox::AcceptRole);
+            tablemodelNotFound->QDialog::setWindowTitle("File not found");
+            tablemodelNotFound->setTextInteractionFlags(Qt::NoTextInteraction);
+            tablemodelNotFound->exec();
+            return;
+        }
+        usedTopmodelPath = topmodelpathinput;
+    }
 
     switch (ui->Integrator->currentIndex()) {
     case 0: integrator = new IntegrateurEulerCromer();

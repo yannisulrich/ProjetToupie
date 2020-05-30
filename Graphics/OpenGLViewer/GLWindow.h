@@ -18,8 +18,9 @@
 #include <QTime>
 #include <QTimer> // Classe pour gérer le temps
 #include "scene.h"
-#include "Toupies/Trace.h"
 #include "Graphics/OpenGLViewer/QCustomPlot/PlotWindow.h"
+#include "MathCore/Trace.h"
+
 class GLWindow : public QOpenGLWidget
 {
 Q_OBJECT

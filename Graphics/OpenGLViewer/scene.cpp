@@ -159,7 +159,7 @@ void Scene::update()
     tableMat.scale(100);
 
 
-    //dessineSystem(shadow_shaderProgram);
+    dessineSystem(shadow_shaderProgram);
 
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

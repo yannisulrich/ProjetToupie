@@ -17,7 +17,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-private slots:
+private slots: //events for Qt. All activate when what their name says happens :)
     void on_pushButtonLaunch_clicked();
     void on_LogFileBrowser_clicked();
     void on_TableModelBrowser_clicked();
@@ -37,9 +37,6 @@ private:
     QString tablemodelpathinput = "";
     QString topmodelpathinput = "";
     std::ofstream* logfile;
-
-    //QGraphicsScene* scene;
-    //QGraphicsView* view;
 
     XMLReader* xmlaccess;
     QFile* configfile;

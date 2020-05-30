@@ -1,3 +1,8 @@
+/*
+ * classe virtuelle principale des toupies.
+ */
+
+
 
 #pragma once
 #include "LinAlg/VecteurArray.h"
@@ -11,8 +16,6 @@
 #include "Graphics/Dessinable.h"
 #include "Graphics/SupportADessin.h"
 #include "Graphics/OpenGLViewer/model.h"
-#include "Trace.h"
-
 
 
 class Toupie: public Dessinable {
@@ -77,7 +80,7 @@ public:
     virtual Vecteur3 getGTrace() const = 0; //les traces de A et G
     virtual Vecteur3 getATrace() const = 0;
 
-    void setPlots(const bool& p1, const bool& p2, const bool& p3, const bool& p4) {plots = {p1, p2, p3, p4};}
+    void setPlots(const bool& p1, const bool& p2, const bool& p3, const bool& p4) {plots = {p1, p2, p3, p4};} //définit quels graphiques il faut montrer dans l'application principale
     std::vector<bool> getPlots() const {return plots;}
 };
 

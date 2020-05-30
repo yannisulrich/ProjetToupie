@@ -16,15 +16,13 @@ void Toupie::afficheSimple(std::ostream & out) const {
 
 void Toupie::afficheFile(std::ostream & out) const {
     for(double i: P.v()) {
-        out << i << " ";
+        out << i << ",";
     }
     for(double i: P_dot.v()) {
-        out << i << " ";
+        out << i << ",";
     }
-    for(double i: returnIndicators().v()) {
-        out << i << " ";
-    }
-
+    Vecteur4 indicators = returnIndicators();
+    out << indicators[0] << "," << indicators[1] << "," << indicators[2] << "," << indicators[3];
 }
 
 

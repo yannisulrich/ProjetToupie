@@ -142,9 +142,10 @@ void GLWindow::timerTimeout()
         time +=  dt;
         //system integration
         scene->integrateSystem(dt, integSubDiv);
+        scene->addToTraces();
         //add points to traces every 5 frames
         if(everyFiveTimes == 0) {
-            scene->addToTraces();
+            //scene->addToTraces();
             everyFiveTimes = 5;
             //plot1.replot();
 

@@ -1,18 +1,4 @@
-#SET(CMAKE_CXX_COMPILER /usr/local/bin/icpc)
-#set(CMAKE_CXX_COMPILER /usr/bin/gcc)
-#set( CMAKE_CXX_FLAGS "-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -mavx2 -O3 -D NOFUNCCALL -qopt-report=1 -qopt-report-phase=vec")
-#set(CMAKE_CXX_FLAGS "-O -mavx2 -funroll-loops")
-#set(CMAKE_CXX_FLAGS "")
-
-#Ceci sert à choisir quel fichier test doit être exécuté.
-
-#[[
-set(projectIncludes
-        ${Qt5Widgets_INCLUDE_DIRS}
-        )
-include_directories(${projectIncludes})
-]]
-#include_directories(.. ../Toupies ../Integrateurs)
+#Les fichiers test de base
 add_executable(TestVecteur testVecteur.cpp)
 add_executable(TestMatrice testMatrice.cc)
 add_executable(TestToupie testToupie.cc)

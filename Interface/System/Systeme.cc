@@ -30,7 +30,6 @@ void Systeme::addSymCone(const Vecteur5 &P, const Vecteur5 &P_dot, const double 
                          const double &m, const QString& modelpath) {
     if(modelpath.isEmpty()) toupies.push_back(new ConeSymFixe(support, P, P_dot, L, R, m, "cone.dae"));
     else toupies.push_back(new ConeSymFixe(support, P, P_dot, L, R, m, modelpath, true));
-    qDebug() << "test1: " << toupies.size();
 }
 /*
 void Systeme::addSymModel(const Vecteur5 &P, const Vecteur5 &P_dot, const double &I1, const double &I3, const double &m,

@@ -14,6 +14,9 @@ Le deuxième point "difficile", est la bibliothèque assimp, que nous utilisons 
 statiques pour macos-clang et le compilateur mingw-730_32 installé par Qt (c'est possiblement important que ce ne soit pas celui de mingw directement,
 pas sûr). Cela devrait rendre possible la compilation sous macos et windows.
 
+Les fichiers tests P9 et P10 sont disponibles dans des dossiers du "parent directory". Pour les fichiers tests des classes de base,
+regarder dans MathCore/tests. Le projet cmake de base est capable de tous les compiler.
+
 ===== Dans le cas de compilation sous linux =====
 
 Il y a quelques points à ajuster. Premièrement, les cmakelists

@@ -125,7 +125,7 @@ private:
     GLTrace<100>* testTrace;
 
 
-    static size_t const traceLength = 200;
+    static size_t const traceLength = 1000;
     std::vector<std::unique_ptr<GLTrace<traceLength> > > GTraces;
     std::vector<std::unique_ptr<GLTrace<traceLength> > > ATraces;
 

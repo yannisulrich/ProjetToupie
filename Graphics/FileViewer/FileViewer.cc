@@ -3,6 +3,11 @@
 #include <Toupies/Toupie.h>
 #include "System/Systeme.h"
 
+FileViewer::FileViewer(std::ofstream &out, const bool &timeUsed): out(out) {
+    if(timeUsed) this->out << "t,";
+    this->out << "theta,psi,phi,x,y,theta',psi',phi',x',y',E,LAk,LAa,a*(w^L)" << std::endl;
+}
+
 void FileViewer::dessine(Toupie const & toupie) const {
     toupie.afficheFile(out);
     out << std::endl;
@@ -33,3 +38,4 @@ void FileViewer::dessine(const double & t, const Systeme &sys) const {
         ++i;
     }
 }
+

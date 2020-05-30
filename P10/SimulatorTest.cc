@@ -8,7 +8,6 @@
 #include "Simulator/Simulator.h"
 #include "FileViewer/FileViewer.h"
 #include "TextViewer/TextViewer.h"
-#include "Trace.h"
 using namespace std;
 
 

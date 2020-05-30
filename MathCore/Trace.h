@@ -1,7 +1,7 @@
 /*
- * Cette classe est une deque de longueur fixe. Elle est utilisée pour la trace des points qu'on souhaite suivre dans la
- * visualisation 3D, ainsi que pour une "trace" des Delta t pour calculer les images par secondes de l'application. Elle ne sert en principe que de rapidement encapsuler
- * une deque.
+ * Cette classe est une deque de longueur fixe. 
+ * Elle est finalement utilisée uniquement pour les Delta t pour calculer les images par secondes de l'application. 
+ * Elle ne sert en principe que de rapidement encapsuler une deque.
  */
 #pragma once
 #include <queue>

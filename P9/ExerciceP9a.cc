@@ -27,7 +27,7 @@ int main() {
     IntegrateurRungeKutta5 integR;
 
 
-    auto outFile = new FileViewer(file);
+    auto outFile = new FileViewer(file, false);
     auto outText = new TextViewer(cout);
 
     ConeSymFixe test(outText, Vecteur5(0.5,0,0,0,0),Vecteur5(0,0,60,0,0), 1.0, 1.0, 0.127);
