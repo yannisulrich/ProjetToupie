@@ -4,7 +4,7 @@
         <top>Slipping cone</top>
         <integrator>Euler-Cromer</integrator>
         <tablemodelpath>default</tablemodelpath>
-        <topmodelpath>/Users/yannis/Downloads/foreverspin_h2.DAE</topmodelpath>
+        <topmodelpath>Tippe Top</topmodelpath>
     </strparameters>
     <numparameters>
         <integratore>1e-06</integratore>

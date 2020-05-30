@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindowphXpAk.ui'
+** Form generated from reading UI file 'mainwindowRgvQSi.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.14.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOWPHXPAK_H
-#define MAINWINDOWPHXPAK_H
+#ifndef MAINWINDOWRGVQSI_H
+#define MAINWINDOWRGVQSI_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -168,7 +168,7 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(Information->sizePolicy().hasHeightForWidth());
         Information->setSizePolicy(sizePolicy);
-        Information->setMinimumSize(QSize(0, 300));
+        Information->setMinimumSize(QSize(0, 200));
 
         verticalLayout->addWidget(Information);
 
@@ -279,6 +279,11 @@ public:
         comboBox_tablemodel->addItem(QString());
         comboBox_tablemodel->addItem(QString());
         comboBox_tablemodel->setObjectName(QString::fromUtf8("comboBox_tablemodel"));
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(comboBox_tablemodel->sizePolicy().hasHeightForWidth());
+        comboBox_tablemodel->setSizePolicy(sizePolicy2);
         comboBox_tablemodel->setMinimumSize(QSize(120, 0));
 
         horizontalLayout_3->addWidget(comboBox_tablemodel);
@@ -303,6 +308,8 @@ public:
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         label_15 = new QLabel(centralwidget);
         label_15->setObjectName(QString::fromUtf8("label_15"));
+        sizePolicy1.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
+        label_15->setSizePolicy(sizePolicy1);
         label_15->setMinimumSize(QSize(80, 0));
         label_15->setAlignment(Qt::AlignCenter);
 
@@ -313,6 +320,8 @@ public:
         comboBox_topmodel->addItem(QString());
         comboBox_topmodel->addItem(QString());
         comboBox_topmodel->setObjectName(QString::fromUtf8("comboBox_topmodel"));
+        sizePolicy2.setHeightForWidth(comboBox_topmodel->sizePolicy().hasHeightForWidth());
+        comboBox_topmodel->setSizePolicy(sizePolicy2);
         comboBox_topmodel->setMinimumSize(QSize(120, 0));
 
         horizontalLayout_4->addWidget(comboBox_topmodel);
@@ -335,11 +344,11 @@ public:
 
         label_initvalues = new QLabel(centralwidget);
         label_initvalues->setObjectName(QString::fromUtf8("label_initvalues"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(label_initvalues->sizePolicy().hasHeightForWidth());
-        label_initvalues->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(label_initvalues->sizePolicy().hasHeightForWidth());
+        label_initvalues->setSizePolicy(sizePolicy3);
         label_initvalues->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label_initvalues);
@@ -591,8 +600,8 @@ public:
         label_physparam = new QLabel(centralwidget);
         label_physparam->setObjectName(QString::fromUtf8("label_physparam"));
         label_physparam->setEnabled(true);
-        sizePolicy2.setHeightForWidth(label_physparam->sizePolicy().hasHeightForWidth());
-        label_physparam->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(label_physparam->sizePolicy().hasHeightForWidth());
+        label_physparam->setSizePolicy(sizePolicy3);
         label_physparam->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label_physparam);
@@ -613,8 +622,9 @@ public:
         doubleSpinBox_m->setObjectName(QString::fromUtf8("doubleSpinBox_m"));
         doubleSpinBox_m->setMinimumSize(QSize(100, 0));
         doubleSpinBox_m->setDecimals(4);
-        doubleSpinBox_m->setMinimum(0.000100000000000);
+        doubleSpinBox_m->setMinimum(0.000000000000000);
         doubleSpinBox_m->setMaximum(100000.000000000000000);
+        doubleSpinBox_m->setValue(0.000000000000000);
 
         PhysParameters->addWidget(doubleSpinBox_m);
 
@@ -664,6 +674,7 @@ public:
         doubleSpinBox_C2->setMinimumSize(QSize(100, 0));
         doubleSpinBox_C2->setDecimals(4);
         doubleSpinBox_C2->setMinimum(0.000000000000000);
+        doubleSpinBox_C2->setSingleStep(0.100000000000000);
         doubleSpinBox_C2->setValue(0.000000000000000);
 
         PhysParameters->addWidget(doubleSpinBox_C2);
@@ -702,8 +713,8 @@ public:
 
         label_advopt = new QLabel(centralwidget);
         label_advopt->setObjectName(QString::fromUtf8("label_advopt"));
-        sizePolicy2.setHeightForWidth(label_advopt->sizePolicy().hasHeightForWidth());
-        label_advopt->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(label_advopt->sizePolicy().hasHeightForWidth());
+        label_advopt->setSizePolicy(sizePolicy3);
         label_advopt->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label_advopt);
@@ -1002,4 +1013,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOWPHXPAK_H
+#endif // MAINWINDOWRGVQSI_H
