@@ -31,7 +31,7 @@ protected:
 
     mutable double cosTheta = 0, sinTheta = 0, sinPsi = 0, cosPsi = 0,sinPhi = 0, cosPhi = 0, thetadot = 0, psidot = 0, phidot = 0, xdot = 0, ydot = 0; //utilisé pour le calcul des indicateurs
     //Ils sont mutable car modifiés pendant le calcul des indicateurs.
-    Vecteur5 P; //paramètres
+    Vecteur5 P; //paramètres (theta, psi, phi, x, y)
     Vecteur5 P_dot; //dérivée des paramètres
 
     Matrice Ig; //matrice d'intertie en G
