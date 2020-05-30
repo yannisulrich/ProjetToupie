@@ -4,7 +4,7 @@
         <top>Slipping cone</top>
         <integrator>Euler-Cromer</integrator>
         <tablemodelpath>default</tablemodelpath>
-        <topmodelpath>Tippe Top</topmodelpath>
+        <topmodelpath>Cone</topmodelpath>
     </strparameters>
     <numparameters>
         <integratore>1e-06</integratore>
