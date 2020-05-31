@@ -5,7 +5,7 @@ Authors: Tanish Patil and Yannis Ulrich.
 
 ## Help for application use
 
-A general step-by-step instruction list is available inside the app. Here is some additonal information about the tops, the integrators, the parameters, and the plotable values. 
+A general step-by-step instruction list is available inside the app. Here is some additonal information about the tops, the integrators, the parameters, and the plotable values. But first, note that you may load existing, pretty configurations! just click on load configuration and choose one of the xml files delivered. It's much easier to start fiddling with parameters when starting from a working configuration. 
 ### Tops
 Four tops can be simulated on a table with this application. They are:
 * A simple cone, whose apex is fixed in a point on the table. It is caracterized by its mass, radius and length/height.
