@@ -30,10 +30,10 @@ bool fileExists(const QString& path) {
 }
 
 void MainWindow::on_LogFileBrowser_clicked() {
+    logpath = QFileDialog::getSaveFileName(this,
+                                                      tr("Create log file"), ".",
+                                                      tr("CSV File (*.csv)"));
 
-    logpath = QFileDialog::getOpenFileName(this,
-                                           tr("Choose File"), "",
-                                           tr("Text Files (*.csv *.log *.txt);;All Files (*)"));
 
     ui->pathToLog->setText(logpath);
     if(!logpath.isEmpty()) ui->Filecheckbox->setChecked(true);
@@ -83,13 +83,27 @@ void MainWindow::on_pushButtonLaunch_clicked()
     case 2: integrator = new IntegrateurRungeKutta5();
     }
 
-    if(ui->Filecheckbox->isChecked() and !logpath.isEmpty()) {
+    if(ui->Filecheckbox->isChecked()) {
+        if(logpath.isEmpty()) {
+            auto nologpath = new QMessageBox(QMessageBox::NoIcon, "No log file chosen",
+                                                        "Please choose a file to log to, or uncheck the option to write to file.");
+            nologpath->addButton("Ok", QMessageBox::AcceptRole);
+            nologpath->QDialog::setWindowTitle("No log file chosen");
+            nologpath->setTextInteractionFlags(Qt::NoTextInteraction);
+            nologpath->exec();
+            return;
+        }
         logfile = new ofstream(ui->pathToLog->text().toUtf8(), ios::out);
         fileviewer = new FileViewer(*logfile);
-        simulator = new Simulator(true, integrator, ui->spinBox_FPS->value(), ui->spinBox_IntegPrec->value(), {fileviewer}, (float) ui->doubleSpinBox_modelScale->value(), usedTablemodelPath);
+
+        simulator = new Simulator(true, integrator, ui->spinBox_FPS->value(), ui->spinBox_IntegPrec->value(),
+                {fileviewer}, (float) ui->doubleSpinBox_modelScale->value(), usedTablemodelPath,
+                1200, 800, ui->spinBox_tracefreq->value());
     }
     else {
-        simulator = new Simulator(true, integrator, ui->spinBox_FPS->value(), ui->spinBox_IntegPrec->value(), {}, (float) ui->doubleSpinBox_modelScale->value(), usedTablemodelPath);
+        simulator = new Simulator(true, integrator, ui->spinBox_FPS->value(), ui->spinBox_IntegPrec->value(),
+                {}, (float) ui->doubleSpinBox_modelScale->value(), usedTablemodelPath,
+                1200, 800, ui->spinBox_tracefreq->value());
 
     }
     Vecteur5 P(ui->doubleSpinBox_theta->value(), ui->doubleSpinBox_psi->value(), ui->doubleSpinBox_phi->value(), ui->doubleSpinBox_x->value(), ui->doubleSpinBox_y->value());

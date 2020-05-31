@@ -25,10 +25,13 @@ class GLWindow : public QOpenGLWidget
 {
 Q_OBJECT
 
-public:
-    GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*> supports, const float& scaleFactor, const int& dpr, QWidget* parent = nullptr);
+public: //dpr = device pixel ratio
+    GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*> supports,
+            const float& scaleFactor, const int& dpr, const int& traceFrequency = 5, QWidget* parent = nullptr);
 
     ~GLWindow() override;
+
+
 
 protected:
     void initializeGL() override; //Qt specific
@@ -90,6 +93,10 @@ private:
     unsigned int everySixtyTimes = 0; //used to trigger events every 60 frames
 
     unsigned int everyFiveTimes = 0; //used to trigger events every 5 frames
+
+    unsigned int traceFrequency;
+
+    unsigned int TraceCounter = 0; //used to trigger writing to trace every traceFrequency frames
 
     std::vector<std::unique_ptr<PlotWindow> > plots;
     std::vector<std::pair<int,int> > plotIndexes;

@@ -3,9 +3,11 @@
 #include <Toupies/Toupie.h>
 #include "System/Systeme.h"
 
-FileViewer::FileViewer(std::ofstream &out, const bool &timeUsed): out(out) {
+FileViewer::FileViewer(std::ofstream &out, const bool &timeUsed, const bool &multiTop): out(out) {
     if(timeUsed) this->out << "t,";
-    this->out << "theta,psi,phi,x,y,theta',psi',phi',x',y',E,LAk,LAa,a*(w^L)" << std::endl;
+    this->out << "theta,psi,phi,x,y,theta',psi',phi',x',y',E,LAk,LAa,a*(w^L)";
+    if(multiTop) this->out << ",#top";
+    this->out << std::endl;
 }
 
 void FileViewer::dessine(Toupie const & toupie) const {
@@ -18,7 +20,7 @@ void FileViewer::dessine(Systeme const & sys) const {
     size_t i(1);
     for (const Toupie* toupie : sys.getToupies()) {
         toupie->afficheFile(out);
-        out << " # " << i << std::endl;
+        out << ",#" << i << std::endl;
         ++i;
     }
 }
@@ -32,9 +34,9 @@ void FileViewer::dessine(const double & t, const Toupie &toupie) const {
 void FileViewer::dessine(const double & t, const Systeme &sys) const {
     size_t i(1);
     for (const Toupie* toupie : sys.getToupies()) {
-        out << t << " ";
+        out << t << ",";
         toupie->afficheFile(out);
-        out << " # " << i << std::endl;
+        out << ",#" << i << std::endl;
         ++i;
     }
 }

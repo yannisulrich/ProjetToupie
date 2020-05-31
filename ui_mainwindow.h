@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindowRgvQSi.ui'
+** Form generated from reading UI file 'mainwindowFpTIBF.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.14.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOWRGVQSI_H
-#define MAINWINDOWRGVQSI_H
+#ifndef MAINWINDOWFPTIBF_H
+#define MAINWINDOWFPTIBF_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -32,8 +32,9 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
+    QVBoxLayout *verticalLayout_2;
     QTextBrowser *Information;
-    QHBoxLayout *horizontalLayout_2;
+    QHBoxLayout *config;
     QSpacerItem *horizontalSpacer_31;
     QPushButton *pushButton_saveconfig;
     QPushButton *pushButton_loadconfig;
@@ -48,12 +49,12 @@ public:
     QLabel *label_IntegratorE;
     QDoubleSpinBox *doubleSpinBox_Integrator;
     QSpacerItem *horizontalSpacer_11;
-    QHBoxLayout *horizontalLayout_3;
+    QHBoxLayout *tablemodel;
     QLabel *label_6;
     QComboBox *comboBox_tablemodel;
     QLineEdit *pathToTableModel;
     QPushButton *TableModelBrowser;
-    QHBoxLayout *horizontalLayout_4;
+    QHBoxLayout *topmodel;
     QLabel *label_15;
     QComboBox *comboBox_topmodel;
     QLineEdit *pathToTopModel;
@@ -127,6 +128,9 @@ public:
     QLabel *label_22;
     QSpinBox *spinBox_IntegPrec;
     QSpacerItem *horizontalSpacer_29;
+    QLabel *label_tracefreq;
+    QSpinBox *spinBox_tracefreq;
+    QSpacerItem *horizontalSpacer_35;
     QHBoxLayout *FileWriteLine;
     QSpacerItem *horizontalSpacer;
     QCheckBox *Filecheckbox;
@@ -142,7 +146,7 @@ public:
     QCheckBox *checkbox_awL;
     QLabel *label_14;
     QSpacerItem *horizontalSpacer_33;
-    QHBoxLayout *horizontalLayout;
+    QHBoxLayout *logfile;
     QLineEdit *pathToLog;
     QPushButton *LogFileBrowser;
     QHBoxLayout *LaunchLine;
@@ -155,45 +159,59 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1032, 836);
+        MainWindow->resize(1127, 832);
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
         MainWindow->setUnifiedTitleAndToolBarOnMac(true);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayout = new QVBoxLayout(centralwidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         Information = new QTextBrowser(centralwidget);
         Information->setObjectName(QString::fromUtf8("Information"));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(Information->sizePolicy().hasHeightForWidth());
-        Information->setSizePolicy(sizePolicy);
-        Information->setMinimumSize(QSize(0, 200));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(Information->sizePolicy().hasHeightForWidth());
+        Information->setSizePolicy(sizePolicy1);
+        Information->setMinimumSize(QSize(0, 100));
 
-        verticalLayout->addWidget(Information);
+        verticalLayout_2->addWidget(Information);
 
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        config = new QHBoxLayout();
+#ifndef Q_OS_MAC
+        config->setSpacing(-1);
+#endif
+        config->setObjectName(QString::fromUtf8("config"));
+        config->setContentsMargins(-1, 0, -1, 0);
         horizontalSpacer_31 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_2->addItem(horizontalSpacer_31);
+        config->addItem(horizontalSpacer_31);
 
         pushButton_saveconfig = new QPushButton(centralwidget);
         pushButton_saveconfig->setObjectName(QString::fromUtf8("pushButton_saveconfig"));
 
-        horizontalLayout_2->addWidget(pushButton_saveconfig);
+        config->addWidget(pushButton_saveconfig);
 
         pushButton_loadconfig = new QPushButton(centralwidget);
         pushButton_loadconfig->setObjectName(QString::fromUtf8("pushButton_loadconfig"));
 
-        horizontalLayout_2->addWidget(pushButton_loadconfig);
+        config->addWidget(pushButton_loadconfig);
 
         horizontalSpacer_34 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_2->addItem(horizontalSpacer_34);
+        config->addItem(horizontalSpacer_34);
 
 
-        verticalLayout->addLayout(horizontalLayout_2);
+        verticalLayout_2->addLayout(config);
+
+
+        verticalLayout->addLayout(verticalLayout_2);
 
         TopandIntegrator = new QHBoxLayout();
         TopandIntegrator->setObjectName(QString::fromUtf8("TopandIntegrator"));
@@ -261,59 +279,57 @@ public:
 
         verticalLayout->addLayout(TopandIntegrator);
 
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        tablemodel = new QHBoxLayout();
+        tablemodel->setObjectName(QString::fromUtf8("tablemodel"));
         label_6 = new QLabel(centralwidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
-        label_6->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy2);
         label_6->setMinimumSize(QSize(80, 0));
         label_6->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_3->addWidget(label_6);
+        tablemodel->addWidget(label_6);
 
         comboBox_tablemodel = new QComboBox(centralwidget);
         comboBox_tablemodel->addItem(QString());
         comboBox_tablemodel->addItem(QString());
         comboBox_tablemodel->setObjectName(QString::fromUtf8("comboBox_tablemodel"));
-        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(comboBox_tablemodel->sizePolicy().hasHeightForWidth());
         comboBox_tablemodel->setSizePolicy(sizePolicy2);
         comboBox_tablemodel->setMinimumSize(QSize(120, 0));
 
-        horizontalLayout_3->addWidget(comboBox_tablemodel);
+        tablemodel->addWidget(comboBox_tablemodel);
 
         pathToTableModel = new QLineEdit(centralwidget);
         pathToTableModel->setObjectName(QString::fromUtf8("pathToTableModel"));
         pathToTableModel->setEnabled(true);
-        pathToTableModel->setMinimumSize(QSize(350, 0));
+        pathToTableModel->setMinimumSize(QSize(200, 0));
         pathToTableModel->setReadOnly(true);
+        pathToTableModel->setClearButtonEnabled(false);
 
-        horizontalLayout_3->addWidget(pathToTableModel);
+        tablemodel->addWidget(pathToTableModel);
 
         TableModelBrowser = new QPushButton(centralwidget);
         TableModelBrowser->setObjectName(QString::fromUtf8("TableModelBrowser"));
 
-        horizontalLayout_3->addWidget(TableModelBrowser);
+        tablemodel->addWidget(TableModelBrowser);
 
 
-        verticalLayout->addLayout(horizontalLayout_3);
+        verticalLayout->addLayout(tablemodel);
 
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        topmodel = new QHBoxLayout();
+        topmodel->setObjectName(QString::fromUtf8("topmodel"));
         label_15 = new QLabel(centralwidget);
         label_15->setObjectName(QString::fromUtf8("label_15"));
-        sizePolicy1.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
-        label_15->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
+        label_15->setSizePolicy(sizePolicy2);
         label_15->setMinimumSize(QSize(80, 0));
         label_15->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_4->addWidget(label_15);
+        topmodel->addWidget(label_15);
 
         comboBox_topmodel = new QComboBox(centralwidget);
         comboBox_topmodel->addItem(QString());
@@ -324,23 +340,23 @@ public:
         comboBox_topmodel->setSizePolicy(sizePolicy2);
         comboBox_topmodel->setMinimumSize(QSize(120, 0));
 
-        horizontalLayout_4->addWidget(comboBox_topmodel);
+        topmodel->addWidget(comboBox_topmodel);
 
         pathToTopModel = new QLineEdit(centralwidget);
         pathToTopModel->setObjectName(QString::fromUtf8("pathToTopModel"));
         pathToTopModel->setEnabled(true);
-        pathToTopModel->setMinimumSize(QSize(350, 0));
+        pathToTopModel->setMinimumSize(QSize(200, 0));
         pathToTopModel->setReadOnly(true);
 
-        horizontalLayout_4->addWidget(pathToTopModel);
+        topmodel->addWidget(pathToTopModel);
 
         TopModelBrowser = new QPushButton(centralwidget);
         TopModelBrowser->setObjectName(QString::fromUtf8("TopModelBrowser"));
 
-        horizontalLayout_4->addWidget(TopModelBrowser);
+        topmodel->addWidget(TopModelBrowser);
 
 
-        verticalLayout->addLayout(horizontalLayout_4);
+        verticalLayout->addLayout(topmodel);
 
         label_initvalues = new QLabel(centralwidget);
         label_initvalues->setObjectName(QString::fromUtf8("label_initvalues"));
@@ -783,6 +799,25 @@ public:
 
         AdvancedOpinions->addItem(horizontalSpacer_29);
 
+        label_tracefreq = new QLabel(centralwidget);
+        label_tracefreq->setObjectName(QString::fromUtf8("label_tracefreq"));
+        label_tracefreq->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        AdvancedOpinions->addWidget(label_tracefreq);
+
+        spinBox_tracefreq = new QSpinBox(centralwidget);
+        spinBox_tracefreq->setObjectName(QString::fromUtf8("spinBox_tracefreq"));
+        spinBox_tracefreq->setMinimumSize(QSize(100, 0));
+        spinBox_tracefreq->setMinimum(1);
+        spinBox_tracefreq->setMaximum(200);
+        spinBox_tracefreq->setValue(5);
+
+        AdvancedOpinions->addWidget(spinBox_tracefreq);
+
+        horizontalSpacer_35 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        AdvancedOpinions->addItem(horizontalSpacer_35);
+
 
         verticalLayout->addLayout(AdvancedOpinions);
 
@@ -856,23 +891,23 @@ public:
 
         verticalLayout->addLayout(FileWriteLine);
 
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        logfile = new QHBoxLayout();
+        logfile->setObjectName(QString::fromUtf8("logfile"));
         pathToLog = new QLineEdit(centralwidget);
         pathToLog->setObjectName(QString::fromUtf8("pathToLog"));
         pathToLog->setEnabled(true);
-        pathToLog->setMinimumSize(QSize(350, 0));
+        pathToLog->setMinimumSize(QSize(300, 0));
         pathToLog->setReadOnly(true);
 
-        horizontalLayout->addWidget(pathToLog);
+        logfile->addWidget(pathToLog);
 
         LogFileBrowser = new QPushButton(centralwidget);
         LogFileBrowser->setObjectName(QString::fromUtf8("LogFileBrowser"));
 
-        horizontalLayout->addWidget(LogFileBrowser);
+        logfile->addWidget(LogFileBrowser);
 
 
-        verticalLayout->addLayout(horizontalLayout);
+        verticalLayout->addLayout(logfile);
 
         LaunchLine = new QHBoxLayout();
         LaunchLine->setObjectName(QString::fromUtf8("LaunchLine"));
@@ -931,9 +966,11 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\342\200\242 FPS target sets a </span><span style=\" font-size:14pt; font-style:italic;\">Frames Per Second </span><span style=\" font-size:14pt;\">target. Note that it will be limited by your monitors refresh rate. </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\342\200\242 Integrator precision is a parameter that only affects the &quot;Simple fixed cone&quot; and &quot;Rolling tippe top&quot; tops. If the time between two frames is \316\224t, the time step of the used integrator will be (\316\224t)/(Integrator precision). The recommended value rarely n"
                         "eeds to be modified. </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\342\200\242 Frames per trace point describes every how many frames a point is added to the trace. This parameter can drastically improve performance if increased!</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">\342\200\242 Finally, you may choose to write the data created to a file. You must specify an absolute file path.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">For controls to use during simulation, press the help button.</span></p></body></html>", nullptr));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">For controls to use during simulation, pr"
+                        "ess the help button.</span></p></body></html>", nullptr));
         pushButton_saveconfig->setText(QCoreApplication::translate("MainWindow", "Save configuration", nullptr));
         pushButton_loadconfig->setText(QCoreApplication::translate("MainWindow", "Load configuration", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "Type of top", nullptr));
@@ -990,6 +1027,7 @@ public:
         label_20->setText(QCoreApplication::translate("MainWindow", "Model scale", nullptr));
         label_21->setText(QCoreApplication::translate("MainWindow", "FPS target", nullptr));
         label_22->setText(QCoreApplication::translate("MainWindow", "Integrator Precision", nullptr));
+        label_tracefreq->setText(QCoreApplication::translate("MainWindow", "Frames per trace point", nullptr));
         Filecheckbox->setText(QCoreApplication::translate("MainWindow", "Write to file", nullptr));
         checkbox_Energyplot->setText(QCoreApplication::translate("MainWindow", "Plot Energy", nullptr));
         checkbox_LA3->setText(QString());
@@ -1013,4 +1051,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOWRGVQSI_H
+#endif // MAINWINDOWFPTIBF_H

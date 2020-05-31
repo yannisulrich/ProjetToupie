@@ -40,7 +40,7 @@ add_library(OpenGLViewer
         model.cpp
         modelloader.cpp
         scene.cpp
-        GLWindow.cc shaders.qrc models.qrc QCustomPlot/PlotWindow.cc GLTrace.h)
+        GLWindow.cc shaders.qrc models.qrc QCustomPlot/PlotWindow.cc GLTrace.h GLTrace.cc)
 
 target_compile_options(OpenGLViewer PRIVATE -fpermissive)
 

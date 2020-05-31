@@ -10,8 +10,11 @@
 
 
 using namespace std;
-GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*>  supports, const float& scaleFactor, const int& dpr, QWidget* parent):
-        QOpenGLWidget(parent), integSubDiv(integSubdiv), fps(fps), supports(std::move(supports)), measuredFPS(60)
+
+GLWindow::GLWindow(Scene* scene_, const int& fps, const int& integSubdiv, std::vector<SupportADessin*>  supports, const float& scaleFactor,
+        const int& dpr, const int& traceFrequency, QWidget* parent):
+        QOpenGLWidget(parent), integSubDiv(integSubdiv), fps(fps), supports(std::move(supports)), measuredFPS(60),
+        traceFrequency(traceFrequency)
 {
     if (fps == 0) throw std::logic_error("fps cannot be set to 0");
 
@@ -142,13 +145,16 @@ void GLWindow::timerTimeout()
         time +=  dt;
         //system integration
         scene->integrateSystem(dt, integSubDiv);
-        scene->addToTraces();
-        //add points to traces every 5 frames
-        if(everyFiveTimes == 0) {
-            //scene->addToTraces();
-            everyFiveTimes = 5;
-            //plot1.replot();
 
+        //add points to traces every 5 frames
+        if(TraceCounter == 0) {
+            scene->addToTraces();
+            TraceCounter = traceFrequency;
+        }
+        else --TraceCounter;
+
+        if(everyFiveTimes == 0) {
+            everyFiveTimes = 5;
             for(std::unique_ptr<PlotWindow>& plot : plots) plot->replot();
         }
         else --everyFiveTimes;
@@ -160,12 +166,10 @@ void GLWindow::timerTimeout()
         for(size_t i(0); i < plots.size(); ++i) {
             plots[i]->append(time, scene->system.getToupies()[plotIndexes[i].first]->returnIndicators()[plotIndexes[i].second]);
         }
-        //plot1.append(time, scene->system.getToupies()[0]->returnIndicators()[0]);
-        //plot1.repaint();
     }
+
+
     //graphics update
-
-
     update();
 
 
@@ -240,7 +244,6 @@ void GLWindow::keyPressEvent(QKeyEvent* event)
             break;
     };
 
-    //paintGL(); // redessine
 }
 
 void GLWindow::keyReleaseEvent(QKeyEvent *event)
@@ -274,7 +277,6 @@ void GLWindow::keyReleaseEvent(QKeyEvent *event)
             break;
 
     }
-    //paintGL();
 }
 
 //This method handles mouse movement. For the mouse not to leave the window, we have to keep it in the rectangle rect()- MouseMargins (cf GLWindow.h)

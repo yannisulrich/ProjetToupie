@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <strparameters>
+        <top>Simple fixed cone</top>
+        <integrator>Euler-Cromer</integrator>
+        <tablemodelpath>default</tablemodelpath>
+        <topmodelpath>Cone</topmodelpath>
+    </strparameters>
+    <numparameters>
+        <integratore>1e-06</integratore>
+        <theta>0.01</theta>
+        <psi>0</psi>
+        <phi>0</phi>
+        <x>0</x>
+        <y>0</y>
+        <thetadot>0</thetadot>
+        <psidot>0</psidot>
+        <phidot>70</phidot>
+        <xdot>0</xdot>
+        <ydot>0</ydot>
+        <m>0.038</m>
+        <R>0.03</R>
+        <secondaryLength>0.02</secondaryLength>
+        <mu>0.01</mu>
+        <modelScale>50</modelScale>
+        <FPStarget>60</FPStarget>
+        <IntegPrec>50</IntegPrec>
+    </numparameters>
+</root>

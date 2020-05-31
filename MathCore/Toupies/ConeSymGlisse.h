@@ -1,7 +1,7 @@
 /*
  * Equations pour une toupie glissante. Attention! le fichier .cc fait presque 3000 lignes (chez moi c'est un peu lent).
  * Les équations sont adaptées et modifiées, mais faites à partir de https://rotations.berkeley.edu/the-poisson-top-with-friction/#Equations_of_motion.
- * Les indicateurs sont correctement implémentés.
+ * Les indicateurs sont correctement implémentés par rapport à ce site.
  */
 
 #pragma once
@@ -52,6 +52,8 @@ public:
         support->dessine(*this); }
 
     Vecteur4 returnIndicators() const override;
+    
+    
 
 };
 

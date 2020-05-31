@@ -1,18 +1,5 @@
-Semaine 1: Création du groupe :)
-
-Semaine 2: Création des fichiers, du projet GitHub, et de la classe Vecteur.
-
-Semaine 3: Utilisation de Clion pour faciliter la transmission de données. Création de la classe Matrice,
-changement des méthodes en operateurs surchargés.
-
-Semaine 4: Classes "Toupie" et "ConeSimple" commencées. Finalisation des classes Vecteur et Matrice. Idée de la classe template
-VecteurArray.
-
-Semaine 5: optimisations de vitesse, terminé les classes Toupie et Conesimple. Commencé des intégrateurs. Fichiers constantes.
-Implémentation de la classe abstraite Integrateur et de l'integrateur Euler-Cromer. Travail sur VecteurArray.
-
-Semaine 6: implémentation des intégrateurs restants, finalisation de VecteurArray. Travail de compréhension pour le graphisme.
-Création d'une fenêtre principale du programme à partir de laquelle une simulation pourra être demarrée.
+Week 1
+We organised how we would work, and made syncing to github work on both our machines.
 
 Week 2
 We created the Vecteur class, as well as well as giving it the necessary methods for us to be able to modify a vector’s values and add dimensions to it or to display the vector.

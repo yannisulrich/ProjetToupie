@@ -4,10 +4,10 @@
 #include "Simulator.h"
 
 Simulator::Simulator(const bool& graphics, Integrateur* integrateur, const int& fps, const int& integSubDiv, std::vector<SupportADessin*> supports, const float& scaleFactor,
-        const QString& tablepath, const int & screenw, const int& screenh):
-fps(fps), integSubDiv(integSubDiv), graphics(graphics), supports(std::move(supports)), scaleFactor(scaleFactor) {
+        const QString& tablepath, const int & screenw, const int& screenh, const int& traceFrequency):
+fps(fps), integSubDiv(integSubDiv), traceFrequency(traceFrequency), graphics(graphics), supports(std::move(supports)), scaleFactor(scaleFactor) {
     if(graphics) {
-        scene = new Scene(integrateur, screenw, screenh, tablepath);
+        scene = new Scene(integrateur, screenw, screenh, 600/traceFrequency, tablepath);
         system = &scene->system;
     }
 }
@@ -28,7 +28,7 @@ int Simulator::runNewApp() {
     QSurfaceFormat::setDefaultFormat(format);
 
     QApplication a(argc, &argv[0]);
-    glwindow = new GLWindow(scene, fps, integSubDiv, supports, scaleFactor, QApplication::desktop()->devicePixelRatio());
+    glwindow = new GLWindow(scene, fps, integSubDiv, supports, scaleFactor, QApplication::desktop()->devicePixelRatio(), traceFrequency);
     glwindow->show();
 
     running = true;
@@ -47,10 +47,10 @@ void Simulator::runInApp() {
 
     QSurfaceFormat::setDefaultFormat(format);
 
-    QWindow window;
-    QHBoxLayout *layout = new QHBoxLayout();
-    glwindow = new GLWindow(scene, fps, integSubDiv, supports, scaleFactor, QApplication::desktop()->devicePixelRatio());
-    glwindow->show();
+    glwindow = new GLWindow(scene, fps, integSubDiv, supports, scaleFactor, QApplication::desktop()->devicePixelRatio(), traceFrequency);
+    glwindow->showMaximized();
     running = true;
+
+
 }
 

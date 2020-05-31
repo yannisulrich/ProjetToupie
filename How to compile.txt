@@ -1,4 +1,5 @@
 Le github: https://github.com/yannisulrich/ProjetToupie
+Il contient toute l'aide pour le programme final!
 
 La structure de ce projet est pas toute simple, voici donc les aspects importants pour compiler. Tout d'abord, c'est
 un projet cmake. L'essentiel est que cmake trouve Qt, et que la bibliothèque assimp soit "linkable". Le projet a été testé sur
@@ -14,10 +15,14 @@ principal dans le même dossier.
 
 Le deuxième point "difficile", est la bibliothèque assimp, que nous utilisons pour importer des modèles 3D. Nous fournissons des versions
 statiques pour macos-clang et le compilateur mingw-730_32 installé par Qt (c'est possiblement important que ce ne soit pas celui de mingw directement,
-pas sûr). Cela devrait rendre possible la compilation sous macos et windows.
+pas sûr). Cela devrait rendre possible la compilation sous macos et windows. Cette bibliothèque est uniquement utilisée dans le cmakelists
+Graphics/OpenGLViewer/CMakeLists.txt
+Donc c'est uniquement là qu'il faut ajuster la dépendence.
 
 Les fichiers tests P9 et P10 sont disponibles dans des dossiers du "parent directory". Pour les fichiers tests des classes de base,
 regarder dans MathCore/tests. Le projet cmake de base est capable de tous les compiler.
+
+Il y a aussi une application complète MacOS sur github.
 
 ===== Dans le cas de compilation sous linux =====
 

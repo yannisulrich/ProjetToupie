@@ -6,11 +6,12 @@
 #include <QOpenGLBuffer>
 #include <chrono>
 #include <memory>
-//TODO: optimize getToupies out
 using namespace std;
 using namespace std::chrono;
-Scene::Scene(Integrateur *integrateur, int screenw, int screenh, const QString &tableModelpath):
-        system(this, integrateur), SCR_WIDTH(screenw), SCR_HEIGHT(screenh) {
+
+
+Scene::Scene(Integrateur *integrateur, const int& screenw, const int& screenh, const int& traceLength, const QString &tableModelpath):
+        system(this, integrateur), SCR_WIDTH(screenw), SCR_HEIGHT(screenh), traceLength(traceLength) {
 
     if(tableModelpath.isEmpty()) table = new Model(QString("Graphics/OpenGLViewer/Models/tabledefault.DAE"),ModelLoader::RelativePath);
     else table = new Model(tableModelpath,ModelLoader::RelativePath);
@@ -49,13 +50,10 @@ void Scene::initialize()
     a = {0,0,0};
     direction = {cos(pitch)*cos(yaw),sin(pitch), cos(pitch)*sin(yaw)};
 
-    float zeros[300] = {};
-
-
     //initialisation des traces
     for(size_t i(0); i < toupies.size(); ++i) {
-        GTraces.push_back(make_unique<GLTrace<traceLength> >(this));
-        ATraces.push_back(make_unique<GLTrace<traceLength> >(this));
+        GTraces.push_back(make_unique<GLTrace>(this, traceLength));
+        ATraces.push_back(make_unique<GLTrace>(this, traceLength));
     }
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     table->initialize(m_shaderProgram);
@@ -85,7 +83,6 @@ void Scene::initialize()
     glReadBuffer(GL_NONE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     lightPos = {-2.0f, 4.0f, -1.0f};
-    //lightProjection.perspective(0.78, (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane);
     lightProjection.ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
     lightView.lookAt(lightPos, QVector3D(0.0f,0.0f,0.0f), QVector3D(0.0, 1.0, 0.0));
     lightSpaceMatrix = lightProjection * lightView;
@@ -196,12 +193,12 @@ void Scene::update()
 
     t_shaderProgram.setUniformValue("traceColor", 1.0f, 0.5f, 0.2f, 1.0f);
 
-    for(unique_ptr<GLTrace<traceLength>>& trace : GTraces) {
+    for(unique_ptr<GLTrace>& trace : GTraces) {
         trace->draw();
     }
 
     t_shaderProgram.setUniformValue("traceColor", 0.0f, 1.0f, 0.6f, 1.0f);
-    for(unique_ptr<GLTrace<traceLength>>& trace : ATraces) {
+    for(unique_ptr<GLTrace>& trace : ATraces) {
         trace->draw();
     }
 

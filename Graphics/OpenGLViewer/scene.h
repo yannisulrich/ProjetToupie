@@ -50,7 +50,7 @@ public:
 private:
     //le constructeur est privé pour être uniquement accessible depuis GLWidget
 
-    explicit Scene(Integrateur* integrateur, int screenw, int screenh, const QString& tableModelpath = "");
+    explicit Scene(Integrateur* integrateur, const int& screenw, const int& screenh, const int& traceLength, const QString& tableModelpath = "");
     //chargement des shaders
     static void createShaderProgram(QOpenGLShaderProgram& shaderProgram, const QString& vShader, const QString& fShader);
 
@@ -100,14 +100,6 @@ private:
     void setScaleFactor(const float& scale) {scaleFactor = scale;} //logique
 
 
-
-    float traceBuffer[600] = {}; //nécessaire comme intermédiaire entre les deques utilisées pour les traces et le buffer
-    std::vector<std::unique_ptr<QOpenGLVertexArrayObject> > QtGVAOs; //Ces 4 objets sont des objets opengl qui contiennent l'information pour dessiner les points des traces
-    std::vector<std::unique_ptr<QOpenGLBuffer> > QtGVBOs;
-    std::vector<std::unique_ptr<QOpenGLVertexArrayObject> > QtAVAOs;
-    std::vector<std::unique_ptr<QOpenGLBuffer> > QtAVBOs;
-
-
     const unsigned int SHADOW_WIDTH = 2048, SHADOW_HEIGHT = 2048;
     unsigned int depthMapFBO;
     unsigned int depthMap;
@@ -122,12 +114,9 @@ private:
     int SCR_WIDTH, SCR_HEIGHT;
     int devicePixelRatio = 1;
 
-    GLTrace<100>* testTrace;
-
-
-    static size_t const traceLength = 1000;
-    std::vector<std::unique_ptr<GLTrace<traceLength> > > GTraces;
-    std::vector<std::unique_ptr<GLTrace<traceLength> > > ATraces;
+    size_t traceLength;
+    std::vector<std::unique_ptr<GLTrace> > GTraces;
+    std::vector<std::unique_ptr<GLTrace> > ATraces;
 
     void addToTraces();
 
