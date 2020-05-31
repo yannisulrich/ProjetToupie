@@ -5,7 +5,7 @@ Week 2
 We created the Vecteur class, as well as well as giving it the necessary methods for us to be able to modify a vector’s values and add dimensions to it or to display the vector.
 
 Week 3
-We then promptly deleted all of the previous week’s work, and now separated the code into a header and .cc file. It was not necessary to create a makefile, as our compilator (CLion) did this automatically.
+We then promptly deleted all of the previous week’s work, and now separated the code into a header and .cc file. It was not necessary to create a regular makefile, as we used CMake.
 We also looked up exactly what #pragma once did before adding it, so we were sure of what it did.
 
 Week 4
